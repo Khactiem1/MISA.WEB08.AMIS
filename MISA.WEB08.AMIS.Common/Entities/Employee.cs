@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MISA.WEB08.AMIS.API.Enums;
+using MISA.WEB08.AMIS.Common.Attributes;
+using MISA.WEB08.AMIS.Common.Enums;
 
-namespace MISA.WEB08.AMIS.API.Entities
+namespace MISA.WEB08.AMIS.Common.Entities
 {
     /// <summary>
     /// nhân viên ứng với bảng employee trong database
@@ -15,111 +16,115 @@ namespace MISA.WEB08.AMIS.API.Entities
         /// <summary>
         /// id nhân viên
         /// </summary>
-        public Guid employee_id { get; set; }
+        [PrimaryKey]
+        public Guid EmployeeID { get; set; }
 
         /// <summary>
         /// id đơn vị
         /// </summary>
-        public Guid unit_id { get; set; }
+        [IsNotNullOrEmpty("Mã đơn vị không được để trống")]
+        public Guid UnitID { get; set; }
 
         /// <summary>
         /// tên đơn vị
         /// </summary>
-        public string unit_name { get; set; }
+        public string UnitName { get; set; }
 
         /// <summary>
         /// mã nhân viên
         /// </summary>
-        public string employee_code { get; set; }
+        [IsNotNullOrEmpty("Mã nhân viên không được để trống")]
+        public string EmployeeCode { get; set; }
 
         /// <summary>
         /// tên nhân viên
         /// </summary>
-        public string employee_name { get; set; }
+        [IsNotNullOrEmpty("Tên nhân viên không được để trống")]
+        public string EmployeeName { get; set; }
 
         /// <summary>
         /// ngày sinh
         /// </summary>
-        public DateTime date_of_birth { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
         /// <summary>
         /// giới tính
         /// </summary>
-        public Gender gender { get; set; }
+        public Gender Gender { get; set; }
 
         /// <summary>
         /// chứng minh thư
         /// </summary>
-        public string identity_card { get; set; }
+        public string IdentityCard { get; set; }
 
         /// <summary>
         /// chi nhánh ngân hàng
         /// </summary>
-        public string branch_bank { get; set; }
+        public string BranchBank { get; set; }
 
         /// <summary>
         /// chức danh
         /// </summary>
-        public string employee_title { get; set; }
+        public string EmployeeTitle { get; set; }
 
         /// <summary>
         /// số tài khoản
         /// </summary>
-        public string bank_account { get; set; }
+        public string BankAccount { get; set; }
 
         /// <summary>
         /// tên ngân hàng
         /// </summary>
-        public string name_bank { get; set; }
+        public string NameBank { get; set; }
 
         /// <summary>
         /// ngày cấp cmnd
         /// </summary>
-        public string day_for_identity { get; set; }
+        public DateTime DayForIdentity { get; set; }
 
         /// <summary>
         /// địa chỉ cấp cmnd
         /// </summary>
-        public string grant_address_identity { get; set; }
+        public string GrantAddressIdentity { get; set; }
 
         /// <summary>
         /// số điện thoại
         /// </summary>
-        public string phone_number { get; set; }
+        public string PhoneNumber { get; set; }
 
         /// <summary>
         /// số điện thoại cố định
         /// </summary>
-        public string landline_phone { get; set; }
+        public string LandlinePhone { get; set; }
 
         /// <summary>
         /// điạ chỉ email
         /// </summary>
-        public string employee_email { get; set; }
+        public string EmployeeEmail { get; set; }
 
         /// <summary>
         /// địa chỉ nhân viên
         /// </summary>
-        public string employee_address { get; set; }
+        public string EmployeeAddress { get; set; }
 
         /// <summary>
         /// Người thêm
         /// </summary>
-        public string created_by { get; set; }
+        public string CreatedBy { get; set; }
 
         /// <summary>
         /// ngày thêm
         /// </summary>
-        public DateTime created_date { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         /// <summary>
         /// người sửa
         /// </summary>
-        public string modified_by { get; set; }
+        public string ModifiedBy { get; set; }
 
         /// <summary>
         /// ngày sửa
         /// </summary>
-        public DateTime modified_date { get; set; }
+        public DateTime ModifiedDate { get; set; }
     }
 }

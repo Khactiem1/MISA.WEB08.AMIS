@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MISA.WEB08.AMIS.API.Enums
+namespace MISA.WEB08.AMIS.Common.Enums
 {
     /// <summary>
     /// Mã lỗi
@@ -18,7 +18,7 @@ namespace MISA.WEB08.AMIS.API.Enums
         Exception = 1,
 
         /// <summary>
-        /// Lỗi mã employee_id
+        /// Lỗi mã employee_id trùng
         /// </summary>
         /// Created by : Khắc Tiềm 21.09.2022
         DuplicateCode = 2,
@@ -28,5 +28,11 @@ namespace MISA.WEB08.AMIS.API.Enums
         /// </summary>
         /// Created by : Khắc Tiềm 21.09.2022
         EmptyCode = 3,
+
+        /// <summary>
+        /// Lỗi sai dữ liệu đầu vào
+        /// </summary>
+        /// Created by : Khắc Tiềm 21.09.2022
+        InvalidInput = 4,
     }
 }

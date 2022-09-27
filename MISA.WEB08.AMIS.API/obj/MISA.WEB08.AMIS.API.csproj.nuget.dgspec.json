@@ -27,7 +27,196 @@
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
+            "projectReferences": {
+              "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj": {
+                "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj"
+              },
+              "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
+                "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.6.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj",
+        "projectName": "MISA.WEB08.AMIS.BL",
+        "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
+                "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj"
+              },
+              "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj": {
+                "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj",
+        "projectName": "MISA.WEB08.AMIS.Common",
+        "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
             "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj",
+        "projectName": "MISA.WEB08.AMIS.DL",
+        "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
+                "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -51,10 +240,6 @@
             "MySqlConnector": {
               "target": "Package",
               "version": "[2.1.13, )"
-            },
-            "Swashbuckle.AspNetCore": {
-              "target": "Package",
-              "version": "[5.6.3, )"
             }
           },
           "imports": [
@@ -68,9 +253,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

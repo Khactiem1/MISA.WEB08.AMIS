@@ -16,7 +16,6 @@ D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Debug\net5.0
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Debug\net5.0\MISA.WEB08.AMIS.API.AssemblyInfoInputs.cache
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Debug\net5.0\MISA.WEB08.AMIS.API.AssemblyInfo.cs
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Debug\net5.0\MISA.WEB08.AMIS.API.csproj.CoreCompileInputs.cache
-D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Debug\net5.0\MISA.WEB08.AMIS.API.MvcApplicationPartsAssemblyInfo.cs
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Debug\net5.0\MISA.WEB08.AMIS.API.MvcApplicationPartsAssemblyInfo.cache
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Debug\net5.0\staticwebassets\MISA.WEB08.AMIS.API.StaticWebAssets.Manifest.cache
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Debug\net5.0\staticwebassets\MISA.WEB08.AMIS.API.StaticWebAssets.xml
@@ -29,3 +28,10 @@ D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Debug\net5.0
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Debug\net5.0\MISA.WEB08.AMIS.API.genruntimeconfig.cache
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\MySqlConnector.dll
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\Dapper.dll
+D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\MISA.WEB08.AMIS.BL.dll
+D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\MISA.WEB08.AMIS.Common.dll
+D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\MISA.WEB08.AMIS.DL.dll
+D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\MISA.WEB08.AMIS.BL.pdb
+D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\MISA.WEB08.AMIS.Common.pdb
+D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\MISA.WEB08.AMIS.DL.pdb
+D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Debug\net5.0\MISA.WEB08.AMIS.API.MvcApplicationPartsAssemblyInfo.cs

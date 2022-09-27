@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MISA.WEB08.AMIS.API.Entities
+namespace MISA.WEB08.AMIS.Common.Entities
 {
     /// <summary>
     /// Đơn vị ứng với bảng unit trong database
@@ -14,36 +14,36 @@ namespace MISA.WEB08.AMIS.API.Entities
         /// <summary>
         /// id đơn vị
         /// </summary>
-        public Guid unit_id { get; set; }
+        public Guid UnitID { get; set; }
 
         /// <summary>
         /// mã đơn vị
         /// </summary>
-        public string unit_code { get; set; }
+        public string UnitCode { get; set; }
 
         /// <summary>
         /// tên đơn vị
         /// </summary>
-        public string unit_name { get; set; } 
+        public string UnitName { get; set; } 
 
         /// <summary>
         /// Người thêm
         /// </summary>
-        public string created_by { get; set; }
+        public string CreatedBy { get; set; }
 
         /// <summary>
         /// ngày thêm
         /// </summary>
-        public DateTime created_date { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         /// <summary>
         /// người sửa
         /// </summary>
-        public string modified_by { get; set; }
+        public string ModifiedBy { get; set; }
 
         /// <summary>
         /// ngày sửa
         /// </summary>
-        public DateTime modified_date { get; set; }
+        public DateTime ModifiedDate { get; set; }
     }
 }

@@ -114,6 +114,46 @@
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
         ]
+      },
+      "MISA.WEB08.AMIS.BL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "MISA.WEB08.AMIS.Common": "1.0.0",
+          "MISA.WEB08.AMIS.DL": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/MISA.WEB08.AMIS.BL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MISA.WEB08.AMIS.BL.dll": {}
+        }
+      },
+      "MISA.WEB08.AMIS.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/MISA.WEB08.AMIS.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MISA.WEB08.AMIS.Common.dll": {}
+        }
+      },
+      "MISA.WEB08.AMIS.DL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Dapper": "2.0.123",
+          "MISA.WEB08.AMIS.Common": "1.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "5.0.0",
+          "MySqlConnector": "2.1.13"
+        },
+        "compile": {
+          "bin/placeholder/MISA.WEB08.AMIS.DL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MISA.WEB08.AMIS.DL.dll": {}
+        }
       }
     }
   },
@@ -313,13 +353,27 @@
         "swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512",
         "swashbuckle.aspnetcore.swaggerui.nuspec"
       ]
+    },
+    "MISA.WEB08.AMIS.BL/1.0.0": {
+      "type": "project",
+      "path": "../MISA.WEB08.AMIS.BL/MISA.WEB08.AMIS.BL.csproj",
+      "msbuildProject": "../MISA.WEB08.AMIS.BL/MISA.WEB08.AMIS.BL.csproj"
+    },
+    "MISA.WEB08.AMIS.Common/1.0.0": {
+      "type": "project",
+      "path": "../MISA.WEB08.AMIS.Common/MISA.WEB08.AMIS.Common.csproj",
+      "msbuildProject": "../MISA.WEB08.AMIS.Common/MISA.WEB08.AMIS.Common.csproj"
+    },
+    "MISA.WEB08.AMIS.DL/1.0.0": {
+      "type": "project",
+      "path": "../MISA.WEB08.AMIS.DL/MISA.WEB08.AMIS.DL.csproj",
+      "msbuildProject": "../MISA.WEB08.AMIS.DL/MISA.WEB08.AMIS.DL.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "Dapper >= 2.0.123",
-      "Microsoft.Extensions.Configuration.Abstractions >= 5.0.0",
-      "MySqlConnector >= 2.1.13",
+      "MISA.WEB08.AMIS.BL >= 1.0.0",
+      "MISA.WEB08.AMIS.Common >= 1.0.0",
       "Swashbuckle.AspNetCore >= 5.6.3"
     ]
   },
@@ -349,7 +403,14 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj": {
+              "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj"
+            },
+            "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
+              "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -362,18 +423,6 @@
       "net5.0": {
         "targetAlias": "net5.0",
         "dependencies": {
-          "Dapper": {
-            "target": "Package",
-            "version": "[2.0.123, )"
-          },
-          "Microsoft.Extensions.Configuration.Abstractions": {
-            "target": "Package",
-            "version": "[5.0.0, )"
-          },
-          "MySqlConnector": {
-            "target": "Package",
-            "version": "[2.1.13, )"
-          },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[5.6.3, )"

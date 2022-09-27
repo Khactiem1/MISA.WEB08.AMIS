@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MISA.WEB08.AMIS.API.Enums
+namespace MISA.WEB08.AMIS.Common.Enums
 {
     /// <summary>
     /// Giới tính 

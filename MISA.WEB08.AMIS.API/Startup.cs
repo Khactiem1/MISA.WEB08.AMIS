@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MISA.WEB08.AMIS.BL;
+using MISA.WEB08.AMIS.DL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,17 +28,23 @@ namespace MISA.WEB08.AMIS.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration["ConnectionStrings:DefaultConnection"];
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
-            services.AddControllers();
+            services.AddControllers().ConfigureApiBehaviorOptions(options => {
+                options.SuppressModelStateInvalidFilter = true;
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MISA.WEB08.AMIS.API", Version = "v1" });
             });
+
+            services.AddScoped<IEmployeeBL, EmployeeBL>();
+            services.AddScoped<IEmployeeDL, EmployeeDL>();
+            services.AddScoped<IUnitBL, UnitBL>();
+            services.AddScoped<IUnitDL, UnitDL>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
