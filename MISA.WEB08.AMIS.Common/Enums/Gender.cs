@@ -8,8 +8,8 @@ namespace MISA.WEB08.AMIS.Common.Enums
     /// <summary>
     /// Giới tính 
     /// Enum giới tính của thực thể người, 3 loại nam, nữ, khác
-    /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
     /// </summary>
+    /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
     public enum Gender:int
     {
         /// <summary>

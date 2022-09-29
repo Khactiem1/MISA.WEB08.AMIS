@@ -11,19 +11,19 @@ namespace MISA.WEB08.AMIS.Common.Entities
     /// nhân viên ứng với bảng employee trong database
     /// </summary>
     /// Created by : Nguyễn Khắc Tiềm 21.09.2022
-    public class Employee
+    public class Employee : BaseEntity
     {
         /// <summary>
         /// id nhân viên
         /// </summary>
         [PrimaryKey]
-        public Guid EmployeeID { get; set; }
+        public Guid? EmployeeID { get; set; }
 
         /// <summary>
         /// id đơn vị
         /// </summary>
         [IsNotNullOrEmpty("Mã đơn vị không được để trống")]
-        public Guid UnitID { get; set; }
+        public Guid? UnitID { get; set; }
 
         /// <summary>
         /// tên đơn vị
@@ -45,7 +45,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// ngày sinh
         /// </summary>
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         /// <summary>
         /// giới tính
@@ -80,7 +80,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// ngày cấp cmnd
         /// </summary>
-        public DateTime DayForIdentity { get; set; }
+        public DateTime? DayForIdentity { get; set; }
 
         /// <summary>
         /// địa chỉ cấp cmnd
@@ -106,25 +106,5 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// địa chỉ nhân viên
         /// </summary>
         public string EmployeeAddress { get; set; }
-
-        /// <summary>
-        /// Người thêm
-        /// </summary>
-        public string CreatedBy { get; set; }
-
-        /// <summary>
-        /// ngày thêm
-        /// </summary>
-        public DateTime CreatedDate { get; set; }
-
-        /// <summary>
-        /// người sửa
-        /// </summary>
-        public string ModifiedBy { get; set; }
-
-        /// <summary>
-        /// ngày sửa
-        /// </summary>
-        public DateTime ModifiedDate { get; set; }
     }
 }

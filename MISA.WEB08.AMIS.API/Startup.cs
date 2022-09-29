@@ -40,11 +40,14 @@ namespace MISA.WEB08.AMIS.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MISA.WEB08.AMIS.API", Version = "v1" });
             });
-
+            //injiection
             services.AddScoped<IEmployeeBL, EmployeeBL>();
             services.AddScoped<IEmployeeDL, EmployeeDL>();
             services.AddScoped<IUnitBL, UnitBL>();
             services.AddScoped<IUnitDL, UnitDL>();
+            services.AddScoped(typeof(IBaseBL<>), typeof(BaseBL<>));
+            services.AddScoped(typeof(IBaseDL<>), typeof(BaseDL<>));
+            DataContext.MySqlConnectionString = Configuration.GetConnectionString("DefaultConnection");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

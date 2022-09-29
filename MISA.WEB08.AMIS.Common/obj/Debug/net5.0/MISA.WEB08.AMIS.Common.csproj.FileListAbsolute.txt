@@ -10,5 +10,5 @@ D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\bin\Debug\net
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.dll
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\ref\MISA.WEB08.AMIS.Common.dll
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.pdb
-D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.Resource.Resource.resources
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.csproj.GenerateResource.cache
+D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.Resources.Resource.resources

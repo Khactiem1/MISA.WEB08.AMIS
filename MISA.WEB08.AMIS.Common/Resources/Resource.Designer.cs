@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MISA.WEB08.AMIS.Common.Resource {
+namespace MISA.WEB08.AMIS.Common.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace MISA.WEB08.AMIS.Common.Resource {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MISA.WEB08.AMIS.Common.Resource.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MISA.WEB08.AMIS.Common.Resources.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,15 @@ namespace MISA.WEB08.AMIS.Common.Resource {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Khắc Tiềm.
+        /// </summary>
+        public static string DefaultUser {
+            get {
+                return ResourceManager.GetString("DefaultUser", resourceCulture);
             }
         }
         

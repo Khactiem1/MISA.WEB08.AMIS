@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.WEB08.AMIS.Common.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,13 +11,7 @@ namespace MISA.WEB08.AMIS.BL
     /// Dữ liệu thao tác với Database và trả về với bảng Unit từ tầng BL
     /// </summary>
     /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
-    public interface IUnitBL
+    public interface IUnitBL : IBaseBL<Unit>
     {
-        /// <summary>
-        /// Hàm lấy ra danh sách tất cả đơn vị
-        /// </summary>
-        /// <returns>Danh sách đơn vị</returns>
-        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetAllUnits();
     }
 }
