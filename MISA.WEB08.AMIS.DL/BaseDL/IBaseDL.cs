@@ -37,10 +37,10 @@ namespace MISA.WEB08.AMIS.DL
         /// <summary>
         /// Hàm lấy ra danh sách record có lọc và phân trang
         /// </summary>
-        /// <param name="offset"></param>
-        /// <param name="limit"></param>
-        /// <param name="keyword"></param>
-        /// <param name="sort"></param>
+        /// <param name="offset">Thứ tự bản ghi bắt đầu lấy</param>
+        /// <param name="limit">Số lượng bản ghi muốn lấy</param>
+        /// <param name="keyword">Từ khoá tìm kiếm</param>
+        /// <param name="sort">Trường muốn sắp xếp</param>
         /// <returns>Danh sách record và tổng số bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public object GetFitterRecords(int offset, int limit, string? keyword, string? sort);
