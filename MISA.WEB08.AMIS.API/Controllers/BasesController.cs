@@ -5,6 +5,7 @@ using MISA.WEB08.AMIS.Common.Attributes;
 using MISA.WEB08.AMIS.Common.Enums;
 using MISA.WEB08.AMIS.Common.Resources;
 using MISA.WEB08.AMIS.Common.Result;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -189,6 +190,17 @@ namespace MISA.WEB08.AMIS.API.Controllers
                 }
                 Guid result = _baseBL.InsertRecord(record);
                 return StatusCode(StatusCodes.Status200OK, result);
+            }
+            catch (MySqlException mySqlException)
+            {
+                Console.WriteLine(mySqlException.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new MisaAmisErrorResult(
+                    MisaAmisErrrorCode.Exception,
+                    Resource.DevMsg_InsertFailed,
+                    Resource.UserMsg_InsertFailed,
+                    Resource.MoreInfo_InsertFailed,
+                    HttpContext.TraceIdentifier
+                    ));
             }
             catch (Exception ex)
             {
