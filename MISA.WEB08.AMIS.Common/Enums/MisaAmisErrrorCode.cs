@@ -34,5 +34,11 @@ namespace MISA.WEB08.AMIS.Common.Enums
         /// </summary>
         /// Created by : Khắc Tiềm 21.09.2022
         InvalidInput = 4,
+
+        /// <summary>
+        /// Mã lỗi trùng khi trường đặt là primarykey hoặc unique
+        /// Created by : Khắc Tiềm 21.09.2022
+        /// </summary>
+        DuplicateEntry = 1062,
     }
 }

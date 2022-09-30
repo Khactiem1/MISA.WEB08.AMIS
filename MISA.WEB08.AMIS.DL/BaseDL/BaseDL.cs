@@ -136,7 +136,6 @@ namespace MISA.WEB08.AMIS.DL
         {
             // tạo recordID
             Guid recordID = Guid.NewGuid();
-
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
             var properties = typeof(T).GetProperties();

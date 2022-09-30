@@ -99,7 +99,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <returns>Mã bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         [HttpGet("next_value")]
-        public IActionResult GetRecordByID()
+        public IActionResult GetRecordCodeNew()
         {
             try
             {
@@ -194,7 +194,13 @@ namespace MISA.WEB08.AMIS.API.Controllers
             catch (MySqlException mySqlException)
             {
                 Console.WriteLine(mySqlException.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, new MisaAmisErrorResult(
+                //Duplicate : DuplicateKeyEntry
+                //foreign key constraint : NoReferencedRow2
+                return StatusCode(StatusCodes.Status400BadRequest, new MisaAmisErrorResult(
+                    // nếu trùng mã sẽ trả về lỗi mã lỗi là DuplicateCode
+                    mySqlException.Number == (int)MySqlErrorCode.DuplicateKeyEntry ? MisaAmisErrrorCode.DuplicateCode :
+                    // nếu truyền khoá ngoại không map với bảng khoá chính sẽ trả mã lỗi InvalidInput
+                    mySqlException.Number == (int)MySqlErrorCode.NoReferencedRow2 ? MisaAmisErrrorCode.InvalidInput :
                     MisaAmisErrrorCode.Exception,
                     Resource.DevMsg_InsertFailed,
                     Resource.UserMsg_InsertFailed,
@@ -269,6 +275,23 @@ namespace MISA.WEB08.AMIS.API.Controllers
                 }
                 var result = _baseBL.UpdateRecord(recordID, record);
                 return StatusCode(StatusCodes.Status200OK, result);
+            }
+            catch (MySqlException mySqlException)
+            {
+                Console.WriteLine(mySqlException.Message);
+                //Duplicate : DuplicateKeyEntry
+                //foreign key constraint : NoReferencedRow2
+                return StatusCode(StatusCodes.Status400BadRequest, new MisaAmisErrorResult(
+                    // nếu trùng mã sẽ trả về lỗi mã lỗi là DuplicateCode
+                    mySqlException.Number == (int)MySqlErrorCode.DuplicateKeyEntry ? MisaAmisErrrorCode.DuplicateCode :
+                    // nếu truyền khoá ngoại không map với bảng khoá chính sẽ trả mã lỗi InvalidInput
+                    mySqlException.Number == (int)MySqlErrorCode.NoReferencedRow2 ? MisaAmisErrrorCode.InvalidInput :
+                    MisaAmisErrrorCode.Exception,
+                    Resource.DevMsg_InsertFailed,
+                    Resource.UserMsg_InsertFailed,
+                    Resource.MoreInfo_InsertFailed,
+                    HttpContext.TraceIdentifier
+                    ));
             }
             catch (Exception ex)
             {
