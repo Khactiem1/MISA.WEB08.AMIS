@@ -164,32 +164,21 @@ namespace MISA.WEB08.AMIS.API.Controllers
         {
             try
             {
-                // Validate dữ liệu đầu vào 
-                var properties = typeof(T).GetProperties();
-                var validateFailures = new List<string>();
-                foreach (var property in properties)
+                var result = _baseBL.InsertRecord(record);
+                if (result.Success)
                 {
-                    string propertyName = property.Name;
-                    var propertyValue = property.GetValue(record);
-                    var isNotNullOrEmptyAttribute = (IsNotNullOrEmptyAttribute?)Attribute.GetCustomAttribute(property, typeof(IsNotNullOrEmptyAttribute));
-                    if (isNotNullOrEmptyAttribute != null && string.IsNullOrEmpty(propertyValue?.ToString()))
-                    {
-                        validateFailures.Add(isNotNullOrEmptyAttribute.ErrorMessage);
-                    }
+                    return StatusCode(StatusCodes.Status200OK, result.Data);
                 }
-
-                if (validateFailures.Count > 0)
+                else
                 {
                     return StatusCode(StatusCodes.Status400BadRequest, new MisaAmisErrorResult(
                     MisaAmisErrrorCode.InvalidInput,
                     Resource.DevMsg_ValidateFailed,
                     Resource.UserMsg_ValidateFailed,
-                    validateFailures,
+                    result.Data,
                     HttpContext.TraceIdentifier
                     ));
                 }
-                Guid result = _baseBL.InsertRecord(record);
-                return StatusCode(StatusCodes.Status200OK, result);
             }
             catch (MySqlException mySqlException)
             {
@@ -249,32 +238,21 @@ namespace MISA.WEB08.AMIS.API.Controllers
         {
             try
             {
-                // Validate dữ liệu đầu vào 
-                var properties = typeof(T).GetProperties();
-                var validateFailures = new List<string>();
-                foreach (var property in properties)
+                var result = _baseBL.UpdateRecord(recordID, record);
+                if (result.Success)
                 {
-                    string propertyName = property.Name;
-                    var propertyValue = property.GetValue(record);
-                    var isNotNullOrEmptyAttribute = (IsNotNullOrEmptyAttribute?)Attribute.GetCustomAttribute(property, typeof(IsNotNullOrEmptyAttribute));
-                    if (isNotNullOrEmptyAttribute != null && string.IsNullOrEmpty(propertyValue?.ToString()))
-                    {
-                        validateFailures.Add(isNotNullOrEmptyAttribute.ErrorMessage);
-                    }
+                    return StatusCode(StatusCodes.Status200OK, result.Data);
                 }
-
-                if (validateFailures.Count > 0)
+                else
                 {
                     return StatusCode(StatusCodes.Status400BadRequest, new MisaAmisErrorResult(
                     MisaAmisErrrorCode.InvalidInput,
                     Resource.DevMsg_ValidateFailed,
                     Resource.UserMsg_ValidateFailed,
-                    validateFailures,
+                    result.Data,
                     HttpContext.TraceIdentifier
                     ));
                 }
-                var result = _baseBL.UpdateRecord(recordID, record);
-                return StatusCode(StatusCodes.Status200OK, result);
             }
             catch (MySqlException mySqlException)
             {

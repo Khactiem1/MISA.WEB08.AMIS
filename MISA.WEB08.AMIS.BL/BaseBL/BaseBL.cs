@@ -1,4 +1,5 @@
-﻿using MISA.WEB08.AMIS.DL;
+﻿using MISA.WEB08.AMIS.Common.Result;
+using MISA.WEB08.AMIS.DL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,9 +82,21 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="record"></param>
         /// <returns>ID bản ghi sau khi thêm</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public Guid InsertRecord(T record)
+        public ServiceResponse InsertRecord(T record)
         {
-            return _baseDL.InsertRecord(record);
+            var validateResult = Validate<T>.ValidateData(record);
+            if (validateResult.Success)
+            {
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = _baseDL.InsertRecord(record)
+                };
+            }
+            else
+            {
+                return validateResult;
+            }
         }
 
         /// <summary>
@@ -93,9 +106,21 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="record"></param>
         /// <returns>ID record sau khi cập nhật</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public Guid UpdateRecord(Guid recordID, T record)
+        public ServiceResponse UpdateRecord(Guid recordID, T record)
         {
-            return _baseDL.UpdateRecord(recordID, record);
+            var validateResult = Validate<T>.ValidateData(record);
+            if (validateResult.Success)
+            {
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = _baseDL.UpdateRecord(recordID, record)
+            };
+            }
+            else
+            {
+                return validateResult;
+            }
         }
 
         /// <summary>
