@@ -4,6 +4,7 @@ using MISA.WEB08.AMIS.Common.Resources;
 using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -127,6 +128,45 @@ namespace MISA.WEB08.AMIS.DL
         }
 
         /// <summary>
+        /// Validate trùng mã nếu mã bản ghi đã tồn tại trong hệ thống
+        /// </summary>
+        /// <param name="propertyName">Trường cần kiểm tra mã trùng </param>
+        /// <param name="propertyValue">Giá trị cần kiểm tra </param>
+        /// <param name="guidUpdate">Ko kiểm tra chính nó khi update </param>
+        /// <returns>true- mã bị trùng; false-mã k bị trùng</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public bool CheckDuplicate(string propertyName, object propertyValue, Guid? guidUpdate)
+        {
+            object result;
+            // Khởi tạo các parameter để chèn vào trong Proc
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("v_PropertyName", propertyName);
+            parameters.Add("v_Table", typeof(T).Name);
+            parameters.Add("v_PropertyValue", propertyValue.ToString().Trim());
+            parameters.Add("v_GuidUpdate", guidUpdate);
+
+            //Khai báo stored truy vấn
+            string storeProcedureName = Resource.Proc_GetDataByAttribute;
+            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
+            {
+                // thực hiện gọi vào DB
+                result = mysqlConnection.QueryFirstOrDefault<T>(
+                    storeProcedureName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure
+                    );
+            }
+            if (result != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Hàm thêm mới một bản ghi
         /// </summary>
         /// <param name="record"></param>
@@ -144,7 +184,7 @@ namespace MISA.WEB08.AMIS.DL
                 string propertyName = property.Name;
                 // Kiểm tra trường nào là khoá chính thì thêm param là id tự sinh Guid
                 var primaryKeyAttribute = (PrimaryKeyAttribute?)Attribute.GetCustomAttribute(property, typeof(PrimaryKeyAttribute));
-                if(primaryKeyAttribute != null)
+                if (primaryKeyAttribute != null)
                 {
                     parameters.Add($"v_{propertyName}", recordID);
                 }
@@ -253,6 +293,70 @@ namespace MISA.WEB08.AMIS.DL
             {
                 return Guid.Empty;
             }
+        }
+
+        /// <summary>
+        /// xóa nhiều bản ghi
+        /// </summary>
+        /// <param name="listRecordID">danh sách bản ghi cần xoá</param>
+        /// <returns>Số kết quả bản ghi đã xoá</returns>
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public int DeleteMultiple(Guid[] listRecordID)
+        {
+            var rowAffects = 0;
+            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
+            {
+                //nếu như kết nối đang đóng thì tiến hành mở lại
+                if (mysqlConnection.State != ConnectionState.Open)
+                {
+                    mysqlConnection.Open();
+                }
+                //mở một giao dịch( nếu xóa thành công thì xóa hết, nếu lỗi giữa chừng thì dừng lại và khôi phục các dữ liệu đã bị xóa)
+                using (var transaction = mysqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        // chuẩn bị câu lệnh MySQL
+                        string storeProcedureName = string.Format(Resource.Proc_DeleteOne, typeof(T).Name);
+                        //lặp lại thao tác xóa với từng Id có trong mảng Id đầu vào 
+                        for (int i = 0; i < listRecordID.Length; i++)
+                        {
+                            // Khởi tạo các parameter để chèn vào trong Proc
+                            DynamicParameters parameters = new DynamicParameters();
+                            parameters.Add($"v_{typeof(T).Name}ID", listRecordID[i]);
+                            // thực hiện gọi vào DB
+                            rowAffects += mysqlConnection.Execute(storeProcedureName,
+                                parameters,
+                                transaction: transaction,
+                                commandType: System.Data.CommandType.StoredProcedure
+                                );
+                        }
+                        if (rowAffects == listRecordID.Length)
+                        {
+                            transaction.Commit();
+                        }
+                        else
+                        {
+                            transaction.Rollback();
+                            rowAffects = 0;
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                        //nếu thực hiện không thành công thì rollback
+                        transaction.Rollback();
+                        rowAffects = 0;
+                    }
+                    finally
+                    {
+                        mysqlConnection.Close();
+                    }
+                }
+            }
+            //trả về kết quả(số bản ghi xóa được)
+            return rowAffects;
         }
 
         #endregion

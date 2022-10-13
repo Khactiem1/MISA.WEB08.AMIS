@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.WEB08.AMIS.Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,12 @@ namespace MISA.WEB08.AMIS.Common.Result
         /// </summary>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         public bool Success { get; set; }
+
+        /// <summary>
+        /// Mã lỗi đi kèm
+        /// </summary>
+        /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
+        public MisaAmisErrrorCode? ErrorCode { get; set; }
 
         /// <summary>
         /// Dữ liệu đi kèm

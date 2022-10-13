@@ -1,4 +1,6 @@
-﻿using MISA.WEB08.AMIS.Common.Result;
+﻿using MISA.WEB08.AMIS.Common.Attributes;
+using MISA.WEB08.AMIS.Common.Enums;
+using MISA.WEB08.AMIS.Common.Result;
 using MISA.WEB08.AMIS.DL;
 using System;
 using System.Collections.Generic;
@@ -84,18 +86,40 @@ namespace MISA.WEB08.AMIS.BL
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public ServiceResponse InsertRecord(T record)
         {
-            var validateResult = Validate<T>.ValidateData(record);
-            if (validateResult.Success)
+            Validate<T> Valid = new Validate<T>(_baseDL);
+            var validateUnique = Valid.CheckUnique(record, null);
+            if (validateUnique.Success)
             {
-                return new ServiceResponse
+                var validateResult = Validate<T>.ValidateData(record);
+                if (validateResult.Success)
                 {
-                    Success = true,
-                    Data = _baseDL.InsertRecord(record)
-                };
+                    Guid result = _baseDL.InsertRecord(record);
+                    if (result != Guid.Empty)
+                    {
+                        return new ServiceResponse
+                        {
+                            Success = true,
+                            Data = result,
+                        };
+                    }
+                    else
+                    {
+                        return new ServiceResponse
+                        {
+                            Success = false,
+                            ErrorCode = MisaAmisErrrorCode.InsertFailed,
+                            Data = result,
+                        };
+                    }
+                }
+                else
+                {
+                    return validateResult;
+                }
             }
             else
             {
-                return validateResult;
+                return validateUnique;
             }
         }
 
@@ -108,18 +132,40 @@ namespace MISA.WEB08.AMIS.BL
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public ServiceResponse UpdateRecord(Guid recordID, T record)
         {
-            var validateResult = Validate<T>.ValidateData(record);
-            if (validateResult.Success)
+            Validate<T> Valid = new Validate<T>(_baseDL);
+            var validateUnique = Valid.CheckUnique(record, recordID);
+            if (validateUnique.Success)
             {
-                return new ServiceResponse
+                var validateResult = Validate<T>.ValidateData(record);
+                if (validateResult.Success)
                 {
-                    Success = true,
-                    Data = _baseDL.UpdateRecord(recordID, record)
-            };
+                    Guid result = _baseDL.UpdateRecord(recordID, record);
+                    if (result != Guid.Empty)
+                    {
+                        return new ServiceResponse
+                        {
+                            Success = true,
+                            Data = result,
+                        };
+                    }
+                    else
+                    {
+                        return new ServiceResponse
+                        {
+                            Success = false,
+                            ErrorCode = MisaAmisErrrorCode.UpdateFailed,
+                            Data = result,
+                        };
+                    }
+                }
+                else
+                {
+                    return validateResult;
+                }
             }
             else
             {
-                return validateResult;
+                return validateUnique;
             }
         }
 
@@ -129,9 +175,54 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="recordID"></param>
         /// <returns>ID record sau khi xoá</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public Guid DeleteRecord(Guid recordID)
+        public ServiceResponse DeleteRecord(Guid recordID)
         {
-            return _baseDL.DeleteRecord(recordID);
+            Guid result = _baseDL.DeleteRecord(recordID);
+            if (result != Guid.Empty)
+            {
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = result,
+                };
+            }
+            else
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    ErrorCode = MisaAmisErrrorCode.DeleteFailed,
+                    Data = result,
+                };
+            }
+        }
+
+        /// <summary>
+        /// xóa nhiều bản ghi
+        /// </summary>
+        /// <param name="listRecordID">danh sách bản ghi cần xoá</param>
+        /// <returns>Số kết quả bản ghi đã xoá</returns>
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public ServiceResponse DeleteMultiple(Guid[] listRecordID)
+        {
+            int rowAffects = _baseDL.DeleteMultiple(listRecordID);
+            if (rowAffects == 0)
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    ErrorCode = MisaAmisErrrorCode.DeleteMultiple,
+                    Data = rowAffects
+                };
+            }
+            else
+            {
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = rowAffects
+                };
+            }
         }
 
         #endregion

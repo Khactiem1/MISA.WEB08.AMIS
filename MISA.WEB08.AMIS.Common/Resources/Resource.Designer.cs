@@ -61,6 +61,15 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to #D8D8D8.
+        /// </summary>
+        public static string BackGroundColorHeaderExport {
+            get {
+                return ResourceManager.GetString("BackGroundColorHeaderExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Khắc Tiềm.
         /// </summary>
         public static string DefaultUser {
@@ -75,6 +84,15 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         public static string DevMsg_DeleteFailed {
             get {
                 return ResourceManager.GetString("DevMsg_DeleteFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete multiple failed.
+        /// </summary>
+        public static string DevMsg_DeleteMultipleFailed {
+            get {
+                return ResourceManager.GetString("DevMsg_DeleteMultipleFailed", resourceCulture);
             }
         }
         
@@ -115,6 +133,51 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Times New Roman.
+        /// </summary>
+        public static string ExcelFontContent {
+            get {
+                return ResourceManager.GetString("ExcelFontContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arial.
+        /// </summary>
+        public static string ExcelFontHeader {
+            get {
+                return ResourceManager.GetString("ExcelFontHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nữ.
+        /// </summary>
+        public static string GenderFemale {
+            get {
+                return ResourceManager.GetString("GenderFemale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nam.
+        /// </summary>
+        public static string GenderMale {
+            get {
+                return ResourceManager.GetString("GenderMale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Khác.
+        /// </summary>
+        public static string GenderOther {
+            get {
+                return ResourceManager.GetString("GenderOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://openapi.google.com/api/errorcode.
         /// </summary>
         public static string MoreInfo_Exception {
@@ -142,6 +205,15 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Danh_sach_nhan_vien.
+        /// </summary>
+        public static string NameFileExcel {
+            get {
+                return ResourceManager.GetString("NameFileExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Proc_{0}_DeleteOne.
         /// </summary>
         public static string Proc_DeleteOne {
@@ -160,11 +232,29 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proc_GetDataByAttribute.
+        /// </summary>
+        public static string Proc_GetDataByAttribute {
+            get {
+                return ResourceManager.GetString("Proc_GetDataByAttribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Proc_{0}_GetDetailOne.
         /// </summary>
         public static string Proc_GetDetailOne {
             get {
                 return ResourceManager.GetString("Proc_GetDetailOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proc_{0}_GetFilterExport.
+        /// </summary>
+        public static string Proc_GetFilterExport {
+            get {
+                return ResourceManager.GetString("Proc_GetFilterExport", resourceCulture);
             }
         }
         
@@ -205,11 +295,29 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DANH SÁCH NHÂN VIÊN.
+        /// </summary>
+        public static string TitleFileExportEmployee {
+            get {
+                return ResourceManager.GetString("TitleFileExportEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Xoá nhân viên thất bại.
         /// </summary>
         public static string UserMsg_DeleteFailed {
             get {
                 return ResourceManager.GetString("UserMsg_DeleteFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Xoá thất bại nhiều bản ghi, hãy tải lại dữ liệu và thử lại.
+        /// </summary>
+        public static string UserMsg_DeleteMultipleFailed {
+            get {
+                return ResourceManager.GetString("UserMsg_DeleteMultipleFailed", resourceCulture);
             }
         }
         

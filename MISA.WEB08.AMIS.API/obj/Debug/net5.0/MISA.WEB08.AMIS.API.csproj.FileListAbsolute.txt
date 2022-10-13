@@ -35,3 +35,6 @@ D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\MISA.WEB08.AMIS.Common.pdb
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\MISA.WEB08.AMIS.DL.pdb
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Debug\net5.0\MISA.WEB08.AMIS.API.MvcApplicationPartsAssemblyInfo.cs
+D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\libman.json
+D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\EPPlus.dll
+D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\Microsoft.IO.RecyclableMemoryStream.dll

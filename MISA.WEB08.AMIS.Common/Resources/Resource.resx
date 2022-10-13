@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BackGroundColorHeaderExport" xml:space="preserve">
+    <value>#D8D8D8</value>
+    <comment>Màu background header khi export file</comment>
+  </data>
   <data name="DefaultUser" xml:space="preserve">
     <value>Khắc Tiềm</value>
     <comment>Tên người dùng mặc định</comment>
@@ -124,6 +128,10 @@
   <data name="DevMsg_DeleteFailed" xml:space="preserve">
     <value>Delete to database return 0</value>
     <comment>Message cho Dev đọc khi xoá một bản ghi trong DB thất bại</comment>
+  </data>
+  <data name="DevMsg_DeleteMultipleFailed" xml:space="preserve">
+    <value>Delete multiple failed</value>
+    <comment>Message cho Dev đọc khi xoá nhiều bản ghi thât bại</comment>
   </data>
   <data name="DevMsg_Exception" xml:space="preserve">
     <value>Catched an exception</value>
@@ -141,6 +149,26 @@
     <value>Invalid input field</value>
     <comment>Message cho Dev đọc khi Validate dữ liệu đầu vào thất bại</comment>
   </data>
+  <data name="ExcelFontContent" xml:space="preserve">
+    <value>Times New Roman</value>
+    <comment>Font family nội dung khi export file</comment>
+  </data>
+  <data name="ExcelFontHeader" xml:space="preserve">
+    <value>Arial</value>
+    <comment>Font family header khi export file</comment>
+  </data>
+  <data name="GenderFemale" xml:space="preserve">
+    <value>Nữ</value>
+    <comment>Giới tính nữ hiển thị giao diện</comment>
+  </data>
+  <data name="GenderMale" xml:space="preserve">
+    <value>Nam</value>
+    <comment>Giới tính nam hiển thị giao diện</comment>
+  </data>
+  <data name="GenderOther" xml:space="preserve">
+    <value>Khác</value>
+    <comment>Giới tính Khác hiển thị giao diện</comment>
+  </data>
   <data name="MoreInfo_Exception" xml:space="preserve">
     <value>https://openapi.google.com/api/errorcode</value>
     <comment>Đường dẫn mô tả lỗi khi gọi API gặp Exception</comment>
@@ -153,6 +181,10 @@
     <value>https://openapi.google.com/api/errorcode</value>
     <comment>Đường dẫn mô tả lỗi khi gọi API chung</comment>
   </data>
+  <data name="NameFileExcel" xml:space="preserve">
+    <value>Danh_sach_nhan_vien</value>
+    <comment>Tên file excel khi export</comment>
+  </data>
   <data name="Proc_DeleteOne" xml:space="preserve">
     <value>Proc_{0}_DeleteOne</value>
     <comment>Template string cho procedure xoá một</comment>
@@ -161,9 +193,17 @@
     <value>Proc_{0}_GetAll</value>
     <comment>Template string cho procedure lấy tất cả bản ghi của một bảng</comment>
   </data>
+  <data name="Proc_GetDataByAttribute" xml:space="preserve">
+    <value>Proc_GetDataByAttribute</value>
+    <comment>Lấy ra bản ghi bất kỳ dựa vào một thuộc tính nhất định để check trùng</comment>
+  </data>
   <data name="Proc_GetDetailOne" xml:space="preserve">
     <value>Proc_{0}_GetDetailOne</value>
     <comment>Template string cho procedure lấy ra thông tin chi tiết của một bản ghi</comment>
+  </data>
+  <data name="Proc_GetFilterExport" xml:space="preserve">
+    <value>Proc_{0}_GetFilterExport</value>
+    <comment>Template string cho procedure lấy ra danh sách tìm kiếm không phân trang</comment>
   </data>
   <data name="Proc_GetFilterPaging" xml:space="preserve">
     <value>Proc_{0}_GetFilterPaging</value>
@@ -181,9 +221,17 @@
     <value>Proc_{0}_UpdateOne</value>
     <comment>Template string cho procedure cập nhật một bản ghi</comment>
   </data>
+  <data name="TitleFileExportEmployee" xml:space="preserve">
+    <value>DANH SÁCH NHÂN VIÊN</value>
+    <comment>Tên file khi export nhân viên</comment>
+  </data>
   <data name="UserMsg_DeleteFailed" xml:space="preserve">
     <value>Xoá nhân viên thất bại</value>
     <comment>Message cho User đọc khi xoá nhân viên trong DB thất bại</comment>
+  </data>
+  <data name="UserMsg_DeleteMultipleFailed" xml:space="preserve">
+    <value>Xoá thất bại nhiều bản ghi, hãy tải lại dữ liệu và thử lại</value>
+    <comment>Message cho User đọc khi xoá nhiều bản ghi thât bại</comment>
   </data>
   <data name="UserMsg_Exception" xml:space="preserve">
     <value>Có lỗi xảy ra! Vui lòng liên hệ với MISA</value>

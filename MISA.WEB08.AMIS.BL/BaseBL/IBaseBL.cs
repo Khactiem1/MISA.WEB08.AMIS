@@ -69,6 +69,14 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="recordID"></param>
         /// <returns>ID record sau khi xoá</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public Guid DeleteRecord(Guid recordID);
+        public ServiceResponse DeleteRecord(Guid recordID);
+
+        /// <summary>
+        /// xóa nhiều bản ghi
+        /// </summary>
+        /// <param name="listRecordID">danh sách bản ghi cần xoá</param>
+        /// <returns>Số kết quả bản ghi đã xoá</returns>
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public ServiceResponse DeleteMultiple(Guid[] listRecordID);
     }
 }

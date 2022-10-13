@@ -46,6 +46,14 @@ namespace MISA.WEB08.AMIS.DL
         public object GetFitterRecords(int offset, int limit, string? keyword, string? sort);
 
         /// <summary>
+        /// Validate trùng mã nếu mã bản ghi đã tồn tại trong hệ thống
+        /// </summary>
+        /// <param name="recordCode"> mã cần kiểm tra trùng </param>
+        /// <returns>true- mã bị trùng; false-mã k bị trùng</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public bool CheckDuplicate(string propertyName, object propertyValue, Guid? guidUpdate);
+
+        /// <summary>
         /// Hàm thêm mới một bản ghi
         /// </summary>
         /// <param name="record"></param>
@@ -69,5 +77,13 @@ namespace MISA.WEB08.AMIS.DL
         /// <returns>ID record sau khi xoá</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public Guid DeleteRecord(Guid recordID);
+
+        /// <summary>
+        /// xóa nhiều bản ghi
+        /// </summary>
+        /// <param name="listRecordID">danh sách bản ghi cần xoá</param>
+        /// <returns>Dữ liệu của bản ghi nếu như bản ghi đó có tồn tại trong hệ thống</returns>
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public int DeleteMultiple(Guid[] listRecordID);
     }
 }

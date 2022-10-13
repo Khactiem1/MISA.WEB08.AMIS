@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MISA.WEB08.AMIS.BL;
-using MISA.WEB08.AMIS.Common.Attributes;
 using MISA.WEB08.AMIS.Common.Enums;
 using MISA.WEB08.AMIS.Common.Resources;
 using MISA.WEB08.AMIS.Common.Result;
@@ -167,31 +166,38 @@ namespace MISA.WEB08.AMIS.API.Controllers
                 var result = _baseBL.InsertRecord(record);
                 if (result.Success)
                 {
-                    return StatusCode(StatusCodes.Status200OK, result.Data);
+                    return StatusCode(StatusCodes.Status201Created, result.Data);
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest, new MisaAmisErrorResult(
-                    MisaAmisErrrorCode.InvalidInput,
-                    Resource.DevMsg_ValidateFailed,
-                    Resource.UserMsg_ValidateFailed,
-                    result.Data,
-                    HttpContext.TraceIdentifier
-                    ));
+                    MisaAmisErrrorCode errrorCode;
+                    if (result.ErrorCode == MisaAmisErrrorCode.Duplicate)
+                    {
+                        errrorCode = MisaAmisErrrorCode.Duplicate;
+                    }
+                    else if (result.ErrorCode == MisaAmisErrrorCode.InsertFailed)
+                    {
+                        errrorCode = MisaAmisErrrorCode.InsertFailed;
+                    }
+                    else
+                    {
+                        errrorCode = MisaAmisErrrorCode.InvalidInput;
+                    }
+                    return StatusCode(errrorCode == MisaAmisErrrorCode.InsertFailed ? StatusCodes.Status500InternalServerError : StatusCodes.Status400BadRequest, new MisaAmisErrorResult(
+                        errrorCode,
+                        Resource.DevMsg_ValidateFailed,
+                        Resource.UserMsg_ValidateFailed,
+                        result.Data,
+                        HttpContext.TraceIdentifier
+                        ));
                 }
             }
             catch (MySqlException mySqlException)
             {
-                Console.WriteLine(mySqlException.Message);
-                //Duplicate : DuplicateKeyEntry
-                //foreign key constraint : NoReferencedRow2
-                return StatusCode(StatusCodes.Status400BadRequest, new MisaAmisErrorResult(
-                    // nếu trùng mã sẽ trả về lỗi mã lỗi là DuplicateCode
-                    mySqlException.Number == (int)MySqlErrorCode.DuplicateKeyEntry ? MisaAmisErrrorCode.DuplicateCode :
-                    // nếu truyền khoá ngoại không map với bảng khoá chính sẽ trả mã lỗi InvalidInput
-                    mySqlException.Number == (int)MySqlErrorCode.NoReferencedRow2 ? MisaAmisErrrorCode.InvalidInput :
+                Console.WriteLine(mySqlException);
+                return StatusCode(StatusCodes.Status500InternalServerError, new MisaAmisErrorResult(
                     MisaAmisErrrorCode.Exception,
-                    Resource.DevMsg_InsertFailed,
+                    mySqlException.Message.ToString(),
                     Resource.UserMsg_InsertFailed,
                     Resource.MoreInfo_InsertFailed,
                     HttpContext.TraceIdentifier
@@ -217,9 +223,37 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <return> danh sách ID bản ghi sau khi xoá <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         [HttpPost("bulk_delete")]
-        public IActionResult BulkDeleteRecord([FromBody] Guid[] listRecordID)
+        public IActionResult DeleteMultiple([FromBody] Guid[] listRecordID)
         {
-            return StatusCode(StatusCodes.Status200OK, listRecordID);
+            try
+            {
+                var result = _baseBL.DeleteMultiple(listRecordID);
+                if (result.Success)
+                {
+                    return StatusCode(StatusCodes.Status200OK, result);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new MisaAmisErrorResult(
+                    MisaAmisErrrorCode.DeleteMultiple,
+                    Resource.DevMsg_DeleteMultipleFailed,
+                    Resource.UserMsg_DeleteMultipleFailed,
+                    result.Data,
+                    HttpContext.TraceIdentifier
+                    ));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, new MisaAmisErrorResult(
+                    MisaAmisErrrorCode.Exception,
+                    Resource.DevMsg_InsertFailed,
+                    Resource.UserMsg_InsertFailed,
+                    Resource.MoreInfo_InsertFailed,
+                    HttpContext.TraceIdentifier
+                    ));
+            }
         }
 
         #endregion
@@ -241,31 +275,38 @@ namespace MISA.WEB08.AMIS.API.Controllers
                 var result = _baseBL.UpdateRecord(recordID, record);
                 if (result.Success)
                 {
-                    return StatusCode(StatusCodes.Status200OK, result.Data);
+                    return StatusCode(StatusCodes.Status201Created, result.Data);
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest, new MisaAmisErrorResult(
-                    MisaAmisErrrorCode.InvalidInput,
-                    Resource.DevMsg_ValidateFailed,
-                    Resource.UserMsg_ValidateFailed,
-                    result.Data,
-                    HttpContext.TraceIdentifier
-                    ));
+                    MisaAmisErrrorCode errrorCode;
+                    if (result.ErrorCode == MisaAmisErrrorCode.Duplicate)
+                    {
+                        errrorCode = MisaAmisErrrorCode.Duplicate;
+                    }
+                    else if (result.ErrorCode == MisaAmisErrrorCode.UpdateFailed)
+                    {
+                        errrorCode = MisaAmisErrrorCode.UpdateFailed;
+                    }
+                    else
+                    {
+                        errrorCode = MisaAmisErrrorCode.InvalidInput;
+                    }
+                    return StatusCode(errrorCode == MisaAmisErrrorCode.UpdateFailed ? StatusCodes.Status500InternalServerError : StatusCodes.Status400BadRequest, new MisaAmisErrorResult(
+                        errrorCode,
+                        Resource.DevMsg_ValidateFailed,
+                        Resource.UserMsg_ValidateFailed,
+                        result.Data,
+                        HttpContext.TraceIdentifier
+                        ));
                 }
             }
             catch (MySqlException mySqlException)
             {
-                Console.WriteLine(mySqlException.Message);
-                //Duplicate : DuplicateKeyEntry
-                //foreign key constraint : NoReferencedRow2
-                return StatusCode(StatusCodes.Status400BadRequest, new MisaAmisErrorResult(
-                    // nếu trùng mã sẽ trả về lỗi mã lỗi là DuplicateCode
-                    mySqlException.Number == (int)MySqlErrorCode.DuplicateKeyEntry ? MisaAmisErrrorCode.DuplicateCode :
-                    // nếu truyền khoá ngoại không map với bảng khoá chính sẽ trả mã lỗi InvalidInput
-                    mySqlException.Number == (int)MySqlErrorCode.NoReferencedRow2 ? MisaAmisErrrorCode.InvalidInput :
+                Console.WriteLine(mySqlException);
+                return StatusCode(StatusCodes.Status500InternalServerError, new MisaAmisErrorResult(
                     MisaAmisErrrorCode.Exception,
-                    Resource.DevMsg_InsertFailed,
+                    mySqlException.Message.ToString(),
                     Resource.UserMsg_InsertFailed,
                     Resource.MoreInfo_InsertFailed,
                     HttpContext.TraceIdentifier
@@ -300,7 +341,20 @@ namespace MISA.WEB08.AMIS.API.Controllers
             try
             {
                 var result = _baseBL.DeleteRecord(recordID);
-                return StatusCode(StatusCodes.Status200OK, result);
+                if (result.Success)
+                {
+                    return StatusCode(StatusCodes.Status200OK, result);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, new MisaAmisErrorResult(
+                        MisaAmisErrrorCode.DeleteFailed,
+                        Resource.DevMsg_DeleteFailed,
+                        Resource.UserMsg_DeleteFailed,
+                        Resource.MoreInfo_Request,
+                        HttpContext.TraceIdentifier
+                        ));
+                }
             }
             catch (Exception ex)
             {

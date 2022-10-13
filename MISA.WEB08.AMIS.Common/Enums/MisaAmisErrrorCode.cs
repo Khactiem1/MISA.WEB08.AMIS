@@ -18,10 +18,10 @@ namespace MISA.WEB08.AMIS.Common.Enums
         Exception = 1,
 
         /// <summary>
-        /// Lỗi mã trùng
+        /// Lỗi trùng các trường
         /// </summary>
         /// Created by : Khắc Tiềm 21.09.2022
-        DuplicateCode = 2,
+        Duplicate = 2,
 
         /// <summary>
         /// Lỗi mã để trống
@@ -36,9 +36,27 @@ namespace MISA.WEB08.AMIS.Common.Enums
         InvalidInput = 4,
 
         /// <summary>
-        /// Mã lỗi trùng khi trường đặt là primarykey hoặc unique
+        /// Mã lỗi xoá nhiều bản ghi thất bại
         /// Created by : Khắc Tiềm 21.09.2022
         /// </summary>
-        DuplicateEntry = 1062,
+        DeleteMultiple = 5,
+
+        /// <summary>
+        /// Mã lỗi thêm mới không thành công
+        /// Created by : Khắc Tiềm 21.09.2022
+        /// </summary>
+        InsertFailed = 6,
+
+        /// <summary>
+        /// Mã lỗi sửa không thành công
+        /// Created by : Khắc Tiềm 21.09.2022
+        /// </summary>
+        UpdateFailed = 6,
+
+        /// <summary>
+        /// Mã lỗi xoá không thành công
+        /// Created by : Khắc Tiềm 21.09.2022
+        /// </summary>
+        DeleteFailed = 7,
     }
 }
