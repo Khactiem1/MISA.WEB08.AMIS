@@ -21,6 +21,13 @@ namespace MISA.WEB08.AMIS.BL
         public object GetAllRecords();
 
         /// <summary>
+        /// Hàm Lấy danh sách tất cả bản ghi của 1 bảng đang hoạt động
+        /// </summary>
+        /// <returns>Danh sách tất cả bản ghi</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public object GetAllRecordActive();
+
+        /// <summary>
         /// Hàm lấy ra bản ghi theo ID
         /// </summary>
         /// <param name="recordID"></param>
@@ -78,5 +85,13 @@ namespace MISA.WEB08.AMIS.BL
         /// <returns>Số kết quả bản ghi đã xoá</returns>
         /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
         public ServiceResponse DeleteMultiple(Guid[] listRecordID);
+
+        /// <summary>
+        /// Hàm cập nhật toggle active bản ghi
+        /// </summary>
+        /// <param name="recordID"></param>
+        /// <returns>ID record sau khi cập nhật</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public ServiceResponse ToggleActive(Guid recordID);
     }
 }

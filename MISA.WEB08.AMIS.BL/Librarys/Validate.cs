@@ -87,7 +87,7 @@ namespace MISA.WEB08.AMIS.BL
                 return new ServiceResponse
                 {
                     Success = false,
-                    ErrorCode = MisaAmisErrrorCode.InvalidInput,
+                    ErrorCode = MisaAmisErrorCode.InvalidInput,
                     Data = validateFailures
                 };
             }
@@ -101,6 +101,7 @@ namespace MISA.WEB08.AMIS.BL
         /// Hàm xử lý dữ liệu không được trùng
         /// </summary>
         /// <param name="record">Đối tượng cần validate</param>
+        /// <param name="guidUpdate">Nếu là update thì sẽ không kiểm tra trùng chính nó</param>
         /// <returns>Danh sách các trường bị trùng</returns>
         /// NK Tiềm 05/10/2022
         public ServiceResponse CheckUnique(T record, Guid? guidUpdate)
@@ -123,7 +124,7 @@ namespace MISA.WEB08.AMIS.BL
                 return new ServiceResponse
                 {
                     Success = false,
-                    ErrorCode = MisaAmisErrrorCode.Duplicate,
+                    ErrorCode = MisaAmisErrorCode.Duplicate,
                     Data = validateFailures
                 };
             }

@@ -21,14 +21,14 @@ namespace MISA.WEB08.AMIS.Common.Entities
 
         /// <summary>
         /// id đơn vị
-        /// </summary>
+        /// </summary>7
         [IsNotNullOrEmpty("Mã đơn vị không được để trống.")]
         public Guid? UnitID { get; set; }
 
         /// <summary>
         /// mã nhân viên
         /// </summary>
-        [Unique("Mã nhân viên <{0}> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.")]
+        [Unique("Mã nhân viên <{0}> đã tồn tại trong hệ thống.")]
         [IsNotNullOrEmpty("Mã nhân viên không được để trống.")]
         [ColumnName("Mã nhân viên", 16, false, false)]
         public string EmployeeCode { get; set; }
@@ -68,7 +68,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// chi nhánh ngân hàng
         /// </summary>
-        [ColumnName("Chi nhánh ngân hàng",40, false, false)]
+        [ColumnName("Chi nhánh ngân hàng", 40, false, false)]
         public string BranchBank { get; set; }
 
         /// <summary>

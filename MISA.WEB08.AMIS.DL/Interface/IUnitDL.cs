@@ -11,7 +11,8 @@ namespace MISA.WEB08.AMIS.DL
     /// Dữ liệu thao tác với Database và trả về với bảng Unit từ tầng DL
     /// </summary>
     /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
-    public class UnitDL : BaseDL<Unit>, IUnitDL
+    public interface IUnitDL : IBaseDL<Unit>
     {
+        
     }
 }

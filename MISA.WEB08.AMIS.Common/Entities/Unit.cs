@@ -27,6 +27,6 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// tên đơn vị
         /// </summary>
-        public string UnitName { get; set; } 
+        public string UnitName { get; set; }
     }
 }

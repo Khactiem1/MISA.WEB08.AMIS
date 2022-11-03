@@ -20,6 +20,12 @@ namespace MISA.WEB08.AMIS.DL
         public object GetAllRecords();
 
         /// <summary>
+        /// Hàm Lấy danh sách tất cả bản ghi trong 1 bảng đang hoạt động
+        /// </summary>
+        /// <returns>Danh sách tất cả bản ghi</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public object GetAllRecordActive();
+        /// <summary>
         /// Hàm lấy ra bản ghi theo ID
         /// </summary>
         /// <param name="recordID"></param>
@@ -48,7 +54,9 @@ namespace MISA.WEB08.AMIS.DL
         /// <summary>
         /// Validate trùng mã nếu mã bản ghi đã tồn tại trong hệ thống
         /// </summary>
-        /// <param name="recordCode"> mã cần kiểm tra trùng </param>
+        /// <param name="propertyName">Trường cần kiểm tra mã trùng </param>
+        /// <param name="propertyValue">Giá trị cần kiểm tra </param>
+        /// <param name="guidUpdate">Ko kiểm tra chính nó khi update </param>
         /// <returns>true- mã bị trùng; false-mã k bị trùng</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public bool CheckDuplicate(string propertyName, object propertyValue, Guid? guidUpdate);
@@ -85,5 +93,13 @@ namespace MISA.WEB08.AMIS.DL
         /// <returns>Dữ liệu của bản ghi nếu như bản ghi đó có tồn tại trong hệ thống</returns>
         /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
         public int DeleteMultiple(Guid[] listRecordID);
+
+        /// <summary>
+        /// Hàm cập nhật toggle active bản ghi
+        /// </summary>
+        /// <param name="recordID"></param>
+        /// <returns>ID record sau khi cập nhật</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public Guid ToggleActive(Guid recordID);
     }
 }

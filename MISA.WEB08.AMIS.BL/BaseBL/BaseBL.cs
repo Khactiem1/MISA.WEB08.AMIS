@@ -1,5 +1,6 @@
 ﻿using MISA.WEB08.AMIS.Common.Attributes;
 using MISA.WEB08.AMIS.Common.Enums;
+using MISA.WEB08.AMIS.Common.Resources;
 using MISA.WEB08.AMIS.Common.Result;
 using MISA.WEB08.AMIS.DL;
 using System;
@@ -41,6 +42,16 @@ namespace MISA.WEB08.AMIS.BL
         public object GetAllRecords()
         {
             return _baseDL.GetAllRecords();
+        }
+
+        /// <summary> 
+        /// Hàm Lấy danh sách tất cả bản ghi của 1 bảng đang hoạt động
+        /// </summary>
+        /// <returns>Danh sách tất cả bản ghi</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public object GetAllRecordActive()
+        {
+            return _baseDL.GetAllRecordActive();
         }
 
         /// <summary>
@@ -93,23 +104,31 @@ namespace MISA.WEB08.AMIS.BL
                 var validateResult = Validate<T>.ValidateData(record);
                 if (validateResult.Success)
                 {
-                    Guid result = _baseDL.InsertRecord(record);
-                    if (result != Guid.Empty)
+                    var validateCustom = CustomValidate(record);
+                    if(validateCustom.Success)
                     {
-                        return new ServiceResponse
+                        Guid result = _baseDL.InsertRecord(record);
+                        if (result != Guid.Empty)
                         {
-                            Success = true,
-                            Data = result,
-                        };
+                            return new ServiceResponse
+                            {
+                                Success = true,
+                                Data = result,
+                            };
+                        }
+                        else
+                        {
+                            return new ServiceResponse
+                            {
+                                Success = false,
+                                ErrorCode = MisaAmisErrorCode.InsertFailed,
+                                Data = Resource.UserMsg_InsertFailed,
+                            };
+                        }
                     }
                     else
                     {
-                        return new ServiceResponse
-                        {
-                            Success = false,
-                            ErrorCode = MisaAmisErrrorCode.InsertFailed,
-                            Data = result,
-                        };
+                        return validateCustom;
                     }
                 }
                 else
@@ -139,23 +158,31 @@ namespace MISA.WEB08.AMIS.BL
                 var validateResult = Validate<T>.ValidateData(record);
                 if (validateResult.Success)
                 {
-                    Guid result = _baseDL.UpdateRecord(recordID, record);
-                    if (result != Guid.Empty)
+                    var validateCustom = CustomValidate(record);
+                    if (validateCustom.Success)
                     {
-                        return new ServiceResponse
+                        Guid result = _baseDL.UpdateRecord(recordID, record);
+                        if (result != Guid.Empty)
                         {
-                            Success = true,
-                            Data = result,
-                        };
+                            return new ServiceResponse
+                            {
+                                Success = true,
+                                Data = result,
+                            };
+                        }
+                        else
+                        {
+                            return new ServiceResponse
+                            {
+                                Success = false,
+                                ErrorCode = MisaAmisErrorCode.UpdateFailed,
+                                Data = result,
+                            };
+                        }
                     }
                     else
                     {
-                        return new ServiceResponse
-                        {
-                            Success = false,
-                            ErrorCode = MisaAmisErrrorCode.UpdateFailed,
-                            Data = result,
-                        };
+                        return validateCustom;
                     }
                 }
                 else
@@ -191,7 +218,7 @@ namespace MISA.WEB08.AMIS.BL
                 return new ServiceResponse
                 {
                     Success = false,
-                    ErrorCode = MisaAmisErrrorCode.DeleteFailed,
+                    ErrorCode = MisaAmisErrorCode.DeleteFailed,
                     Data = result,
                 };
             }
@@ -211,7 +238,7 @@ namespace MISA.WEB08.AMIS.BL
                 return new ServiceResponse
                 {
                     Success = false,
-                    ErrorCode = MisaAmisErrrorCode.DeleteMultiple,
+                    ErrorCode = MisaAmisErrorCode.DeleteMultiple,
                     Data = rowAffects
                 };
             }
@@ -221,6 +248,47 @@ namespace MISA.WEB08.AMIS.BL
                 {
                     Success = true,
                     Data = rowAffects
+                };
+            }
+        }
+
+        /// <summary>
+        /// Hàm xử lý custom validate những model riêng biệt
+        /// </summary>
+        /// <param name="record">Record cần custom validate</param>
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public virtual ServiceResponse CustomValidate(T record)
+        {
+            return new ServiceResponse
+            {
+                Success = true
+            };
+        }
+
+        /// <summary>
+        /// Hàm cập nhật toggle active bản ghi
+        /// </summary>
+        /// <param name="recordID"></param>
+        /// <returns>ID record sau khi cập nhật</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public ServiceResponse ToggleActive(Guid recordID)
+        {
+            Guid result = _baseDL.ToggleActive(recordID);
+            if (result != Guid.Empty)
+            {
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = result,
+                };
+            }
+            else
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    ErrorCode = MisaAmisErrorCode.UpdateFailed,
+                    Data = result,
                 };
             }
         }

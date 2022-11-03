@@ -193,6 +193,10 @@
     <value>Proc_{0}_GetAll</value>
     <comment>Template string cho procedure lấy tất cả bản ghi của một bảng</comment>
   </data>
+  <data name="Proc_GetAllActive" xml:space="preserve">
+    <value>Proc_{0}_GetAllActive</value>
+    <comment>Template string cho procedure lấy tất cả bản ghi của một bảng đang hoạt động</comment>
+  </data>
   <data name="Proc_GetDataByAttribute" xml:space="preserve">
     <value>Proc_GetDataByAttribute</value>
     <comment>Lấy ra bản ghi bất kỳ dựa vào một thuộc tính nhất định để check trùng</comment>
@@ -216,6 +220,10 @@
   <data name="Proc_InsertOne" xml:space="preserve">
     <value>Proc_{0}_InsertOne</value>
     <comment>Template string cho procedure thêm mới một bản ghi</comment>
+  </data>
+  <data name="Proc_UpdateActive" xml:space="preserve">
+    <value>Proc_{0}_UpdateActive</value>
+    <comment>Template set toggle update active</comment>
   </data>
   <data name="Proc_UpdateOne" xml:space="preserve">
     <value>Proc_{0}_UpdateOne</value>

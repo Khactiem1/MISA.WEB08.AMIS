@@ -232,6 +232,15 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proc_{0}_GetAllActive.
+        /// </summary>
+        public static string Proc_GetAllActive {
+            get {
+                return ResourceManager.GetString("Proc_GetAllActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Proc_GetDataByAttribute.
         /// </summary>
         public static string Proc_GetDataByAttribute {
@@ -282,6 +291,15 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         public static string Proc_InsertOne {
             get {
                 return ResourceManager.GetString("Proc_InsertOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proc_{0}_UpdateActive.
+        /// </summary>
+        public static string Proc_UpdateActive {
+            get {
+                return ResourceManager.GetString("Proc_UpdateActive", resourceCulture);
             }
         }
         

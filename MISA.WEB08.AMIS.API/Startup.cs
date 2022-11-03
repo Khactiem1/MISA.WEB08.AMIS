@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MISA.WEB08.AMIS.API.Middleware;
 using MISA.WEB08.AMIS.BL;
 using MISA.WEB08.AMIS.DL;
 using System;
@@ -45,6 +46,14 @@ namespace MISA.WEB08.AMIS.API
             services.AddScoped<IEmployeeDL, EmployeeDL>();
             services.AddScoped<IUnitBL, UnitBL>();
             services.AddScoped<IUnitDL, UnitDL>();
+            services.AddScoped<IUnitCalculationBL, UnitCalculationBL>();
+            services.AddScoped<IUnitCalculationDL, UnitCalculationDL>();
+            services.AddScoped<IDepotBL, DepotBL>();
+            services.AddScoped<IDepotDL, DepotDL>();
+            services.AddScoped<ICommodityGroupBL, CommodityGroupBL>();
+            services.AddScoped<ICommodityGroupDL, CommodityGroupDL>();
+            services.AddScoped<IInventoryItemBL, InventoryItemBL>();
+            services.AddScoped<IInventoryItemDL, InventoryItemDL>();
             services.AddScoped(typeof(IBaseBL<>), typeof(BaseBL<>));
             services.AddScoped(typeof(IBaseDL<>), typeof(BaseDL<>));
             DataContext.MySqlConnectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -63,6 +72,8 @@ namespace MISA.WEB08.AMIS.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseAuthorization();
 

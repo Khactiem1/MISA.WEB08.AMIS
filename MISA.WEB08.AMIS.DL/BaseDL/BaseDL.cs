@@ -41,6 +41,27 @@ namespace MISA.WEB08.AMIS.DL
         }
 
         /// <summary>
+        /// Hàm Lấy danh sách tất cả bản ghi trong 1 bảng đang hoạt động
+        /// </summary>
+        /// <returns>Danh sách tất cả bản ghi</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public object GetAllRecordActive()
+        {
+            object result;
+            // Khai báo stored procedure
+            string storeProcedureName = string.Format(Resource.Proc_GetAllActive, typeof(T).Name);
+            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
+            {
+                // thực hiện gọi vào DB
+                result = mysqlConnection.Query<T>(
+                    storeProcedureName,
+                    commandType: System.Data.CommandType.StoredProcedure
+                    );
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Hàm lấy ra bản ghi theo ID
         /// </summary>
         /// <param name="recordID"></param>
@@ -357,6 +378,49 @@ namespace MISA.WEB08.AMIS.DL
             }
             //trả về kết quả(số bản ghi xóa được)
             return rowAffects;
+        }
+
+        /// <summary>
+        /// Hàm cập nhật toggle active bản ghi
+        /// </summary>
+        /// <param name="recordID"></param>
+        /// <returns>ID record sau khi cập nhật</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public Guid ToggleActive(Guid recordID)
+        {
+            // Khởi tạo các parameter để chèn vào trong Proc
+            DynamicParameters parameters = new DynamicParameters();
+            var properties = typeof(T).GetProperties();
+            foreach (var property in properties)
+            {
+                string propertyName = property.Name;
+                // Kiểm tra trường nào là khoá chính thì thêm param là id tự sinh Guid
+                var primaryKeyAttribute = (PrimaryKeyAttribute?)Attribute.GetCustomAttribute(property, typeof(PrimaryKeyAttribute));
+                if (primaryKeyAttribute != null)
+                {
+                    parameters.Add($"v_{propertyName}", recordID);
+                }
+            }
+            parameters.Add($"v_ModifiedBy", Resource.DefaultUser);
+            // chuẩn bị câu lệnh MySQL
+            string storeProcedureName = string.Format(Resource.Proc_UpdateActive, typeof(T).Name);
+            int numberOfAffectdRows = 0;
+            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
+            {
+                // thực hiện gọi vào DB
+                numberOfAffectdRows = mysqlConnection.Execute(storeProcedureName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure
+                    );
+            }
+            if (numberOfAffectdRows > 0)
+            {
+                return recordID;
+            }
+            else
+            {
+                return Guid.Empty;
+            }
         }
 
         #endregion

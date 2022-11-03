@@ -9,13 +9,13 @@ namespace MISA.WEB08.AMIS.Common.Enums
     /// Mã lỗi
     /// </summary>
     /// Create by: Nguyễn Khắc Tiềm 21.09.2022
-    public enum MisaAmisErrrorCode : int
+    public enum MisaAmisErrorCode : int
     {
         /// <summary>
         /// Lỗi do ngoại lệ
         /// </summary>
         /// Created by : Khắc Tiềm 21.09.2022
-        Exception = 1,
+        Exception = 500,
 
         /// <summary>
         /// Lỗi trùng các trường

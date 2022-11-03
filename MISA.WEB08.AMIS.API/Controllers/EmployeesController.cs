@@ -44,29 +44,15 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <summary>
         /// Export data ra file excel
         /// </summary>
-        /// <returns>file Excel chứa dữ liệu danh sách các nhân viên</returns>
+        /// <returns>file Excel chứa dữ liệu danh sách </returns>
         /// CreatedBy: Nguyễn Khắc Tiềm (6/10/2022)
         [HttpGet("export_data")]
         public IActionResult GetEmployeeExport([FromQuery] string? keyword, [FromQuery] string? sort)
         {
-            try
-            {
-                var stream = _employeeBL.GetEmployeeExport(keyword, sort);
-                stream.Position = 0;
-                string excelName = $"{Resource.NameFileExcel} ({DateTime.Now.ToString("dd-MM-yyyy")}).xlsx";
-                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message.ToString());
-                return StatusCode(StatusCodes.Status500InternalServerError, new MisaAmisErrorResult(
-                    MisaAmisErrrorCode.Exception,
-                    Resource.DevMsg_Exception,
-                    Resource.UserMsg_Exception,
-                    Resource.MoreInfo_Exception,
-                    HttpContext.TraceIdentifier
-                    ));
-            }
+            var stream = _employeeBL.GetEmployeeExport(keyword, sort);
+            stream.Position = 0;
+            string excelName = $"{Resource.NameFileExcel} ({DateTime.Now.ToString("dd-MM-yyyy")}).xlsx";
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
 
         #endregion

@@ -13,11 +13,12 @@ namespace MISA.WEB08.AMIS.Common.Result
     public class MisaAmisErrorResult
     {
         #region Field
+
         /// <summary>
         /// Mã lỗi enum
         /// </summary>
         /// Created by : Nguyễn Khắc Tiềm 21.09.2022
-        public MisaAmisErrrorCode ErrorCode { get; set; }
+        public MisaAmisErrorCode ErrorCode { get; set; }
 
         /// <summary>
         /// Mã lỗi cho dev
@@ -29,22 +30,24 @@ namespace MISA.WEB08.AMIS.Common.Result
         /// Mã lỗi cho người dùng
         /// </summary>
         /// Created by : Nguyễn Khắc Tiềm 21.09.2022
-        public string UserMsg { get; set; }
+        public dynamic? UserMsg { get; set; }
 
         /// <summary>
         /// Thông tin thêm
         /// </summary>
         /// Created by : Nguyễn Khắc Tiềm 21.09.2022
-        public dynamic? MoreInfo { get; set; }
+        public string MoreInfo { get; set; }
 
         /// <summary>
         /// ID kết nối để trace sau này để dò lỗi
         /// </summary>
         /// Created by : Nguyễn Khắc Tiềm 21.09.2022
         public string TraceId { get; set; }
+
         #endregion
 
         #region Contructor
+
         /// <summary>
         /// Hàm khởi tạo
         /// </summary>
@@ -54,14 +57,15 @@ namespace MISA.WEB08.AMIS.Common.Result
         /// <param name="moreInfo"></param>
         /// <param name="traceId">ID kết nối</param>
         /// Created by : Nguyễn Khắc Tiềm 21.09.2022
-        public MisaAmisErrorResult(MisaAmisErrrorCode errorCode, string devMsg, string userMsg, dynamic? moreInfo, string traceId)
+        public MisaAmisErrorResult(MisaAmisErrorCode errorCode, string devMsg, dynamic? userMsg, string moreInfo, string traceId)
         {
+            UserMsg = userMsg;
             ErrorCode = errorCode;
             DevMsg = devMsg;
-            UserMsg = userMsg;
             MoreInfo = moreInfo;
             TraceId = traceId;
         }
+
         #endregion
 
         #region Method

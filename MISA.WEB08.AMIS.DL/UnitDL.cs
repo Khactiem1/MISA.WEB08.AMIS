@@ -1,4 +1,7 @@
-﻿using MISA.WEB08.AMIS.Common.Entities;
+﻿using Dapper;
+using MISA.WEB08.AMIS.Common.Entities;
+using MISA.WEB08.AMIS.Common.Resources;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +14,8 @@ namespace MISA.WEB08.AMIS.DL
     /// Dữ liệu thao tác với Database và trả về với bảng Unit từ tầng DL
     /// </summary>
     /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
-    public interface IUnitDL : IBaseDL<Unit>
+    public class UnitDL : BaseDL<Unit>, IUnitDL
     {
+        
     }
 }

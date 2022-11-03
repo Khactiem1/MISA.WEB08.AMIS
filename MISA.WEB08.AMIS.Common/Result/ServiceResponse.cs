@@ -25,13 +25,13 @@ namespace MISA.WEB08.AMIS.Common.Result
         /// Mã lỗi đi kèm
         /// </summary>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
-        public MisaAmisErrrorCode? ErrorCode { get; set; }
+        public MisaAmisErrorCode? ErrorCode { get; set; }
 
         /// <summary>
         /// Dữ liệu đi kèm
         /// </summary>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
-        public object? Data { get; set; }
+        public dynamic? Data { get; set; }
 
         #endregion
     }
