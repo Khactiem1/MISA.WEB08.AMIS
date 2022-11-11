@@ -185,6 +185,18 @@
     <value>Danh_sach_nhan_vien</value>
     <comment>Tên file excel khi export</comment>
   </data>
+  <data name="Path_SaveImage" xml:space="preserve">
+    <value>D:/Data/Bài tập CTM Misa/MISA.WEB08.AMIS/MISA.WEB08.AMIS.API/Assets/Images/</value>
+    <comment>Đường dẫn thư mục lưu hình ảnh</comment>
+  </data>
+  <data name="Path_SaveImageInDB" xml:space="preserve">
+    <value>/Assets/Images/</value>
+    <comment>Đường dẫn hình ảnh api</comment>
+  </data>
+  <data name="Proc_DeleteMultiple" xml:space="preserve">
+    <value>Proc_{0}_DeleteMultiple</value>
+    <comment>Template string cho procedure xoá nhiều bản ghi</comment>
+  </data>
   <data name="Proc_DeleteOne" xml:space="preserve">
     <value>Proc_{0}_DeleteOne</value>
     <comment>Template string cho procedure xoá một</comment>
@@ -200,6 +212,10 @@
   <data name="Proc_GetDataByAttribute" xml:space="preserve">
     <value>Proc_GetDataByAttribute</value>
     <comment>Lấy ra bản ghi bất kỳ dựa vào một thuộc tính nhất định để check trùng</comment>
+  </data>
+  <data name="Proc_GetDataByCheckIncurred" xml:space="preserve">
+    <value>Proc_GetDataByCheckIncurred</value>
+    <comment>Lấy ra bản ghi bất kỳ dựa vào một thuộc tính nhất định để check phát sinh</comment>
   </data>
   <data name="Proc_GetDetailOne" xml:space="preserve">
     <value>Proc_{0}_GetDetailOne</value>
@@ -233,8 +249,12 @@
     <value>DANH SÁCH NHÂN VIÊN</value>
     <comment>Tên file khi export nhân viên</comment>
   </data>
+  <data name="UserMsg_CheckIncurred" xml:space="preserve">
+    <value>Đã có phát sinh bản ghi này với bảng {0}. Bạn phải xóa các phát sinh liên quan trước khi xóa.</value>
+    <comment>Thông báo xoá bản ghi thất bại khi có phát sinh</comment>
+  </data>
   <data name="UserMsg_DeleteFailed" xml:space="preserve">
-    <value>Xoá nhân viên thất bại</value>
+    <value>Xoá bản ghi thất bại</value>
     <comment>Message cho User đọc khi xoá nhân viên trong DB thất bại</comment>
   </data>
   <data name="UserMsg_DeleteMultipleFailed" xml:space="preserve">

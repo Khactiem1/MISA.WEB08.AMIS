@@ -14,4 +14,8 @@
     <ProjectReference Include="..\MISA.WEB08.AMIS.Common\MISA.WEB08.AMIS.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Assets\Images\InventoryItemImages\" />
+  </ItemGroup>
+
 </Project>

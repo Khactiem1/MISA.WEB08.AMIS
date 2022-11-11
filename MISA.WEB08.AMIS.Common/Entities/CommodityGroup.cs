@@ -24,14 +24,14 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// </summary>
         [Unique("Nhóm vật tư <{0}> đã tồn tại trong hệ thống.")]
         [IsNotNullOrEmpty("Mã Nhóm vật tư không được để trống.")]
-        [ColumnName("Mã Nhóm vật tư", 35, false, false)]
+        [ColumnName("Mã Nhóm vật tư", 35, false, false, false)]
         public string CommodityCode { get; set; }
 
         /// <summary>
         /// Tên kho
         /// </summary>
         [IsNotNullOrEmpty("Tên nhóm vật tư không được để trống.")]
-        [ColumnName("Tên nhóm vật tư", 50, false, false)]
+        [ColumnName("Tên nhóm vật tư", 50, false, false, false)]
         public string CommodityName { get; set; }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
-        [ColumnName("Trạng thái", 20, false, false)]
+        [ColumnName("Trạng thái", 20, false, false, false)]
         public bool IsActive { get; set; }
     }
 }

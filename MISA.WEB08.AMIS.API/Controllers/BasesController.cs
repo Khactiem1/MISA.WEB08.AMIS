@@ -107,16 +107,13 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <summary> 
         /// API trả về danh sách đã lọc và phân trang
         /// <summary>
-        /// <param name="offset">Thứ tự bản ghi bắt đầu lấy</param>
-        /// <param name="limit">Số lượng bản ghi muốn lấy</param>
-        /// <param name="keyword">Từ khoá tìm kiếm</param>
-        /// <param name="sort">Trường muốn sắp xếp</param>
+        /// <param name="formData">Trường muốn filter và sắp xếp</param>
         /// <return> Danh sách bản ghi sau khi phân trang, chỉ lấy ra số bản ghi và số trang yêu cầu, và tổng số lượg bản ghi có điều kiện <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
-        [HttpGet("fitter")]
-        public IActionResult GetFitterRecords([FromQuery] int offset, [FromQuery] int limit, [FromQuery] string? keyword, [FromQuery] string? sort)
+        [HttpPost("fitter")]
+        public IActionResult GetFitterRecords([FromBody] Dictionary<string, object> formData)
         {
-            var records = _baseBL.GetFitterRecords(offset, limit, keyword, sort);
+            var records = _baseBL.GetFitterRecords(formData);
             return StatusCode(StatusCodes.Status200OK, new ServiceResponse
             {
                 Success = true,
@@ -291,11 +288,11 @@ namespace MISA.WEB08.AMIS.API.Controllers
                 return StatusCode(StatusCodes.Status200OK, new ServiceResponse
                 {
                     Success = false,
-                    ErrorCode = MisaAmisErrorCode.DeleteFailed,
+                    ErrorCode = result.ErrorCode,
                     Data = new MisaAmisErrorResult(
-                            MisaAmisErrorCode.DeleteFailed,
+                            (MisaAmisErrorCode)result.ErrorCode,
                             Resource.DevMsg_DeleteFailed.ToString(),
-                            Resource.UserMsg_DeleteFailed,
+                            result.Data,
                             Resource.MoreInfo_Exception,
                             HttpContext.TraceIdentifier
                         )

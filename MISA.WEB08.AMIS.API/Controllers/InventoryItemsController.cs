@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MISA.WEB08.AMIS.BL;
 using MISA.WEB08.AMIS.Common.Entities;
+using MISA.WEB08.AMIS.Common.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,21 @@ namespace MISA.WEB08.AMIS.API.Controllers
             stream.Position = 0;
             string excelName = $"{"Danh_sach_vat_tu_hang_hoa_dich_vu"} ({DateTime.Now.ToString("dd-MM-yyyy")}).xlsx";
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+        }
+
+        /// <summary>
+        /// API lấy ra tổng số lượng hàng sắp hết và hết hàng
+        /// </summary>
+        /// <returns></returns>
+        //// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        [HttpGet("GetInventoryStatus")]
+        public IActionResult GetInventoryStatus()
+        {
+            return StatusCode(StatusCodes.Status201Created, new ServiceResponse
+            {
+                Success = true,
+                Data = _inventoryItemBL.GetInventoryStatus()
+            });
         }
 
         #endregion

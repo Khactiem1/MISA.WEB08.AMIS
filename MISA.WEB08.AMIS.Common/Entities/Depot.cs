@@ -24,26 +24,26 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// </summary>
         [Unique("Mã kho <{0}> đã tồn tại trong hệ thống.")]
         [IsNotNullOrEmpty("Mã kho không được để trống.")]
-        [ColumnName("Mã kho", 30, false, false)]
+        [ColumnName("Mã kho", 30, false, false, false)]
         public string DepotCode { get; set; }
 
         /// <summary>
         /// Tên kho
         /// </summary>
         [IsNotNullOrEmpty("Tên kho không được để trống.")]
-        [ColumnName("Tên kho", 50, false, false)]
+        [ColumnName("Tên kho", 50, false, false, false)]
         public string DepotName { get; set; }
 
         /// <summary>
         /// Địa chỉ
         /// </summary>
-        [ColumnName("Địa chỉ", 100, false, false)]
+        [ColumnName("Địa chỉ", 100, false, false, false)]
         public string DepotDelivery { get; set; }
 
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
-        [ColumnName("Trạng thái", 20, false, false)]
+        [ColumnName("Trạng thái", 20, false, false, false)]
         public bool IsActive { get; set; }
     }
 }

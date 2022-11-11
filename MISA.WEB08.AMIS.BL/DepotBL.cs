@@ -1,6 +1,8 @@
 ﻿using MISA.WEB08.AMIS.Common.Attributes;
 using MISA.WEB08.AMIS.Common.Entities;
+using MISA.WEB08.AMIS.Common.Enums;
 using MISA.WEB08.AMIS.Common.Resources;
+using MISA.WEB08.AMIS.Common.Result;
 using MISA.WEB08.AMIS.DL;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -127,6 +129,36 @@ namespace MISA.WEB08.AMIS.BL
                 }
                 package.Save();
                 return package.Stream;
+            }
+        }
+
+        /// <summary>
+        /// Hàm xử lý kiểm tra phát sinh
+        /// </summary>
+        /// <param name="record">Record cần custom validate</param>
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public override ServiceResponse CheckIncurred(Guid record)
+        {
+            var validateFailures = new List<string>();
+            if (!_depotDL.CheckIncurred("InventoryItem", "DepotID", record.ToString()))
+            {
+                validateFailures.Add(string.Format(Resource.UserMsg_CheckIncurred, "danh sách hàng hóa, dịch vụ"));
+            }
+            if (validateFailures.Count > 0)
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Data = validateFailures,
+                    ErrorCode = MisaAmisErrorCode.Incurred
+                };
+            }
+            else
+            {
+                return new ServiceResponse
+                {
+                    Success = true
+                };
             }
         }
 

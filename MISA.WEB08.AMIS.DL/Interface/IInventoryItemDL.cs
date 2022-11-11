@@ -19,5 +19,12 @@ namespace MISA.WEB08.AMIS.DL
         /// <returns>Danh sách tất cả bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public object GetExport(string? keyword, string? sort);
+
+        /// <summary>
+        /// Hàm lấy ra tổng số lượng hàng sắp hết và hết hàng
+        /// </summary>
+        /// <returns></returns>
+        //// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public object GetInventoryStatus();
     }
 }

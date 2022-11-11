@@ -135,6 +135,88 @@ namespace MISA.WEB08.AMIS.BL
             };
         }
 
+        /// <summary>
+        /// Hàm xử lý fomat số đúng định dạng
+        /// </summary>
+        /// <param name="pText"></param>
+        /// <returns></returns>
+        /// NK Tiềm 05/10/2022
+        public static string FormatNumber(double number)
+        {
+            return String.Format("{0:0,0.0}", number);
+        }
+
+        /// <summary>
+        /// Hàm xử lý build truy vấn
+        /// </summary>
+        /// <param name="key">Column trong data base cần so sánh</param>
+        /// <param name="value">Giá trị cần so sánh</param>
+        /// <param name="typeSearch">Kiểu so sánh là chữ hay dạng số</param>
+        /// <param name="comparisonType">toán tử so sánh</param>
+        /// <returns>truy vấn sau khi build</returns>
+        ///  NK Tiềm 05/10/2022
+        public static string FormatQuery(string key, string value, string typeSearch, string comparisonType)
+        {
+            string v_Query = "";
+            if ((comparisonType == "=" || comparisonType == ">" || comparisonType == ">=" || comparisonType == "<" || comparisonType == "<=") && typeSearch == "number")
+            {
+                v_Query += $" AND {key} {comparisonType} {value}";
+            }
+            else if ((comparisonType == "=Null" || comparisonType == "!=Null" || comparisonType == "!=") && typeSearch == "number")
+            {
+                switch (comparisonType)
+                {
+                    case "=Null":
+                        v_Query += $" AND ({key} IS NULL OR {key} = '' AND {key} != 0)";
+                        break;
+                    case "!=Null":
+                        v_Query += $" AND ({key} != NULL OR {key} != '' OR {key} = 0)";
+                        break;
+                    case "!=":
+                        v_Query += $" AND ({key} != {value} OR {key} = '' OR {key} IS NULL)";
+                        break;
+                }
+            }
+            else
+            {
+                switch (comparisonType)
+                {
+                    //Chứa
+                    case "%%":
+                        v_Query += $" AND {key} LIKE '%{value}%'";
+                        break;
+                    //Rỗng
+                    case "=Null":
+                        v_Query += $" AND ({key} IS NULL OR {key} = '')";
+                        break;
+                    //Không rỗng
+                    case "!=Null":
+                        v_Query += $" AND ({key} != NULL OR {key} != '')";
+                        break;
+                    //Bằng
+                    case "=":
+                        v_Query += $" AND {key} = '{value}'";
+                        break;
+                    //Khác
+                    case "!=":
+                        v_Query += $" AND ({key} != '{value}' OR {key} = '' OR {key} IS NULL)";
+                        break;
+                    //Không chứa
+                    case "!%%":
+                        v_Query += $" AND ({key} NOT LIKE '%{value}%' OR {key} = '' OR {key} IS NULL)";
+                        break;
+                    //Bắt đầu bởi
+                    case "_%":
+                        v_Query += $" AND {key} LIKE '{value}%'";
+                        break;
+                    //Kết thúc bởi
+                    case "%_":
+                        v_Query += $" AND {key} LIKE '%{value}'";
+                        break;
+                }
+            }
+            return v_Query;
+        }
         #endregion
     }
 }

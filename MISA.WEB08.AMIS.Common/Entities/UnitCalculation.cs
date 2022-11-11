@@ -24,19 +24,19 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// </summary>
         [Unique("Đơn vị <{0}> đã tồn tại trong hệ thống.")]
         [IsNotNullOrEmpty("Đơn vị không được để trống.")]
-        [ColumnName("Đơn vị", 16, false, false)]
+        [ColumnName("Đơn vị", 16, false, false, false)]
         public string UnitCalculationName { get; set; }
 
         /// <summary>
         /// Mô tả đơn vị tính
         /// </summary>
-        [ColumnName("Mô tả", 16, false, false)]
+        [ColumnName("Mô tả", 16, false, false, false)]
         public string UnitCalculationDetail { get; set; }
 
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
-        [ColumnName("Trạng thái", 16, false, false)]
+        [ColumnName("Trạng thái", 16, false, false, false)]
         public bool IsActive { get; set; }
     }
 }

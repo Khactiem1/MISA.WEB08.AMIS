@@ -1,8 +1,10 @@
 ﻿using MISA.WEB08.AMIS.Common.Attributes;
+using MISA.WEB08.AMIS.Common.Entities;
 using MISA.WEB08.AMIS.Common.Enums;
 using MISA.WEB08.AMIS.Common.Resources;
 using MISA.WEB08.AMIS.Common.Result;
 using MISA.WEB08.AMIS.DL;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +17,7 @@ namespace MISA.WEB08.AMIS.BL
     /// Dữ liệu thao tác với Database và trả về với bảng trong Database từ tầng BL
     /// </summary>
     /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
-    public class BaseBL<T> : IBaseBL<T>
+    public class BaseBL<T> : CustomVirtual<T>, IBaseBL<T>
     {
         #region Field
 
@@ -78,15 +80,26 @@ namespace MISA.WEB08.AMIS.BL
         /// <summary>
         /// Hàm lấy ra danh sách record có lọc và phân trang
         /// </summary>
-        /// <param name="offset">Thứ tự bản ghi bắt đầu lấy</param>
-        /// <param name="limit">Số lượng bản ghi muốn lấy</param>
-        /// <param name="keyword">Từ khoá tìm kiếm</param>
-        /// <param name="sort">Trường muốn sắp xếp</param>
+        /// <param name="formData">Từ khoá tìm kiếm</param>
         /// <returns>Danh sách record và tổng số bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetFitterRecords(int offset, int limit, string? keyword, string? sort)
+        public object GetFitterRecords(Dictionary<string, object> formData)
         {
-            return _baseDL.GetFitterRecords(offset, limit, keyword, sort);
+            var v_Offset = int.Parse(formData["v_Offset"].ToString());
+            var v_Limit = int.Parse(formData["v_Limit"].ToString());
+            var v_Where = formData.Keys.Contains("v_Where") ? Convert.ToString(formData["v_Where"]).Trim() : null;
+            var v_Sort = formData.Keys.Contains("v_Sort") ? Convert.ToString(formData["v_Sort"]) : null;
+
+            List<ComparisonTypeSearch> listQuery = formData.Keys.Contains("customSearch") ? JsonConvert.DeserializeObject <List<ComparisonTypeSearch>>(Convert.ToString(formData["customSearch"])) : new List<ComparisonTypeSearch>();
+            string v_Query = "";
+            foreach (ComparisonTypeSearch item in listQuery)
+            {
+                if (!string.IsNullOrEmpty(item.valueSearch) || item.comparisonType == "!=Null" || item.comparisonType == "=Null")
+                {
+                    v_Query += Validate<T>.FormatQuery(item.columnSearch, item.valueSearch.Trim(), item.typeSearch, item.comparisonType);
+                }
+            }
+            return _baseDL.GetFitterRecords(v_Offset, v_Limit, v_Where, v_Sort, v_Query);
         }
 
         /// <summary>
@@ -99,47 +112,37 @@ namespace MISA.WEB08.AMIS.BL
         {
             Validate<T> Valid = new Validate<T>(_baseDL);
             var validateUnique = Valid.CheckUnique(record, null);
-            if (validateUnique.Success)
-            {
-                var validateResult = Validate<T>.ValidateData(record);
-                if (validateResult.Success)
-                {
-                    var validateCustom = CustomValidate(record);
-                    if(validateCustom.Success)
-                    {
-                        Guid result = _baseDL.InsertRecord(record);
-                        if (result != Guid.Empty)
-                        {
-                            return new ServiceResponse
-                            {
-                                Success = true,
-                                Data = result,
-                            };
-                        }
-                        else
-                        {
-                            return new ServiceResponse
-                            {
-                                Success = false,
-                                ErrorCode = MisaAmisErrorCode.InsertFailed,
-                                Data = Resource.UserMsg_InsertFailed,
-                            };
-                        }
-                    }
-                    else
-                    {
-                        return validateCustom;
-                    }
-                }
-                else
-                {
-                    return validateResult;
-                }
-            }
-            else
+            if (!validateUnique.Success)
             {
                 return validateUnique;
             }
+            var validateResult = Validate<T>.ValidateData(record);
+            if (!validateResult.Success)
+            {
+                return validateResult;
+            }
+            var validateCustom = CustomValidate(record);
+            if (!validateCustom.Success)
+            {
+                return validateCustom;
+            }
+            SaveImage(ref record);
+            Guid result = _baseDL.InsertRecord(record);
+            if (result == Guid.Empty)
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    ErrorCode = MisaAmisErrorCode.InsertFailed,
+                    Data = Resource.UserMsg_InsertFailed,
+                };
+            }
+            SaveCode(record);
+            return new ServiceResponse
+            {
+                Success = true,
+                Data = result,
+            };
         }
 
         /// <summary>
@@ -153,47 +156,36 @@ namespace MISA.WEB08.AMIS.BL
         {
             Validate<T> Valid = new Validate<T>(_baseDL);
             var validateUnique = Valid.CheckUnique(record, recordID);
-            if (validateUnique.Success)
-            {
-                var validateResult = Validate<T>.ValidateData(record);
-                if (validateResult.Success)
-                {
-                    var validateCustom = CustomValidate(record);
-                    if (validateCustom.Success)
-                    {
-                        Guid result = _baseDL.UpdateRecord(recordID, record);
-                        if (result != Guid.Empty)
-                        {
-                            return new ServiceResponse
-                            {
-                                Success = true,
-                                Data = result,
-                            };
-                        }
-                        else
-                        {
-                            return new ServiceResponse
-                            {
-                                Success = false,
-                                ErrorCode = MisaAmisErrorCode.UpdateFailed,
-                                Data = result,
-                            };
-                        }
-                    }
-                    else
-                    {
-                        return validateCustom;
-                    }
-                }
-                else
-                {
-                    return validateResult;
-                }
-            }
-            else
+            if (!validateUnique.Success)
             {
                 return validateUnique;
             }
+            var validateResult = Validate<T>.ValidateData(record);
+            if (!validateResult.Success)
+            {
+                return validateResult;
+            }
+            var validateCustom = CustomValidate(record);
+            if (!validateCustom.Success)
+            {
+                return validateCustom;
+            }
+            SaveImage(ref record);
+            Guid result = _baseDL.UpdateRecord(recordID, record);
+            if (result == Guid.Empty)
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    ErrorCode = MisaAmisErrorCode.UpdateFailed,
+                    Data = result,
+                };
+            }
+            return new ServiceResponse
+            {
+                Success = true,
+                Data = result,
+            };
         }
 
         /// <summary>
@@ -204,23 +196,31 @@ namespace MISA.WEB08.AMIS.BL
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public ServiceResponse DeleteRecord(Guid recordID)
         {
-            Guid result = _baseDL.DeleteRecord(recordID);
-            if (result != Guid.Empty)
+            var checkIncurred = CheckIncurred(recordID);
+            if (checkIncurred.Success)
             {
-                return new ServiceResponse
+                Guid result = _baseDL.DeleteRecord(recordID);
+                if (result != Guid.Empty)
                 {
-                    Success = true,
-                    Data = result,
-                };
+                    return new ServiceResponse
+                    {
+                        Success = true,
+                        Data = result,
+                    };
+                }
+                else
+                {
+                    return new ServiceResponse
+                    {
+                        Success = false,
+                        ErrorCode = MisaAmisErrorCode.DeleteFailed,
+                        Data = Resource.UserMsg_DeleteFailed,
+                    };
+                }
             }
             else
             {
-                return new ServiceResponse
-                {
-                    Success = false,
-                    ErrorCode = MisaAmisErrorCode.DeleteFailed,
-                    Data = result,
-                };
+                return checkIncurred;
             }
         }
 
@@ -250,19 +250,6 @@ namespace MISA.WEB08.AMIS.BL
                     Data = rowAffects
                 };
             }
-        }
-
-        /// <summary>
-        /// Hàm xử lý custom validate những model riêng biệt
-        /// </summary>
-        /// <param name="record">Record cần custom validate</param>
-        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public virtual ServiceResponse CustomValidate(T record)
-        {
-            return new ServiceResponse
-            {
-                Success = true
-            };
         }
 
         /// <summary>

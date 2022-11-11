@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace MISA.WEB08.AMIS.BL
 {
     /// <summary>
-    /// Dữ liệu thao tác với Database và trả về với bảng CommodityGroup từ tầng BL
+    /// Dữ liệu thao tác với DatACase và trả về với bảng CommodityGroup từ tầng BL
     /// </summary>
     /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
     public class InventoryItemBL : BaseBL<InventoryItem>, IInventoryItemBL
@@ -55,27 +55,27 @@ namespace MISA.WEB08.AMIS.BL
                 // thêm 1 sheet vào file excel
                 var sheet = package.Workbook.Worksheets.Add("DANH SÁCH VẬT TƯ HÀNG HOÁ DỊCH VỤ");
                 // style header
-                sheet.Cells["A1:Z1"].Merge = true;
-                sheet.Cells["A1:Z1"].Value = "DANH SÁCH VẬT TƯ HÀNG HOÁ DỊCH VỤ";
-                sheet.Cells["A1:Z1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                sheet.Cells["A1:Z1"].Style.Font.Bold = true;
-                sheet.Cells["A1:Z1"].Style.Font.Size = 16;
-                sheet.Cells["A1:Z1"].Style.Font.Name = Resource.ExcelFontHeader;
-                sheet.Cells["A2:Z2"].Merge = true;
+                sheet.Cells["A1:AD1"].Merge = true;
+                sheet.Cells["A1:AD1"].Value = "DANH SÁCH VẬT TƯ HÀNG HOÁ DỊCH VỤ";
+                sheet.Cells["A1:AD1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                sheet.Cells["A1:AD1"].Style.Font.Bold = true;
+                sheet.Cells["A1:AD1"].Style.Font.Size = 16;
+                sheet.Cells["A1:AD1"].Style.Font.Name = Resource.ExcelFontHeader;
+                sheet.Cells["A2:AD2"].Merge = true;
                 sheet.Row(3).Style.Font.Name = Resource.ExcelFontHeader;
                 sheet.Row(3).Style.Font.Bold = true;
                 sheet.Row(3).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 sheet.Row(3).Style.Font.Size = 10;
-                sheet.Cells["A3:Z3"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells["A3:Z3"].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml(Resource.BackGroundColorHeaderExport));
+                sheet.Cells["A3:AD3"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells["A3:AD3"].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml(Resource.BackGroundColorHeaderExport));
                 sheet.Cells[3, 1].Value = "STT";
                 sheet.Column(1).Width = 10;
-                sheet.Cells[$"A3:Z{employees.Count() + 3}"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                sheet.Cells[$"A3:Z{employees.Count() + 3}"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                sheet.Cells[$"A3:Z{employees.Count() + 3}"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                sheet.Cells[$"A3:Z{employees.Count() + 3}"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                sheet.Cells[$"A3:Z{employees.Count() + 3}"].Style.Font.Name = Resource.ExcelFontContent;
-                sheet.Cells[$"A3:Z{employees.Count() + 3}"].Style.Font.Size = 11;
+                sheet.Cells[$"A3:AD{employees.Count() + 3}"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                sheet.Cells[$"A3:AD{employees.Count() + 3}"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                sheet.Cells[$"A3:AD{employees.Count() + 3}"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                sheet.Cells[$"A3:AD{employees.Count() + 3}"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                sheet.Cells[$"A3:AD{employees.Count() + 3}"].Style.Font.Name = Resource.ExcelFontContent;
+                sheet.Cells[$"A3:AD{employees.Count() + 3}"].Style.Font.Size = 11;
                 // customize tên header của file excel
                 var employee = new InventoryItem();
                 // lấy các thuộc tính của nhân viên
@@ -116,9 +116,22 @@ namespace MISA.WEB08.AMIS.BL
                             {
                                 sheet.Cells[indexRow + 4, indexBody].Value = (bool)property.GetValue(employeeItem) == true ? "Đang hoạt động" : "Ngừng hoạt động";
                             }
+                            else if ((displayNameAttributes[0] as ColumnName).Name == "Tính chất")
+                            {
+                                int temp = (int)property.GetValue(employeeItem);
+                                sheet.Cells[indexRow + 4, indexBody].Value = temp == 1 ? "Hàng hoá" : temp == 2 ? "Dịch vụ" : temp == 3 ? "Nguyên vật liệu" : temp == 4 ? "Thành phẩm" : "Dụng cụ công cụ";
+                            }
                             else
                             {
-                                sheet.Cells[indexRow + 4, indexBody].Value = property.GetValue(employeeItem);
+                                if ((displayNameAttributes[0] as ColumnName).IsNumber && !string.IsNullOrEmpty(Convert.ToString(property.GetValue(employeeItem))))
+                                {
+                                    sheet.Cells[indexRow + 4, indexBody].Value = Validate<InventoryItem>.FormatNumber(double.Parse(property.GetValue(employeeItem) + ""));
+                                    sheet.Cells[indexRow + 4, indexBody].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                                }
+                                else
+                                {
+                                    sheet.Cells[indexRow + 4, indexBody].Value = property.GetValue(employeeItem);
+                                }
                             }
                             indexBody++;
                         }
@@ -130,6 +143,76 @@ namespace MISA.WEB08.AMIS.BL
             }
         }
 
+        /// <summary>
+        /// Hàm lấy ra tổng số lượng hàng sắp hết và hết hàng
+        /// </summary>
+        /// <returns></returns>
+        //// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public object GetInventoryStatus()
+        {
+            return _inventoryItemBL.GetInventoryStatus();
+        }
+
+        /// <summary>
+        /// Hàm xử lý lưu hình ảnh
+        /// <param name="record">Record cần custom </param>
+        /// </summary>
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public override void SaveImage(ref InventoryItem record)
+        {
+            if (!string.IsNullOrEmpty(record.Avatar))
+            {
+                if (!record.Avatar.Contains("/Assets/Images/"))
+                {
+                    string path = SaveFileImage.Post(record.Avatar, "InventoryItemImages");
+                    record.Avatar = path;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Hàm xử lý lưu mã để tự sinh
+        /// </summary>
+        /// <param name="record">Bản ghi</param>
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public override void SaveCode(InventoryItem record)
+        {
+            string prefix = "";
+            string number = "";
+            string last = "";
+            for (int i = 0; i < record.InventoryItemCode.Length; i++)
+            {
+                char[] keyNumber = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+                char temp = record.InventoryItemCode[i];
+                if ((keyNumber.Contains(temp)) && last == "")
+                {
+                    if (number == "" && temp == '0')
+                    {
+                        prefix += temp;
+                    }
+                    else
+                    {
+                        number += temp;
+                    }
+                }
+                else
+                {
+                    if (number != "")
+                    {
+                        last += temp;
+                    }
+                    else
+                    {
+                        prefix += temp; 
+                    }
+                }
+            }
+            if (number == "")
+            {
+                number = "0";
+            }
+            _inventoryItemBL.SaveCode(prefix, number, last);
+        }
         #endregion
     }
 }

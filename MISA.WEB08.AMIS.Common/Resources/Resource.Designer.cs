@@ -214,6 +214,33 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to D:/Data/Bài tập CTM Misa/MISA.WEB08.AMIS/MISA.WEB08.AMIS.API/Assets/Images/.
+        /// </summary>
+        public static string Path_SaveImage {
+            get {
+                return ResourceManager.GetString("Path_SaveImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /Assets/Images/.
+        /// </summary>
+        public static string Path_SaveImageInDB {
+            get {
+                return ResourceManager.GetString("Path_SaveImageInDB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proc_{0}_DeleteMultiple.
+        /// </summary>
+        public static string Proc_DeleteMultiple {
+            get {
+                return ResourceManager.GetString("Proc_DeleteMultiple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Proc_{0}_DeleteOne.
         /// </summary>
         public static string Proc_DeleteOne {
@@ -246,6 +273,15 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         public static string Proc_GetDataByAttribute {
             get {
                 return ResourceManager.GetString("Proc_GetDataByAttribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proc_GetDataByCheckIncurred.
+        /// </summary>
+        public static string Proc_GetDataByCheckIncurred {
+            get {
+                return ResourceManager.GetString("Proc_GetDataByCheckIncurred", resourceCulture);
             }
         }
         
@@ -322,7 +358,16 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Xoá nhân viên thất bại.
+        ///   Looks up a localized string similar to Đã có phát sinh bản ghi này với bảng {0}. Bạn phải xóa các phát sinh liên quan trước khi xóa..
+        /// </summary>
+        public static string UserMsg_CheckIncurred {
+            get {
+                return ResourceManager.GetString("UserMsg_CheckIncurred", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Xoá bản ghi thất bại.
         /// </summary>
         public static string UserMsg_DeleteFailed {
             get {

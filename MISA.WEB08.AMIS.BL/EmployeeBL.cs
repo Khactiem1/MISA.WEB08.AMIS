@@ -146,7 +146,6 @@ namespace MISA.WEB08.AMIS.BL
         /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
         public override ServiceResponse? CustomValidate(Employee employee)
         {
-            base.CustomValidate(employee);
             var validateFailures = new List<string>();
             if (employee.EmployeeName == "Khắc Tiềm")
             {
@@ -168,6 +167,45 @@ namespace MISA.WEB08.AMIS.BL
                     Success = true
                 };
             }
+        }
+
+        /// <summary>
+        /// Hàm xử lý lưu mã để tự sinh
+        /// </summary>
+        /// <param name="record">Bản ghi</param>
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public override void SaveCode(Employee record)
+        {
+            string prefix = "";
+            string number = "";
+            string last = "";
+            for (int i = 0; i < record.EmployeeCode.Length; i++)
+            {
+                char temp = record.EmployeeCode[i];
+                if ((temp == '1' || temp == '2' || temp == '3' || temp == '4' || temp == '5' || temp == '6' || temp == '7' || temp == '8' || temp == '9' || temp == '0') && last == "")
+                {
+                    if (number == "" && temp == '0')
+                    {
+                        prefix += temp;
+                    }
+                    else
+                    {
+                        number += temp;
+                    }
+                }
+                else
+                {
+                    if (number != "")
+                    {
+                        last += temp;
+                    }
+                    else
+                    {
+                        prefix += temp;
+                    }
+                }
+            }
+            _employeeDL.SaveCode(prefix, number, last);
         }
 
         #endregion

@@ -104,6 +104,11 @@ namespace MISA.WEB08.AMIS.Common.Attributes
         /// </summary>
         public bool IsGender;
 
+        /// <summary>
+        /// Là số hay không
+        /// </summary>
+        public bool IsNumber;
+
         #endregion
 
         #region Constructor
@@ -112,12 +117,13 @@ namespace MISA.WEB08.AMIS.Common.Attributes
         /// Hàm khởi tạo 
         /// </summary>
         /// <param name="name"></param>
-        public ColumnName(string name, int width, bool isDate, bool isGender)
+        public ColumnName(string name, int width, bool isDate, bool isGender, bool isNumber)
         {
             Name = name;
             Width = width;
             IsDate = isDate;
             IsGender = isGender;
+            IsNumber = isNumber;
         }
 
         #endregion

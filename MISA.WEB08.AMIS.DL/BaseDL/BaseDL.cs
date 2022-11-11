@@ -97,12 +97,15 @@ namespace MISA.WEB08.AMIS.DL
         {
             object result;
             // chuẩn bị câu lệnh MySQL
-            string storeProcedureName = string.Format(Resource.Proc_GetNewCode, typeof(T).Name);
+            string storeProcedureName = "Proc_coderecord_GetNewCode";
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("v_TableName", typeof(T).Name);
             using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
             {
                 // thực hiện gọi vào DB
                 result = mysqlConnection.QueryFirstOrDefault<string>(
                     storeProcedureName,
+                    parameters,
                     commandType: System.Data.CommandType.StoredProcedure
                     );
             }
@@ -116,9 +119,10 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="limit">Số lượng bản ghi muốn lấy</param>
         /// <param name="keyword">Từ khoá tìm kiếm</param>
         /// <param name="sort">Trường muốn sắp xếp</param>
+        /// <param name="v_Query">Lọc theo yêu cầu</param>
         /// <returns>Danh sách record và tổng số bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetFitterRecords(int offset, int limit, string? keyword, string? sort)
+        public virtual object GetFitterRecords(int offset, int limit, string? keyword, string? sort, string v_Query)
         {
             object result;
             // Khởi tạo các parameter để chèn vào trong Proc
@@ -127,6 +131,7 @@ namespace MISA.WEB08.AMIS.DL
             parameters.Add("v_Limit", limit);
             parameters.Add("v_Sort", sort);
             parameters.Add("v_Where", keyword);
+            parameters.Add("v_Query", v_Query);
 
             // chuẩn bị câu lệnh MySQL
             string storeProcedureName = string.Format(Resource.Proc_GetFilterPaging, typeof(T).Name);
@@ -188,6 +193,44 @@ namespace MISA.WEB08.AMIS.DL
         }
 
         /// <summary>
+        /// Hàm kiểm tra giá trị phát sinh khi xoá
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columnName"></param>
+        /// <param name="valueCheck"></param>
+        /// <returns>true hoặc false tương ứng với phát sinh hoặc không</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public bool CheckIncurred(string tableName, string columnName, string valueCheck)
+        {
+            int result;
+            // Khởi tạo các parameter để chèn vào trong Proc
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("v_TableName", tableName);
+            parameters.Add("v_ColumnName", columnName);
+            parameters.Add("v_ValueCheck", valueCheck);
+
+            //Khai báo stored truy vấn
+            string storeProcedureName = Resource.Proc_GetDataByCheckIncurred;
+            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
+            {
+                // thực hiện gọi vào DB
+                result = mysqlConnection.QueryFirstOrDefault<int>(
+                    storeProcedureName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure
+                    );
+            }
+            if (result == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Hàm thêm mới một bản ghi
         /// </summary>
         /// <param name="record"></param>
@@ -233,6 +276,34 @@ namespace MISA.WEB08.AMIS.DL
             else
             {
                 return Guid.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Hàm cập nhật bản ghi mã tự sinh
+        /// </summary>
+        /// <param name="prefix">Phần tiền tố</param>
+        /// <param name="number">Phần số</param>
+        /// <param name="last">phần hậu tố</param>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public void SaveCode(string prefix, string number, string last)
+        {
+            // Khởi tạo các parameter để chèn vào trong Proc
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("v_TableName", typeof(T).Name);
+            parameters.Add("v_Prefix", prefix);
+            parameters.Add("v_ValueNumber", number);
+            parameters.Add("v_Last", last);
+            parameters.Add("v_LengthNumber", number.Length);
+            // chuẩn bị câu lệnh MySQL
+            string storeProcedureName = "Proc_coderecord_UpdateOne";
+            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
+            {
+                // thực hiện gọi vào DB
+                mysqlConnection.Execute(storeProcedureName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure
+                    );
             }
         }
 
@@ -338,20 +409,17 @@ namespace MISA.WEB08.AMIS.DL
                     try
                     {
                         // chuẩn bị câu lệnh MySQL
-                        string storeProcedureName = string.Format(Resource.Proc_DeleteOne, typeof(T).Name);
-                        //lặp lại thao tác xóa với từng Id có trong mảng Id đầu vào 
-                        for (int i = 0; i < listRecordID.Length; i++)
-                        {
-                            // Khởi tạo các parameter để chèn vào trong Proc
-                            DynamicParameters parameters = new DynamicParameters();
-                            parameters.Add($"v_{typeof(T).Name}ID", listRecordID[i]);
-                            // thực hiện gọi vào DB
-                            rowAffects += mysqlConnection.Execute(storeProcedureName,
-                                parameters,
-                                transaction: transaction,
-                                commandType: System.Data.CommandType.StoredProcedure
-                                );
-                        }
+                        string storeProcedureName = string.Format(Resource.Proc_DeleteMultiple, typeof(T).Name);
+                        // Khởi tạo các parameter để chèn vào trong Proc
+                        DynamicParameters parameters = new DynamicParameters();
+                        string listID = string.Join(";", listRecordID);
+                        parameters.Add("v_ListID", listID);
+                        // thực hiện gọi vào DB
+                        rowAffects += mysqlConnection.Execute(storeProcedureName,
+                            parameters,
+                            transaction: transaction,
+                            commandType: System.Data.CommandType.StoredProcedure
+                            );
                         if (rowAffects == listRecordID.Length)
                         {
                             transaction.Commit();

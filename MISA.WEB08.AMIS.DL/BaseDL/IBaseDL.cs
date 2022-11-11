@@ -47,9 +47,10 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="limit">Số lượng bản ghi muốn lấy</param>
         /// <param name="keyword">Từ khoá tìm kiếm</param>
         /// <param name="sort">Trường muốn sắp xếp</param>
+        /// <param name="v_Query">Lọc theo yêu cầu</param>
         /// <returns>Danh sách record và tổng số bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetFitterRecords(int offset, int limit, string? keyword, string? sort);
+        public object GetFitterRecords(int offset, int limit, string? keyword, string? sort,string v_Query);
 
         /// <summary>
         /// Validate trùng mã nếu mã bản ghi đã tồn tại trong hệ thống
@@ -60,6 +61,16 @@ namespace MISA.WEB08.AMIS.DL
         /// <returns>true- mã bị trùng; false-mã k bị trùng</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public bool CheckDuplicate(string propertyName, object propertyValue, Guid? guidUpdate);
+
+        /// <summary>
+        /// Hàm kiểm tra giá trị phát sinh khi xoá
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columnName"></param>
+        /// <param name="valueCheck"></param>
+        /// <returns>true hoặc false tương ứng với phát sinh hoặc không</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public bool CheckIncurred(string tableName, string columnName, string valueCheck);
 
         /// <summary>
         /// Hàm thêm mới một bản ghi
@@ -77,6 +88,15 @@ namespace MISA.WEB08.AMIS.DL
         /// <returns>ID record sau khi cập nhật</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public Guid UpdateRecord(Guid recordID, T record);
+
+        /// <summary>
+        /// Hàm cập nhật bản ghi mã tự sinh
+        /// </summary>
+        /// <param name="prefix">Phần tiền tố</param>
+        /// <param name="number">Phần số</param>
+        /// <param name="last">phần hậu tố</param>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public void SaveCode(string prefix, string number, string last);
 
         /// <summary>
         /// Xoá một bản ghi theo ID

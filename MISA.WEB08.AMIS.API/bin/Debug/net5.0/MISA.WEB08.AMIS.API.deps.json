@@ -553,7 +553,8 @@
         "dependencies": {
           "EPPlus": "5.8.14",
           "MISA.WEB08.AMIS.Common": "1.0.0",
-          "MISA.WEB08.AMIS.DL": "1.0.0"
+          "MISA.WEB08.AMIS.DL": "1.0.0",
+          "Newtonsoft.Json": "13.0.1"
         },
         "runtime": {
           "MISA.WEB08.AMIS.BL.dll": {}

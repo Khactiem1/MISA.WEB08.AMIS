@@ -58,5 +58,11 @@ namespace MISA.WEB08.AMIS.Common.Enums
         /// Created by : Khắc Tiềm 21.09.2022
         /// </summary>
         DeleteFailed = 7,
+
+        /// <summary>
+        /// Mã lỗi xoá không thành công, bị phát sinh dữ liệu
+        /// Created by : Khắc Tiềm 21.09.2022
+        /// </summary>
+        Incurred = 8,
     }
 }
