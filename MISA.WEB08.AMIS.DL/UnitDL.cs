@@ -16,6 +16,23 @@ namespace MISA.WEB08.AMIS.DL
     /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
     public class UnitDL : BaseDL<Unit>, IUnitDL
     {
-        
+        #region Field
+
+        private IDatabaseHelper<Unit> _dbHelper;
+
+        #endregion
+
+        #region Contructor
+
+        public UnitDL(IDatabaseHelper<Unit> dbHelper) : base(dbHelper)
+        {
+            _dbHelper = dbHelper;
+        }
+
+        #endregion
+
+        #region Method
+
+        #endregion
     }
 }

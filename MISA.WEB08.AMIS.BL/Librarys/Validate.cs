@@ -49,36 +49,36 @@ namespace MISA.WEB08.AMIS.BL
             {
                 // Kiểm tra không được rỗng
                 var propertyValue = property.GetValue(record)?.ToString();
-                var isNotNullOrEmptyAttribute = (IsNotNullOrEmptyAttribute?)Attribute.GetCustomAttribute(property, typeof(IsNotNullOrEmptyAttribute));
-                if (isNotNullOrEmptyAttribute != null && string.IsNullOrEmpty(propertyValue))
+                var ValidateAttribute = (ValidateAttribute?)Attribute.GetCustomAttribute(property, typeof(ValidateAttribute));
+                if (ValidateAttribute != null)
                 {
-                    validateFailures.Add(isNotNullOrEmptyAttribute.ErrorMessage);
-                }
-                // Kiểm tra phải đúng định dạng số điện thoại
-                var phoneNumberAttribute = (PhoneNumberAttribute?)Attribute.GetCustomAttribute(property, typeof(PhoneNumberAttribute));
-                if (phoneNumberAttribute != null && !string.IsNullOrEmpty(propertyValue))
-                {
-                    if (!Regex.IsMatch(propertyValue, @"(03|02|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b"))
+                    if (ValidateAttribute.IsNotNullOrEmpty && string.IsNullOrEmpty(propertyValue))
                     {
-                        validateFailures.Add(phoneNumberAttribute.ErrorMessage);
+                        validateFailures.Add(ValidateAttribute.ErrorMessage);
                     }
-                }
-                // kiểm tra phải đúng định dạng email
-                var emailAttribute = (EmailAttribute?)Attribute.GetCustomAttribute(property, typeof(EmailAttribute));
-                if (emailAttribute != null && !string.IsNullOrEmpty(propertyValue))
-                {
-                    if (!Regex.IsMatch(propertyValue, @"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"))
+                    // Kiểm tra phải đúng định dạng số điện thoại
+                    else if (ValidateAttribute.PhoneNumber && !string.IsNullOrEmpty(propertyValue))
                     {
-                        validateFailures.Add(emailAttribute.ErrorMessage);
+                        if (!Regex.IsMatch(propertyValue, @"(03|02|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b"))
+                        {
+                            validateFailures.Add(ValidateAttribute.ErrorMessage);
+                        }
                     }
-                }
-                // Kiểm tra ngày không được lớn hơn ngày hiện tại
-                var maxDateNowAttribute = (MaxDateNowAttribute?)Attribute.GetCustomAttribute(property, typeof(MaxDateNowAttribute));
-                if (maxDateNowAttribute != null && !string.IsNullOrEmpty(propertyValue))
-                {
-                    if (DateTime.Parse(propertyValue) > DateTime.Now)
+                    // kiểm tra phải đúng định dạng email
+                    else if (ValidateAttribute.Email && !string.IsNullOrEmpty(propertyValue))
                     {
-                        validateFailures.Add(maxDateNowAttribute.ErrorMessage);
+                        if (!Regex.IsMatch(propertyValue, @"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"))
+                        {
+                            validateFailures.Add(ValidateAttribute.ErrorMessage);
+                        }
+                    }
+                    // Kiểm tra ngày không được lớn hơn ngày hiện tại
+                    else if (ValidateAttribute.MaxDateNow && !string.IsNullOrEmpty(propertyValue))
+                    {
+                        if (DateTime.Parse(propertyValue) > DateTime.Now)
+                        {
+                            validateFailures.Add(ValidateAttribute.ErrorMessage);
+                        }
                     }
                 }
             }
@@ -158,22 +158,50 @@ namespace MISA.WEB08.AMIS.BL
         public static string FormatQuery(string key, string value, string typeSearch, string comparisonType)
         {
             string v_Query = "";
-            if ((comparisonType == "=" || comparisonType == ">" || comparisonType == ">=" || comparisonType == "<" || comparisonType == "<=") && typeSearch == "number")
+            if ((comparisonType == "=" || comparisonType == ">" || comparisonType == ">=" || comparisonType == "<" || comparisonType == "<=") && (typeSearch == "number" || typeSearch == "date"))
             {
-                v_Query += $" AND {key} {comparisonType} {value}";
+                if (typeSearch == "number")
+                {
+                    v_Query += $" AND {key} {comparisonType} {value}";
+                }
+                else
+                {
+                    v_Query += $" AND {key} {comparisonType} STR_TO_DATE('{DateTime.Parse(value).ToString("dd/MM/yyyy")}', '%d/%m/%Y')";
+                }
             }
-            else if ((comparisonType == "=Null" || comparisonType == "!=Null" || comparisonType == "!=") && typeSearch == "number")
+            else if ((comparisonType == "=Null" || comparisonType == "!=Null" || comparisonType == "!=") && (typeSearch == "number" || typeSearch == "date"))
             {
                 switch (comparisonType)
                 {
                     case "=Null":
-                        v_Query += $" AND ({key} IS NULL OR {key} = '' AND {key} != 0)";
+                        if (typeSearch == "number")
+                        {
+                            v_Query += $" AND ({key} IS NULL OR {key} = '' AND {key} != 0)";
+                        }
+                        else
+                        {
+                            v_Query += $" AND {key} IS NULL";
+                        }
                         break;
                     case "!=Null":
-                        v_Query += $" AND ({key} != NULL OR {key} != '' OR {key} = 0)";
+                        if (typeSearch == "number")
+                        {
+                            v_Query += $" AND ({key} != NULL OR {key} != '' OR {key} = 0)";
+                        }
+                        else
+                        {
+                            v_Query += $" AND {key} IS NOT NULL";
+                        }
                         break;
                     case "!=":
-                        v_Query += $" AND ({key} != {value} OR {key} = '' OR {key} IS NULL)";
+                        if (typeSearch == "number")
+                        {
+                            v_Query += $" AND ({key} != {value} OR {key} = '' OR {key} IS NULL)";
+                        }
+                        else
+                        {
+                            v_Query += $" AND {key} != STR_TO_DATE('{DateTime.Parse(value).ToString("dd/MM/yyyy")}', '%d/%m/%Y')";
+                        }
                         break;
                 }
             }

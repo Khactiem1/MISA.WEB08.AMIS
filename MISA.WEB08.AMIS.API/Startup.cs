@@ -1,22 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MISA.WEB08.AMIS.API.Middleware;
 using MISA.WEB08.AMIS.BL;
 using MISA.WEB08.AMIS.DL;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.API
 {
@@ -45,6 +38,8 @@ namespace MISA.WEB08.AMIS.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MISA.WEB08.AMIS.API", Version = "v1" });
             });
             //injiection
+            services.AddScoped(typeof(IDatabaseHelper<>), typeof(DatabaseHelper<>));
+
             services.AddScoped<IEmployeeBL, EmployeeBL>();
             services.AddScoped<IEmployeeDL, EmployeeDL>();
             services.AddScoped<IUnitBL, UnitBL>();
@@ -77,8 +72,7 @@ namespace MISA.WEB08.AMIS.API
             app.UseRouting();
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
-
-            app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

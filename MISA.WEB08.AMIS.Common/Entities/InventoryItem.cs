@@ -17,7 +17,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// id hàng hoá
         /// </summary>
-        [PrimaryKey]
+        [Validate(PrimaryKey = true)]
         public Guid? InventoryItemID { get; set; }
 
         /// <summary>
@@ -29,15 +29,15 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// mã hàng hoá vật tư
         /// </summary>
         [Unique("Mã hàng hoá vật tư <{0}> đã tồn tại trong hệ thống.")]
-        [IsNotNullOrEmpty("Mã hàng hoá vật tư không được để trống.")]
-        [ColumnName("Mã hàng hoá vật tư", 16, false, false, false)]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Mã hàng hoá vật tư không được để trống.")]
+        [ColumnName(Name = "Mã hàng hoá vật tư", Width = 16)]
         public string InventoryItemCode { get; set; }
 
         /// <summary>
         /// tên hàng hoá vật tư
         /// </summary>
-        [IsNotNullOrEmpty("Tên hàng hoá vật tư không được để trống.")]
-        [ColumnName("Tên hàng hoá vật tư", 40, false, false, false)]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Tên hàng hoá vật tư không được để trống.")]
+        [ColumnName(Name = "Tên hàng hoá vật tư", Width = 40)]
         public string InventoryItemName { get; set; }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Mã nhóm vật tư hàng hoá
         /// </summary>
-        [ColumnName("Mã nhóm vật tư hàng hoá", 50, false, false, false)]
+        [ColumnName(Name = "Mã nhóm vật tư hàng hoá", Width = 50)]
         public string CommodityCode { get; set; }
 
         /// <summary>
@@ -59,63 +59,62 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// tính chất
         /// </summary>
-        [IsNotNullOrEmpty("Tính chất không được để trống.")]
-        [ColumnName("Tính chất", 40, false, false, false)]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Tính chất không được để trống.")]
+        [ColumnName(Name = "Tính chất", Width = 40)]
         public Nature Nature { get; set; }
 
         /// <summary>
         /// Tên đơn vị tính
         /// </summary>
-        [ColumnName("Tên đơn vị tính", 40, false, false, false)]
+        [ColumnName(Name = "Tên đơn vị tính", Width = 40)]
         public string UnitCalculationName { get; set; }
 
         /// <summary>
         /// Giảm thuế
         /// </summary>
-        [ColumnName("Giảm thuế", 40, false, false, false)]
+        [ColumnName(Name = "Giảm thuế", Width = 40)]
         public string DepreciatedTax { get; set; }
 
         /// <summary>
         /// Thời hạn bảo hành
         /// </summary>
-        [ColumnName("Thời hạn bảo hành", 40, false, false, false)]
+        [ColumnName(Name = "Thời hạn bảo hành", Width = 40)]
         public string WarrantyPeriod { get; set; }
 
         /// <summary>
         /// Số lượng tồn tối thiểu
         /// </summary>
-        [ColumnName("Số lượng tồn tối thiểu", 40, false, false, true)]
+        [ColumnName(Name = "Số lượng tồn tối thiểu", Width = 40, IsNumber = true)]
         public double? MinimumStock { get; set; }
-
 
         /// <summary>
         /// Số lượng tồn
         /// </summary>
-        [ColumnName("Số lượng tồn", 40, false, false, true)]
+        [ColumnName(Name = "Số lượng tồn", Width = 40, IsNumber = true)]
         public double? QuantityTock { get; set; }
 
         /// <summary>
         /// Nguồn gốc
         /// </summary>
-        [ColumnName("Nguồn gốc", 40, false, false, false)]
+        [ColumnName(Name = "Nguồn gốc", Width = 40)]
         public string Origin { get; set; }
 
         /// <summary>
         /// Mô tả
         /// </summary>
-        [ColumnName("Mô tả", 40, false, false, false)]
+        [ColumnName(Name = "Mô tả", Width = 40)]
         public string Description { get; set; }
 
         /// <summary>
         /// Diễn giải khi mua
         /// </summary>
-        [ColumnName("Diễn giải khi mua", 40, false, false, false)]
+        [ColumnName(Name = "Diễn giải khi mua", Width = 40)]
         public string ExplanationBuy { get; set; }
 
         /// <summary>
         /// Diễn giải khi bán
         /// </summary>
-        [ColumnName("Diễn giải khi bán", 40, false, false, false)]
+        [ColumnName(Name = "Diễn giải khi bán", Width = 40)]
         public string ExplanationSell { get; set; }
 
         /// <summary>
@@ -126,97 +125,97 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Tên nhà kho
         /// </summary>
-        [ColumnName("Tên nhà kho", 40, false, false, false)]
+        [ColumnName(Name = "Tên nhà kho", Width = 40)]
         public string? DepotName { get; set; }
 
         /// <summary>
         /// Tài khoản kho
         /// </summary>
-        [ColumnName("Tài khoản kho", 40, false, false, false)]
+        [ColumnName(Name = "Tài khoản kho", Width = 40)]
         public string AccountDepot { get; set; }
 
         /// <summary>
         /// Tài khoản doanh thu
         /// </summary>
-        [ColumnName("Tài khoản doanh thu", 40, false, false, false)]
+        [ColumnName(Name = "Tài khoản doanh thu", Width = 40)]
         public string AccountRevenue { get; set; }
 
         /// <summary>
         /// Tài khoản chiết khấu
         /// </summary>
-        [ColumnName("Tài khoản chiết khấu", 40, false, false, false)]
+        [ColumnName(Name = "Tài khoản chiết khấu", Width = 40)]
         public string AccountDiscount { get; set; }
 
         /// <summary>
         /// Tài khoản giảm giá
         /// </summary>
-        [ColumnName("Tài khoản giảm giá", 40, false, false, false)]
+        [ColumnName(Name = "Tài khoản giảm giá", Width = 40)]
         public string AccountSale { get; set; }
 
         /// <summary>
         /// Tài khoản trả lại
         /// </summary>
-        [ColumnName("Tài khoản trả lại", 40, false, false, false)]
+        [ColumnName(Name = "Tài khoản trả lại", Width = 40)]
         public string AccountReturn { get; set; }
 
         /// <summary>
         /// Tài khoản chi phí
         /// </summary>
-        [ColumnName("Tài khoản chi phí", 40, false, false, false)]
+        [ColumnName(Name = "Tài khoản chi phí", Width = 40)]
         public string AccountCost { get; set; }
 
         /// <summary>
         /// Tỉ lệ chiết khấu khuyến mại
         /// </summary>
-        [ColumnName("Tỉ lệ chiết khấu khuyến mại", 40, false, false, true)]
+        [ColumnName(Name = "Tỉ lệ chiết khấu khuyến mại", Width = 40, IsNumber = true)]
         public float? RatioDiscount { get; set; }
 
         /// <summary>
         /// Thuế giá trị gia tăng
         /// </summary>
-        [ColumnName("Thuế giá trị gia tăng", 40, false, false, true)]
+        [ColumnName(Name = "Thuế giá trị gia tăng", Width = 40, IsNumber = true)]
         public float? VATTax { get; set; }
 
         /// <summary>
         /// Thuế nhập khẩu
         /// </summary>
-        [ColumnName("Thuế nhập khẩu", 40, false, false, true)]
+        [ColumnName(Name = "Thuế nhập khẩu", Width = 40, IsNumber = true)]
         public float? VATImport { get; set; }
 
         /// <summary>
         /// Thuế xuất khẩu
         /// </summary>
-        [ColumnName("Thuế xuất khẩu", 40, false, false, true)]
+        [ColumnName(Name = "Thuế xuất khẩu", Width = 40, IsNumber = true)]
         public float? VATExport { get; set; }
 
         /// <summary>
         /// Nhóm hàng hoá dịch vụ chịu thuế tiêu thụ đặc biệt
         /// </summary>
-        [ColumnName("Nhóm hàng hoá dịch vụ chịu thuế tiêu thụ đặc biệt", 40, false, false, false)]
+        [ColumnName(Name = "Nhóm hàng hoá dịch vụ chịu thuế tiêu thụ đặc biệt", Width = 40)]
         public string VATGroupExciceTax { get; set; }
 
         /// <summary>
         /// Đơn mua cố định
         /// </summary>
-        [ColumnName("Đơn mua cố định", 40, false, false, true)]
+        [ColumnName(Name = "Đơn mua cố định", Width = 40, IsNumber = true)]
         public double? OrderFix { get; set; }
 
         /// <summary>
         /// Đơn mua gần nhất
         /// </summary>
-        [ColumnName("Đơn mua gần nhất", 40, false, false, true)]
+        [ColumnName(Name = "Đơn mua gần nhất", Width = 40, IsNumber = true)]
         public double? OrderNearest { get; set; }
 
         /// <summary>
         /// Đơn giá bán
         /// </summary>
-        [ColumnName("Đơn giá bán", 40, false, false, true)]
+        [ColumnName(Name = "Đơn giá bán", Width = 40, IsNumber = true)]
         public double? OrderSell { get; set; }
 
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
-        [ColumnName("Trạng thái", 20, false, false, false)]
+        [ColumnName(Name = "Trạng thái", Width = 20)]
         public bool IsActive { get; set; }
     }
 }

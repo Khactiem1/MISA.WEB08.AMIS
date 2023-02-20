@@ -31,7 +31,7 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="recordID"></param>
         /// <returns>Thông tin chi tiết một bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetRecordByID(Guid recordID);
+        public object GetRecordByID(string recordID);
 
         /// <summary>
         /// Hàm lấy ra mã record tự sinh
@@ -51,6 +51,13 @@ namespace MISA.WEB08.AMIS.DL
         /// <returns>Danh sách record và tổng số bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public object GetFitterRecords(int offset, int limit, string? keyword, string? sort,string v_Query);
+
+        /// <summary>
+        /// Hàm Lấy danh sách bản ghi theo từ khoá tìm kiếm không phân trang
+        /// </summary>
+        /// <returns>Danh sách tất cả bản ghi</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public object GetsDataExport(string? keyword, string? sort);
 
         /// <summary>
         /// Validate trùng mã nếu mã bản ghi đã tồn tại trong hệ thống

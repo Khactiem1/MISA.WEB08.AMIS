@@ -16,27 +16,27 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// id đơn vị tính
         /// </summary>
-        [PrimaryKey]
+        [Validate(PrimaryKey = true)]
         public Guid? UnitCalculationID { get; set; }
 
         /// <summary>
         /// Tên đơn vị tính
         /// </summary>
         [Unique("Đơn vị <{0}> đã tồn tại trong hệ thống.")]
-        [IsNotNullOrEmpty("Đơn vị không được để trống.")]
-        [ColumnName("Đơn vị", 16, false, false, false)]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Đơn vị không được để trống.")]
+        [ColumnName(Name = "Đơn vị", Width = 16)]
         public string UnitCalculationName { get; set; }
 
         /// <summary>
         /// Mô tả đơn vị tính
         /// </summary>
-        [ColumnName("Mô tả", 16, false, false, false)]
+        [ColumnName(Name = "Mô tả", Width = 25)]
         public string UnitCalculationDetail { get; set; }
 
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
-        [ColumnName("Trạng thái", 16, false, false, false)]
+        [ColumnName(Name = "Trạng thái", Width = 20)]
         public bool IsActive { get; set; }
     }
 }

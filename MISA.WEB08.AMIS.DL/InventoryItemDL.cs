@@ -16,33 +16,21 @@ namespace MISA.WEB08.AMIS.DL
     /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
     public class InventoryItemDL : BaseDL<InventoryItem>, IInventoryItemDL
     {
-        #region Method
+        #region Field
 
-        /// <summary>
-        /// Hàm Lấy danh sách bản ghi nhân viên theo từ khoá tìm kiếm không phân trang
-        /// </summary>
-        /// <returns>Danh sách tất cả bản ghi</returns>
-        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetExport(string? keyword, string? sort)
+        private IDatabaseHelper<InventoryItem> _dbHelper;
+
+        #endregion
+
+        #region Contructor
+
+        public InventoryItemDL(IDatabaseHelper<InventoryItem> dbHelper) : base(dbHelper)
         {
-            object result;
-            // Khởi tạo các parameter để chèn vào trong Proc
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("v_Sort", sort);
-            parameters.Add("v_Where", keyword);
-            // Khai báo stored procedure
-            string storeProcedureName = string.Format(Resource.Proc_GetFilterExport, "InventoryItem");
-            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
-            {
-                // thực hiện gọi vào DB
-                result = mysqlConnection.Query<InventoryItem>(
-                    storeProcedureName,
-                    parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
-                    );
-            }
-            return result;
+            _dbHelper = dbHelper;
         }
+
+        #endregion
+        #region Method
 
         /// <summary>
         /// Hàm lấy ra tổng số lượng hàng sắp hết và hết hàng

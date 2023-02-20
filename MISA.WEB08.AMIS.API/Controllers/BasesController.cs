@@ -4,11 +4,8 @@ using MISA.WEB08.AMIS.BL;
 using MISA.WEB08.AMIS.Common.Enums;
 using MISA.WEB08.AMIS.Common.Resources;
 using MISA.WEB08.AMIS.Common.Result;
-using MySqlConnector;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.API.Controllers
 {
@@ -45,7 +42,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <return> Danh sách tất cả bản ghi <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         [HttpGet]
-        public IActionResult GetAllRecords()
+        public virtual IActionResult GetAllRecords()
         {
             var recordList = _baseBL.GetAllRecords();
             return StatusCode(StatusCodes.Status200OK, new ServiceResponse
@@ -61,7 +58,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <return> Danh sách tất cả bản ghi <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         [HttpGet("active")]
-        public IActionResult GetAllRecordActive()
+        public virtual IActionResult GetAllRecordActive()
         {
             var recordList = _baseBL.GetAllRecordActive();
             return StatusCode(StatusCodes.Status200OK, new ServiceResponse
@@ -78,9 +75,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <returns>Thông tin chi tiết một bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         [HttpGet("{recordID}")]
-        public IActionResult GetRecordByID([FromRoute] Guid recordID)
+        public virtual IActionResult GetRecordByID([FromRoute] Guid recordID)
         {
-            var record = _baseBL.GetRecordByID(recordID);
+            var record = _baseBL.GetRecordByID(recordID.ToString());
             return StatusCode(StatusCodes.Status200OK, new ServiceResponse
             {
                 Success = true,
@@ -94,7 +91,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <returns>Mã bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         [HttpGet("next_value")]
-        public IActionResult GetRecordCodeNew()
+        public virtual IActionResult GetRecordCodeNew()
         {
             var newCode = _baseBL.GetRecordCodeNew();
             return StatusCode(StatusCodes.Status200OK, new ServiceResponse
@@ -111,7 +108,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <return> Danh sách bản ghi sau khi phân trang, chỉ lấy ra số bản ghi và số trang yêu cầu, và tổng số lượg bản ghi có điều kiện <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         [HttpPost("fitter")]
-        public IActionResult GetFitterRecords([FromBody] Dictionary<string, object> formData)
+        public virtual IActionResult GetFitterRecords([FromBody] Dictionary<string, object> formData)
         {
             var records = _baseBL.GetFitterRecords(formData);
             return StatusCode(StatusCodes.Status200OK, new ServiceResponse
@@ -132,7 +129,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <return> ID bản ghi sau khi thêm <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         [HttpPost]
-        public IActionResult InsertRecord([FromBody] T record)
+        public virtual IActionResult InsertRecord([FromBody] T record)
         {
             var result = _baseBL.InsertRecord(record);
             if (result.Success)
@@ -180,7 +177,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <return> danh sách ID bản ghi sau khi xoá <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         [HttpPost("bulk_delete")]
-        public IActionResult DeleteMultiple([FromBody] Guid[] listRecordID)
+        public virtual IActionResult DeleteMultiple([FromBody] Guid[] listRecordID)
         {
             var result = _baseBL.DeleteMultiple(listRecordID);
             if (result.Success)
@@ -220,7 +217,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <return> ID bản ghi sau khi cập nhật <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         [HttpPut("{recordID}")]
-        public IActionResult UpdateRecord([FromRoute] Guid recordID, [FromBody] T record)
+        public virtual IActionResult UpdateRecord([FromRoute] Guid recordID, [FromBody] T record)
         {
             var result = _baseBL.UpdateRecord(recordID, record);
             if (result.Success)
@@ -272,7 +269,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <return> ID bản ghi sau khi xoá <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         [HttpDelete("{recordID}")]
-        public IActionResult DeleteRecord([FromRoute] Guid recordID)
+        public virtual IActionResult DeleteRecord([FromRoute] Guid recordID)
         {
             var result = _baseBL.DeleteRecord(recordID);
             if (result.Success)
@@ -306,7 +303,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <returns>ID bản ghi </returns>
         /// CreatedBy: Nguyễn Khắc Tiềm (6/10/2022)
         [HttpGet("ToggleActive/{recordID}")]
-        public IActionResult ToggleActive([FromRoute] Guid recordID)
+        public virtual IActionResult ToggleActive([FromRoute] Guid recordID)
         {
             var result = _baseBL.ToggleActive(recordID);
             if (result.Success)

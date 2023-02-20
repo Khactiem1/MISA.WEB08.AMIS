@@ -49,7 +49,7 @@ namespace MISA.WEB08.AMIS.BL
         public Stream GetExport(string? keyword, string? sort)
         {
             // lấy dữ liệu nhân viên
-            List<CommodityGroup> employees = (List<CommodityGroup>)_commodityGroupDL.GetExport(keyword, sort);
+            List<CommodityGroup> employees = (List<CommodityGroup>)_commodityGroupDL.GetsDataExport(keyword, sort);
             var stream = new MemoryStream();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (var package = new ExcelPackage(stream ?? new MemoryStream()))
@@ -88,7 +88,7 @@ namespace MISA.WEB08.AMIS.BL
                 {
                     // lấy tên hiển thị đầu tiên của thuộc tính
                     var displayNameAttributes = property.GetCustomAttributes(typeof(ColumnName), true);
-                    if (displayNameAttributes.Length > 0)
+                    if (displayNameAttributes != null && displayNameAttributes.Length > 0)
                     {
                         // add vào header của file excel
                         sheet.Column(indexHeader).Width = (displayNameAttributes[0] as ColumnName).Width;
@@ -110,13 +110,13 @@ namespace MISA.WEB08.AMIS.BL
                     foreach (var property in properties)
                     {
                         var displayNameAttributes = property.GetCustomAttributes(typeof(ColumnName), true);
-                        if (displayNameAttributes.Length > 0)
+                        if (displayNameAttributes != null && displayNameAttributes.Length > 0)
                         {
 
                             // xử lí các datetime ở ngày nhân viên
                             if ((displayNameAttributes[0] as ColumnName).Name == "Trạng thái")
                             {
-                                sheet.Cells[indexRow + 4, indexBody].Value = (bool)property.GetValue(employeeItem) == true ? "Đang hoạt động" : "Ngừng hoạt động";
+                                sheet.Cells[indexRow + 4, indexBody].Value = (bool)property.GetValue(employeeItem) == true ? Resource.ActiveTrue : Resource.ActiveFalse;
                             }
                             else
                             {

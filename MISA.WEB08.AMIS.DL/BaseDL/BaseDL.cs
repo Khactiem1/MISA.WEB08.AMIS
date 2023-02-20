@@ -17,6 +17,22 @@ namespace MISA.WEB08.AMIS.DL
     /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
     public class BaseDL<T> : IBaseDL<T>
     {
+
+        #region Field
+
+        private IDatabaseHelper<T> _dbHelper;
+
+        #endregion
+
+        #region Contructor
+
+        public BaseDL(IDatabaseHelper<T> dbHelper)
+        {
+            _dbHelper = dbHelper;
+        }
+
+        #endregion
+
         #region Method
 
         /// <summary>
@@ -24,20 +40,10 @@ namespace MISA.WEB08.AMIS.DL
         /// </summary>
         /// <returns>Danh sách tất cả bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetAllRecords()
+        public virtual object GetAllRecords()
         {
-            object result;
-            // Khai báo stored procedure
             string storeProcedureName = string.Format(Resource.Proc_GetAll, typeof(T).Name);
-            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
-            {
-                // thực hiện gọi vào DB
-                result = mysqlConnection.Query<T>(
-                    storeProcedureName,
-                    commandType: System.Data.CommandType.StoredProcedure
-                    );
-            }
-            return result;
+            return _dbHelper.RunProcWithQuery(storeProcedureName, null);
         }
 
         /// <summary>
@@ -45,20 +51,26 @@ namespace MISA.WEB08.AMIS.DL
         /// </summary>
         /// <returns>Danh sách tất cả bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetAllRecordActive()
+        public virtual object GetAllRecordActive()
         {
-            object result;
-            // Khai báo stored procedure
             string storeProcedureName = string.Format(Resource.Proc_GetAllActive, typeof(T).Name);
-            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
-            {
-                // thực hiện gọi vào DB
-                result = mysqlConnection.Query<T>(
-                    storeProcedureName,
-                    commandType: System.Data.CommandType.StoredProcedure
-                    );
-            }
-            return result;
+            return _dbHelper.RunProcWithQuery(storeProcedureName, null);
+        }
+
+        /// <summary>
+        /// Hàm Lấy danh sách bản ghi theo từ khoá tìm kiếm không phân trang
+        /// </summary>
+        /// <returns>Danh sách tất cả bản ghi</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public virtual object GetsDataExport(string? keyword, string? sort)
+        {
+            // Khởi tạo các parameter để chèn vào trong Proc
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("v_Sort", sort);
+            parameters.Add("v_Where", keyword);
+            // Khai báo stored procedure
+            string storeProcedureName = string.Format(Resource.Proc_GetFilterExport, typeof(T).Name);
+            return _dbHelper.RunProcWithQuery(storeProcedureName, parameters);
         }
 
         /// <summary>
@@ -67,25 +79,45 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="recordID"></param>
         /// <returns>Thông tin chi tiết một bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetRecordByID(Guid recordID)
+        public virtual object GetRecordByID(string recordID)
+        {
+            // Khởi tạo các parameter để chèn vào trong Proc
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add($"v_{typeof(T).Name}ID", recordID);
+            // Khai báo stored procedure
+            string storeProcedureName = string.Format(Resource.Proc_GetDetailOne, typeof(T).Name);
+            return _dbHelper.RunProcWithQueryFirstOrDefault(storeProcedureName, parameters);
+        }
+
+        /// <summary>
+        /// Validate trùng mã nếu mã bản ghi đã tồn tại trong hệ thống
+        /// </summary>
+        /// <param name="propertyName">Trường cần kiểm tra mã trùng </param>
+        /// <param name="propertyValue">Giá trị cần kiểm tra </param>
+        /// <param name="guidUpdate">Ko kiểm tra chính nó khi update </param>
+        /// <returns>true- mã bị trùng; false-mã k bị trùng</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public virtual bool CheckDuplicate(string propertyName, object propertyValue, Guid? guidUpdate)
         {
             object result;
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add($"v_{typeof(T).Name}ID", recordID);
+            parameters.Add("v_PropertyName", propertyName);
+            parameters.Add("v_Table", typeof(T).Name);
+            parameters.Add("v_PropertyValue", propertyValue.ToString().Trim());
+            parameters.Add("v_GuidUpdate", guidUpdate);
 
-            // Khai báo stored procedure
-            string storeProcedureName = string.Format(Resource.Proc_GetDetailOne, typeof(T).Name);
-            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
+            //Khai báo stored truy vấn
+            string storeProcedureName = Resource.Proc_GetDataByAttribute;
+            result = _dbHelper.RunProcWithQueryFirstOrDefault(storeProcedureName, parameters);
+            if (result != null)
             {
-                // thực hiện gọi vào DB
-                result = mysqlConnection.QueryFirstOrDefault<T>(
-                    storeProcedureName,
-                    parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
-                    );
+                return true;
             }
-            return result;
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -93,7 +125,7 @@ namespace MISA.WEB08.AMIS.DL
         /// </summary>
         /// <returns>Mã bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetRecordCodeNew()
+        public virtual object GetRecordCodeNew()
         {
             object result;
             // chuẩn bị câu lệnh MySQL
@@ -154,45 +186,6 @@ namespace MISA.WEB08.AMIS.DL
         }
 
         /// <summary>
-        /// Validate trùng mã nếu mã bản ghi đã tồn tại trong hệ thống
-        /// </summary>
-        /// <param name="propertyName">Trường cần kiểm tra mã trùng </param>
-        /// <param name="propertyValue">Giá trị cần kiểm tra </param>
-        /// <param name="guidUpdate">Ko kiểm tra chính nó khi update </param>
-        /// <returns>true- mã bị trùng; false-mã k bị trùng</returns>
-        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public bool CheckDuplicate(string propertyName, object propertyValue, Guid? guidUpdate)
-        {
-            object result;
-            // Khởi tạo các parameter để chèn vào trong Proc
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("v_PropertyName", propertyName);
-            parameters.Add("v_Table", typeof(T).Name);
-            parameters.Add("v_PropertyValue", propertyValue.ToString().Trim());
-            parameters.Add("v_GuidUpdate", guidUpdate);
-
-            //Khai báo stored truy vấn
-            string storeProcedureName = Resource.Proc_GetDataByAttribute;
-            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
-            {
-                // thực hiện gọi vào DB
-                result = mysqlConnection.QueryFirstOrDefault<T>(
-                    storeProcedureName,
-                    parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
-                    );
-            }
-            if (result != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
         /// Hàm kiểm tra giá trị phát sinh khi xoá
         /// </summary>
         /// <param name="tableName"></param>
@@ -200,7 +193,7 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="valueCheck"></param>
         /// <returns>true hoặc false tương ứng với phát sinh hoặc không</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public bool CheckIncurred(string tableName, string columnName, string valueCheck)
+        public virtual bool CheckIncurred(string tableName, string columnName, string valueCheck)
         {
             int result;
             // Khởi tạo các parameter để chèn vào trong Proc
@@ -236,7 +229,7 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="record"></param>
         /// <returns>ID bản ghi sau khi thêm</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public Guid InsertRecord(T record)
+        public virtual Guid InsertRecord(T record)
         {
             // tạo recordID
             Guid recordID = Guid.NewGuid();
@@ -247,8 +240,8 @@ namespace MISA.WEB08.AMIS.DL
             {
                 string propertyName = property.Name;
                 // Kiểm tra trường nào là khoá chính thì thêm param là id tự sinh Guid
-                var primaryKeyAttribute = (PrimaryKeyAttribute?)Attribute.GetCustomAttribute(property, typeof(PrimaryKeyAttribute));
-                if (primaryKeyAttribute != null)
+                var primaryKeyAttribute = (ValidateAttribute?)Attribute.GetCustomAttribute(property, typeof(ValidateAttribute));
+                if (primaryKeyAttribute != null && primaryKeyAttribute.PrimaryKey)
                 {
                     parameters.Add($"v_{propertyName}", recordID);
                 }
@@ -260,15 +253,7 @@ namespace MISA.WEB08.AMIS.DL
             }
             // chuẩn bị câu lệnh MySQL
             string storeProcedureName = string.Format(Resource.Proc_InsertOne, typeof(T).Name);
-            int numberOfAffectdRows = 0;
-            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
-            {
-                // thực hiện gọi vào DB
-                numberOfAffectdRows = mysqlConnection.Execute(storeProcedureName,
-                    parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
-                    );
-            }
+            int numberOfAffectdRows = _dbHelper.RunProcWithExecute(storeProcedureName, parameters);
             if (numberOfAffectdRows > 0)
             {
                 return recordID;
@@ -286,7 +271,7 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="number">Phần số</param>
         /// <param name="last">phần hậu tố</param>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public void SaveCode(string prefix, string number, string last)
+        public virtual void SaveCode(string prefix, string number, string last)
         {
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
@@ -297,14 +282,7 @@ namespace MISA.WEB08.AMIS.DL
             parameters.Add("v_LengthNumber", number.Length);
             // chuẩn bị câu lệnh MySQL
             string storeProcedureName = "Proc_coderecord_UpdateOne";
-            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
-            {
-                // thực hiện gọi vào DB
-                mysqlConnection.Execute(storeProcedureName,
-                    parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
-                    );
-            }
+            _dbHelper.RunProcWithExecute(storeProcedureName, parameters);
         }
 
         /// <summary>
@@ -314,7 +292,7 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="record"></param>
         /// <returns>ID record sau khi cập nhật</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public Guid UpdateRecord(Guid recordID, T record)
+        public virtual Guid UpdateRecord(Guid recordID, T record)
         {
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
@@ -323,8 +301,8 @@ namespace MISA.WEB08.AMIS.DL
             {
                 string propertyName = property.Name;
                 // Kiểm tra trường nào là khoá chính thì thêm param là id tự sinh Guid
-                var primaryKeyAttribute = (PrimaryKeyAttribute?)Attribute.GetCustomAttribute(property, typeof(PrimaryKeyAttribute));
-                if (primaryKeyAttribute != null)
+                var primaryKeyAttribute = (ValidateAttribute?)Attribute.GetCustomAttribute(property, typeof(ValidateAttribute));
+                if (primaryKeyAttribute != null && primaryKeyAttribute.PrimaryKey)
                 {
                     parameters.Add($"v_{propertyName}", recordID);
                 }
@@ -336,15 +314,7 @@ namespace MISA.WEB08.AMIS.DL
             }
             // chuẩn bị câu lệnh MySQL
             string storeProcedureName = string.Format(Resource.Proc_UpdateOne, typeof(T).Name);
-            int numberOfAffectdRows = 0;
-            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
-            {
-                // thực hiện gọi vào DB
-                numberOfAffectdRows = mysqlConnection.Execute(storeProcedureName,
-                    parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
-                    );
-            }
+            int numberOfAffectdRows = _dbHelper.RunProcWithExecute(storeProcedureName, parameters);
             if (numberOfAffectdRows > 0)
             {
                 return recordID;
@@ -361,22 +331,14 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="recordID"></param>
         /// <returns>ID record sau khi xoá</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public Guid DeleteRecord(Guid recordID)
+        public virtual Guid DeleteRecord(Guid recordID)
         {
             // chuẩn bị câu lệnh MySQL
             string storeProcedureName = string.Format(Resource.Proc_DeleteOne, typeof(T).Name);
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add($"v_{typeof(T).Name}ID", recordID);
-            int numberOfAffectdRows = 0;
-            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
-            {
-                // thực hiện gọi vào DB
-                numberOfAffectdRows = mysqlConnection.Execute(storeProcedureName,
-                    parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
-                    );
-            }
+            int numberOfAffectdRows = _dbHelper.RunProcWithExecute(storeProcedureName, parameters);
             if (numberOfAffectdRows > 0)
             {
                 return recordID;
@@ -393,7 +355,7 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="listRecordID">danh sách bản ghi cần xoá</param>
         /// <returns>Số kết quả bản ghi đã xoá</returns>
         /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public int DeleteMultiple(Guid[] listRecordID)
+        public virtual int DeleteMultiple(Guid[] listRecordID)
         {
             var rowAffects = 0;
             using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
@@ -429,7 +391,6 @@ namespace MISA.WEB08.AMIS.DL
                             transaction.Rollback();
                             rowAffects = 0;
                         }
-
                     }
                     catch (Exception ex)
                     {
@@ -440,7 +401,10 @@ namespace MISA.WEB08.AMIS.DL
                     }
                     finally
                     {
-                        mysqlConnection.Close();
+                        if (mysqlConnection.State == ConnectionState.Open)
+                        {
+                            mysqlConnection.Close();
+                        }
                     }
                 }
             }
@@ -454,33 +418,15 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="recordID"></param>
         /// <returns>ID record sau khi cập nhật</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public Guid ToggleActive(Guid recordID)
+        public virtual Guid ToggleActive(Guid recordID)
         {
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
-            var properties = typeof(T).GetProperties();
-            foreach (var property in properties)
-            {
-                string propertyName = property.Name;
-                // Kiểm tra trường nào là khoá chính thì thêm param là id tự sinh Guid
-                var primaryKeyAttribute = (PrimaryKeyAttribute?)Attribute.GetCustomAttribute(property, typeof(PrimaryKeyAttribute));
-                if (primaryKeyAttribute != null)
-                {
-                    parameters.Add($"v_{propertyName}", recordID);
-                }
-            }
-            parameters.Add($"v_ModifiedBy", Resource.DefaultUser);
+            parameters.Add("v_ID", recordID);
+            parameters.Add("v_ModifiedBy", Resource.DefaultUser);
             // chuẩn bị câu lệnh MySQL
             string storeProcedureName = string.Format(Resource.Proc_UpdateActive, typeof(T).Name);
-            int numberOfAffectdRows = 0;
-            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
-            {
-                // thực hiện gọi vào DB
-                numberOfAffectdRows = mysqlConnection.Execute(storeProcedureName,
-                    parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
-                    );
-            }
+            int numberOfAffectdRows = _dbHelper.RunProcWithExecute(storeProcedureName, parameters);
             if (numberOfAffectdRows > 0)
             {
                 return recordID;

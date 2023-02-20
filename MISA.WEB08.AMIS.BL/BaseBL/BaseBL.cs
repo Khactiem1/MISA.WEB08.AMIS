@@ -41,7 +41,7 @@ namespace MISA.WEB08.AMIS.BL
         /// </summary>
         /// <returns>Danh sách tất cả bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetAllRecords()
+        public virtual object GetAllRecords()
         {
             return _baseDL.GetAllRecords();
         }
@@ -51,7 +51,7 @@ namespace MISA.WEB08.AMIS.BL
         /// </summary>
         /// <returns>Danh sách tất cả bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetAllRecordActive()
+        public virtual object GetAllRecordActive()
         {
             return _baseDL.GetAllRecordActive();
         }
@@ -62,7 +62,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="recordID"></param>
         /// <returns>Thông tin chi tiết một bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetRecordByID(Guid recordID)
+        public virtual object GetRecordByID(string recordID)
         {
             return _baseDL.GetRecordByID(recordID);
         }
@@ -72,7 +72,7 @@ namespace MISA.WEB08.AMIS.BL
         /// </summary>
         /// <returns>Mã bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetRecordCodeNew()
+        public virtual object GetRecordCodeNew()
         {
             return _baseDL.GetRecordCodeNew();
         }
@@ -83,7 +83,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="formData">Từ khoá tìm kiếm</param>
         /// <returns>Danh sách record và tổng số bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetFitterRecords(Dictionary<string, object> formData)
+        public virtual object GetFitterRecords(Dictionary<string, object> formData)
         {
             var v_Offset = int.Parse(formData["v_Offset"].ToString());
             var v_Limit = int.Parse(formData["v_Limit"].ToString());
@@ -108,7 +108,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="record"></param>
         /// <returns>ID bản ghi sau khi thêm</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public ServiceResponse InsertRecord(T record)
+        public virtual ServiceResponse InsertRecord(T record)
         {
             Validate<T> Valid = new Validate<T>(_baseDL);
             var validateUnique = Valid.CheckUnique(record, null);
@@ -152,7 +152,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="record"></param>
         /// <returns>ID record sau khi cập nhật</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public ServiceResponse UpdateRecord(Guid recordID, T record)
+        public virtual ServiceResponse UpdateRecord(Guid recordID, T record)
         {
             Validate<T> Valid = new Validate<T>(_baseDL);
             var validateUnique = Valid.CheckUnique(record, recordID);
@@ -194,7 +194,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="recordID"></param>
         /// <returns>ID record sau khi xoá</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public ServiceResponse DeleteRecord(Guid recordID)
+        public virtual ServiceResponse DeleteRecord(Guid recordID)
         {
             var checkIncurred = CheckIncurred(recordID);
             if (checkIncurred.Success)
@@ -230,7 +230,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="listRecordID">danh sách bản ghi cần xoá</param>
         /// <returns>Số kết quả bản ghi đã xoá</returns>
         /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public ServiceResponse DeleteMultiple(Guid[] listRecordID)
+        public virtual ServiceResponse DeleteMultiple(Guid[] listRecordID)
         {
             int rowAffects = _baseDL.DeleteMultiple(listRecordID);
             if (rowAffects == 0)
@@ -258,7 +258,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="recordID"></param>
         /// <returns>ID record sau khi cập nhật</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public ServiceResponse ToggleActive(Guid recordID)
+        public virtual ServiceResponse ToggleActive(Guid recordID)
         {
             Guid result = _baseDL.ToggleActive(recordID);
             if (result != Guid.Empty)

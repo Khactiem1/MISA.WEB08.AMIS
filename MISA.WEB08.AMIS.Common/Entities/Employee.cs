@@ -16,117 +16,123 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// id nhân viên
         /// </summary>
-        [PrimaryKey]
+        [Validate(PrimaryKey = true)]
         public Guid? EmployeeID { get; set; }
 
         /// <summary>
         /// id đơn vị
         /// </summary>7
-        [IsNotNullOrEmpty("Mã đơn vị không được để trống.")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Mã đơn vị không được để trống.")]
         public Guid? UnitID { get; set; }
 
         /// <summary>
         /// mã nhân viên
         /// </summary>
         [Unique("Mã nhân viên <{0}> đã tồn tại trong hệ thống.")]
-        [IsNotNullOrEmpty("Mã nhân viên không được để trống.")]
-        [ColumnName("Mã nhân viên", 16, false, false, false)]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Mã nhân viên không được để trống.")]
+        [ColumnName(Name = "Mã nhân viên", Width = 16)]
         public string EmployeeCode { get; set; }
 
         /// <summary>
         /// tên nhân viên
         /// </summary>
-        [IsNotNullOrEmpty("Tên nhân viên không được để trống.")]
-        [ColumnName("Tên nhân viên", 40, false, false, false)]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Tên nhân viên không được để trống.")]
+        [ColumnName(Name = "Tên nhân viên", Width = 40)]
         public string EmployeeName { get; set; }
 
         /// <summary>
         /// tên đơn vị
         /// </summary>
-        [ColumnName("Tên đơn vị", 50, false, false, false)]
+        [ColumnName(Name = "Tên đơn vị", Width = 50)]
         public string UnitName { get; set; }
 
         /// <summary>
         /// ngày sinh
         /// </summary>
-        [ColumnName("Ngày sinh", 20, true, false, false)]
-        [MaxDateNow("Ngày sinh phải nhỏ hơn ngày hiện tại.")]
+        [ColumnName(Name = "Ngày sinh", Width = 20, IsDate = true)]
+        [Validate(MaxDateNow = true, ErrorMessage = "Ngày sinh phải nhỏ hơn ngày hiện tại.")]
         public DateTime? DateOfBirth { get; set; }
 
         /// <summary>
         /// giới tính
         /// </summary>
-        [ColumnName("Giới tính", 10, false, true, false)]
+        [ColumnName(Name = "Giới tính", Width = 10, IsGender = true)]
         public Gender Gender { get; set; }
 
         /// <summary>
         /// chứng minh thư
         /// </summary>
-        [ColumnName("Chứng minh thư", 20, false, false, false)]
+        [ColumnName(Name = "Chứng minh thư", Width = 20)]
         public string IdentityCard { get; set; }
 
         /// <summary>
         /// chi nhánh ngân hàng
         /// </summary>
-        [ColumnName("Chi nhánh ngân hàng", 40, false, false, false)]
+        [ColumnName(Name = "Chi nhánh ngân hàng", Width = 40)]
         public string BranchBank { get; set; }
 
         /// <summary>
         /// chức danh
         /// </summary>
-        [ColumnName("Chức danh", 20, false, false, false)]
+        [ColumnName(Name = "Chức danh", Width = 20)]
         public string EmployeeTitle { get; set; }
 
         /// <summary>
         /// số tài khoản
         /// </summary>
-        [ColumnName("Số tài khoản", 20, false, false, false)]
+        [ColumnName(Name = "Số tài khoản", Width = 20)]
         public string BankAccount { get; set; }
 
         /// <summary>
         /// tên ngân hàng
         /// </summary>
-        [ColumnName("Tên ngân hàng", 40, false, false, false)]
+        [ColumnName(Name = "Tên ngân hàng", Width = 40)]
         public string NameBank { get; set; }
 
         /// <summary>
         /// ngày cấp cmnd
         /// </summary>
-        [ColumnName("Ngày cấp chứng minh thư", 30, true, false, false)]
-        [MaxDateNow("Ngày cấp phải nhỏ hơn ngày hiện tại.")]
+        [ColumnName(Name = "Ngày cấp chứng minh thư", Width = 30, IsDate = true)]
+        [Validate(MaxDateNow = true, ErrorMessage = "Ngày cấp phải nhỏ hơn ngày hiện tại.")]
         public DateTime? DayForIdentity { get; set; }
 
         /// <summary>
         /// địa chỉ cấp cmnd
         /// </summary>
-        [ColumnName("Nơi cấp", 40, false, false, false)]
+        [ColumnName(Name = "Nơi cấp", Width = 40)]
         public string GrantAddressIdentity { get; set; }
 
         /// <summary>
         /// số điện thoại
         /// </summary>
-        [ColumnName("Điện thoại", 20, false, false, false)]
-        [PhoneNumber("Không đúng định dạng số điện thoại.")]
+        [ColumnName(Name = "Điện thoại", Width = 20)]
+        [Validate(PhoneNumber = true, ErrorMessage = "Không đúng định dạng số điện thoại.")]
         public string PhoneNumber { get; set; }
 
         /// <summary>
         /// số điện thoại cố định
         /// </summary>
-        [ColumnName("Điện thoại cố định", 20, false, false, false)]
-        [PhoneNumber("Không đúng định dạng số điện thoại cố định.")]
+        [ColumnName(Name = "Điện thoại cố định", Width = 20)]
+        [Validate(PhoneNumber = true, ErrorMessage = "Không đúng định dạng số điện thoại cố định.")]
         public string LandlinePhone { get; set; }
 
         /// <summary>
         /// điạ chỉ email
         /// </summary>
-        [ColumnName("Địa chỉ Email", 30, false, false, false)]
-        [Email("Không đúng định dạng email.")]
+        [ColumnName(Name = "Địa chỉ Email", Width = 30)]
+        [Validate(Email = true, ErrorMessage = "Không đúng định dạng email.")]
         public string EmployeeEmail { get; set; }
 
         /// <summary>
         /// địa chỉ nhân viên
         /// </summary>
-        [ColumnName("Địa chỉ", 40, false, false, false)]
+        [ColumnName(Name = "Địa chỉ", Width = 40)]
         public string EmployeeAddress { get; set; }
+
+        /// <summary>
+        /// Hoạt động hay không hoạt động
+        /// </summary>
+        [ColumnName(Name = "Trạng thái", Width = 20)]
+        public bool IsActive { get; set; }
     }
 }

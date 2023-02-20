@@ -33,7 +33,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="recordID"></param>
         /// <returns>Thông tin chi tiết một bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetRecordByID(Guid recordID);
+        public object GetRecordByID(string recordID);
 
         /// <summary>
         /// Hàm lấy ra mã record tự sinh

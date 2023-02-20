@@ -61,6 +61,24 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ngừng hoạt động.
+        /// </summary>
+        public static string ActiveFalse {
+            get {
+                return ResourceManager.GetString("ActiveFalse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Đang hoạt động.
+        /// </summary>
+        public static string ActiveTrue {
+            get {
+                return ResourceManager.GetString("ActiveTrue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to #D8D8D8.
         /// </summary>
         public static string BackGroundColorHeaderExport {

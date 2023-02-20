@@ -16,34 +16,34 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// id kho
         /// </summary>
-        [PrimaryKey]
+        [Validate(PrimaryKey = true)]
         public Guid? DepotID { get; set; }
 
         /// <summary>
         /// Mã kho
         /// </summary>
         [Unique("Mã kho <{0}> đã tồn tại trong hệ thống.")]
-        [IsNotNullOrEmpty("Mã kho không được để trống.")]
-        [ColumnName("Mã kho", 30, false, false, false)]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Mã kho không được để trống.")]
+        [ColumnName(Name = "Mã kho", Width = 30)]
         public string DepotCode { get; set; }
 
         /// <summary>
         /// Tên kho
         /// </summary>
-        [IsNotNullOrEmpty("Tên kho không được để trống.")]
-        [ColumnName("Tên kho", 50, false, false, false)]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Tên kho không được để trống.")]
+        [ColumnName(Name = "Tên kho", Width = 50)]
         public string DepotName { get; set; }
 
         /// <summary>
         /// Địa chỉ
         /// </summary>
-        [ColumnName("Địa chỉ", 100, false, false, false)]
+        [ColumnName(Name = "Địa chỉ", Width = 100)]
         public string DepotDelivery { get; set; }
 
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
-        [ColumnName("Trạng thái", 20, false, false, false)]
+        [ColumnName(Name = "Trạng thái", Width = 20)]
         public bool IsActive { get; set; }
     }
 }
