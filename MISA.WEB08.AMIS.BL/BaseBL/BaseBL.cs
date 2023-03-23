@@ -89,17 +89,25 @@ namespace MISA.WEB08.AMIS.BL
             var v_Limit = int.Parse(formData["v_Limit"].ToString());
             var v_Where = formData.Keys.Contains("v_Where") ? Convert.ToString(formData["v_Where"]).Trim() : null;
             var v_Sort = formData.Keys.Contains("v_Sort") ? Convert.ToString(formData["v_Sort"]) : null;
+            var v_Select = formData.Keys.Contains("v_Select") ? JsonConvert.DeserializeObject<List<string>>(Convert.ToString(formData["v_Select"])) : new List<string>();
 
-            List<ComparisonTypeSearch> listQuery = formData.Keys.Contains("customSearch") ? JsonConvert.DeserializeObject <List<ComparisonTypeSearch>>(Convert.ToString(formData["customSearch"])) : new List<ComparisonTypeSearch>();
+            List<ComparisonTypeSearch> listQuery = formData.Keys.Contains("CustomSearch") ? JsonConvert.DeserializeObject <List<ComparisonTypeSearch>>(Convert.ToString(formData["CustomSearch"])) : new List<ComparisonTypeSearch>();
             string v_Query = "";
             foreach (ComparisonTypeSearch item in listQuery)
             {
-                if (!string.IsNullOrEmpty(item.valueSearch) || item.comparisonType == "!=Null" || item.comparisonType == "=Null")
+                if (!string.IsNullOrEmpty(item.ValueSearch) || item.ComparisonType == "!=Null" || item.ComparisonType == "=Null")
                 {
-                    v_Query += Validate<T>.FormatQuery(item.columnSearch, item.valueSearch.Trim(), item.typeSearch, item.comparisonType);
+                    if (item.Join == null || string.IsNullOrEmpty(item.Join.TableJoin))
+                    {
+                        v_Query += Validate<T>.FormatQuery(item.ColumnSearch, item.ValueSearch.Trim(), item.TypeSearch, item.ComparisonType, typeof(T).Name);
+                    }
+                    else
+                    {
+                        v_Query += Validate<T>.FormatQuery(item.ColumnSearch, item.ValueSearch.Trim(), item.TypeSearch, item.ComparisonType, item.Join.TableJoin);
+                    }
                 }
             }
-            return _baseDL.GetFitterRecords(v_Offset, v_Limit, v_Where, v_Sort, v_Query);
+            return _baseDL.GetFitterRecords(v_Offset, v_Limit, v_Where, v_Sort, v_Query, string.Join(", ", v_Select));
         }
 
         /// <summary>
@@ -134,7 +142,7 @@ namespace MISA.WEB08.AMIS.BL
                 {
                     Success = false,
                     ErrorCode = MisaAmisErrorCode.InsertFailed,
-                    Data = Resource.UserMsg_InsertFailed,
+                    Data = "message.api.data_change",
                 };
             }
             SaveCode(record);
@@ -155,11 +163,11 @@ namespace MISA.WEB08.AMIS.BL
         public virtual ServiceResponse UpdateRecord(Guid recordID, T record)
         {
             Validate<T> Valid = new Validate<T>(_baseDL);
-            var validateUnique = Valid.CheckUnique(record, recordID);
-            if (!validateUnique.Success)
-            {
-                return validateUnique;
-            }
+            //var validateUnique = Valid.CheckUnique(record, recordID);
+            //if (!validateUnique.Success)
+            //{
+            //    return validateUnique;
+            //}
             var validateResult = Validate<T>.ValidateData(record);
             if (!validateResult.Success)
             {
@@ -178,7 +186,7 @@ namespace MISA.WEB08.AMIS.BL
                 {
                     Success = false,
                     ErrorCode = MisaAmisErrorCode.UpdateFailed,
-                    Data = result,
+                    Data = "message.api.data_change",
                 };
             }
             return new ServiceResponse
@@ -214,7 +222,7 @@ namespace MISA.WEB08.AMIS.BL
                     {
                         Success = false,
                         ErrorCode = MisaAmisErrorCode.DeleteFailed,
-                        Data = Resource.UserMsg_DeleteFailed,
+                        Data = "message.api.data_change",
                     };
                 }
             }
@@ -228,18 +236,19 @@ namespace MISA.WEB08.AMIS.BL
         /// xóa nhiều bản ghi
         /// </summary>
         /// <param name="listRecordID">danh sách bản ghi cần xoá</param>
+        /// <param name="count">Số lượng bản ghi bị xoá</param>
         /// <returns>Số kết quả bản ghi đã xoá</returns>
         /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public virtual ServiceResponse DeleteMultiple(Guid[] listRecordID)
+        public virtual ServiceResponse DeleteMultiple(string listRecordID, int count)
         {
-            int rowAffects = _baseDL.DeleteMultiple(listRecordID);
+            int rowAffects = _baseDL.DeleteMultiple(listRecordID, count);
             if (rowAffects == 0)
             {
                 return new ServiceResponse
                 {
                     Success = false,
                     ErrorCode = MisaAmisErrorCode.DeleteMultiple,
-                    Data = rowAffects
+                    Data = "message.api.data_change"
                 };
             }
             else
@@ -275,9 +284,21 @@ namespace MISA.WEB08.AMIS.BL
                 {
                     Success = false,
                     ErrorCode = MisaAmisErrorCode.UpdateFailed,
-                    Data = result,
+                    Data = "message.api.data_change",
                 };
             }
+        }
+
+        /// <summary>
+        /// Hhập khẩu dữ liệu từ tệp
+        /// </summary>
+        /// <param name="data">Json danh sách</param>
+        /// <param name="count">Số lượng record</param>
+        /// <returns></returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public bool ImportXLSX(string data, int count)
+        {
+            return _baseDL.ImportXLSX(data, count);
         }
 
         #endregion

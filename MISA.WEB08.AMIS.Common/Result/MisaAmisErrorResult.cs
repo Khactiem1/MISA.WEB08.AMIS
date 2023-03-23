@@ -69,8 +69,9 @@ namespace MISA.WEB08.AMIS.Common.Result
         #endregion
 
         #region Method
-        /// ctrl m o : đóng mở
+        /// ctrl m o : đóng
         /// ctrl k s : thêm region
+        /// ctrl m l : mở
         #endregion
     }
 }

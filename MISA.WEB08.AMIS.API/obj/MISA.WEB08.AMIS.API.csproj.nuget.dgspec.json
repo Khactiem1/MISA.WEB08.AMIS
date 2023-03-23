@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\MISA.WEB08.AMIS.API.csproj": {}
+    "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\MISA.WEB08.AMIS.API.csproj": {}
   },
   "projects": {
-    "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\MISA.WEB08.AMIS.API.csproj": {
+    "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\MISA.WEB08.AMIS.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\MISA.WEB08.AMIS.API.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\MISA.WEB08.AMIS.API.csproj",
         "projectName": "MISA.WEB08.AMIS.API",
-        "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\MISA.WEB08.AMIS.API.csproj",
+        "projectPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\MISA.WEB08.AMIS.API.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,11 +28,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj": {
-                "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj"
+              "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj"
               },
-              "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
-                "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj"
+              "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj"
               }
             }
           }
@@ -47,6 +47,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.1, )"
@@ -78,14 +86,14 @@
         }
       }
     },
-    "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj": {
+    "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj",
         "projectName": "MISA.WEB08.AMIS.BL",
-        "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj",
+        "projectPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -102,11 +110,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
-                "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj"
+              "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj"
               },
-              "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj": {
-                "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj"
+              "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj"
               }
             }
           }
@@ -149,14 +157,14 @@
         }
       }
     },
-    "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
+    "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj",
         "projectName": "MISA.WEB08.AMIS.Common",
-        "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj",
+        "projectPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -203,14 +211,14 @@
         }
       }
     },
-    "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj": {
+    "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj",
         "projectName": "MISA.WEB08.AMIS.DL",
-        "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj",
+        "projectPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -227,8 +235,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
-                "projectPath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj"
+              "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj"
               }
             }
           }

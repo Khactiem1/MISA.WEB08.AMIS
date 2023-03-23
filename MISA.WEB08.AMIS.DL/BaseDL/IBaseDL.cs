@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.WEB08.AMIS.Common.Result;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,9 +49,10 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="keyword">Từ khoá tìm kiếm</param>
         /// <param name="sort">Trường muốn sắp xếp</param>
         /// <param name="v_Query">Lọc theo yêu cầu</param>
+        /// <param name="v_Select">Trường muốn select</param>
         /// <returns>Danh sách record và tổng số bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetFitterRecords(int offset, int limit, string? keyword, string? sort,string v_Query);
+        public Paging GetFitterRecords(int offset, int limit, string? keyword, string? sort,string v_Query, string v_Select);
 
         /// <summary>
         /// Hàm Lấy danh sách bản ghi theo từ khoá tìm kiếm không phân trang
@@ -117,9 +119,10 @@ namespace MISA.WEB08.AMIS.DL
         /// xóa nhiều bản ghi
         /// </summary>
         /// <param name="listRecordID">danh sách bản ghi cần xoá</param>
+        /// <param name="count">Số lượng bản ghi bị xoá</param>
         /// <returns>Dữ liệu của bản ghi nếu như bản ghi đó có tồn tại trong hệ thống</returns>
         /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public int DeleteMultiple(Guid[] listRecordID);
+        public int DeleteMultiple(string listRecordID, int count);
 
         /// <summary>
         /// Hàm cập nhật toggle active bản ghi
@@ -128,5 +131,14 @@ namespace MISA.WEB08.AMIS.DL
         /// <returns>ID record sau khi cập nhật</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public Guid ToggleActive(Guid recordID);
+
+        /// <summary>
+        /// Hhập khẩu dữ liệu từ tệp
+        /// </summary>
+        /// <param name="data">Json danh sách</param>
+        /// <param name="count">Số lượng record</param>
+        /// <returns></returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public bool ImportXLSX(string data, int count);
     }
 }

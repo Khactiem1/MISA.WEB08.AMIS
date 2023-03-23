@@ -13,3 +13,48 @@ D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.dll
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\ref\MISA.WEB08.AMIS.DL.dll
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.pdb
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\MISA.WEB08.AMIS.DL.deps.json
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\MISA.WEB08.AMIS.DL.dll
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\ref\MISA.WEB08.AMIS.DL.dll
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\MISA.WEB08.AMIS.DL.pdb
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\MISA.WEB08.AMIS.Common.dll
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\MISA.WEB08.AMIS.Common.pdb
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.csproj.AssemblyReference.cache
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.GeneratedMSBuildEditorConfig.editorconfig
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.AssemblyInfoInputs.cache
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.AssemblyInfo.cs
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.csproj.CoreCompileInputs.cache
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.csproj.CopyComplete
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.dll
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\ref\MISA.WEB08.AMIS.DL.dll
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.pdb
+N:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\MISA.WEB08.AMIS.DL.deps.json
+N:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\MISA.WEB08.AMIS.DL.dll
+N:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\ref\MISA.WEB08.AMIS.DL.dll
+N:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\MISA.WEB08.AMIS.DL.pdb
+N:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\MISA.WEB08.AMIS.Common.dll
+N:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\MISA.WEB08.AMIS.Common.pdb
+N:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.csproj.AssemblyReference.cache
+N:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.GeneratedMSBuildEditorConfig.editorconfig
+N:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.AssemblyInfoInputs.cache
+N:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.AssemblyInfo.cs
+N:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.csproj.CoreCompileInputs.cache
+N:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.csproj.CopyComplete
+N:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.dll
+N:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\ref\MISA.WEB08.AMIS.DL.dll
+N:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.pdb
+C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\MISA.WEB08.AMIS.DL.deps.json
+C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\MISA.WEB08.AMIS.DL.dll
+C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\ref\MISA.WEB08.AMIS.DL.dll
+C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\MISA.WEB08.AMIS.DL.pdb
+C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\MISA.WEB08.AMIS.Common.dll
+C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\bin\Debug\net5.0\MISA.WEB08.AMIS.Common.pdb
+C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.csproj.AssemblyReference.cache
+C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.AssemblyInfoInputs.cache
+C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.AssemblyInfo.cs
+C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.csproj.CopyComplete
+C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.dll
+C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\ref\MISA.WEB08.AMIS.DL.dll
+C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.DL\obj\Debug\net5.0\MISA.WEB08.AMIS.DL.pdb

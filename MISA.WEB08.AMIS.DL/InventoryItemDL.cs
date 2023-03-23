@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using MISA.WEB08.AMIS.Common.Entities;
 using MISA.WEB08.AMIS.Common.Resources;
+using MISA.WEB08.AMIS.Common.Result;
 using MySqlConnector;
 using System;
 using System.Collections.Generic;
@@ -69,9 +70,9 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="v_Query">Lọc theo yêu cầu</param>
         /// <returns>Danh sách record và tổng số bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public override object GetFitterRecords(int offset, int limit, string? keyword, string? sort, string v_Query)
+        public override Paging GetFitterRecords(int offset, int limit, string? keyword, string? sort, string v_Query, string v_Select)
         {
-            object result;
+            Paging result;
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("v_Offset", offset);
@@ -91,11 +92,11 @@ namespace MISA.WEB08.AMIS.DL
                     parameters,
                     commandType: System.Data.CommandType.StoredProcedure
                     );
-                result = new
+                result = new Paging
                 {
                     recordList = records.Read<InventoryItem>().ToList(),
                     totalCount = records.ReadSingle().totalCount,
-                    result1 = records.ReadSingle().result1,
+                    dataMore = records.ReadSingle().result1,
                 };
             }
             return result;

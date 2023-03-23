@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "j8afYunG3U3k5rn0bNOViZZfMW+EtvRzJevT9oTzEFy71a/VFiYZ77r56S8cqLLQuBfWx9g+HAvXyPYJzUdkoQ==",
+  "dgSpecHash": "dX+clSC0DNio7gMkIeiUu6Vp9FhDvkORtcU5TTKyLOdVhtUmP5PZJJNugasxnWq62KmfKGGJZKrSzJMPwT7xKA==",
   "success": true,
-  "projectFilePath": "D:\\Data\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\mysqlconnector\\2.1.13\\mysqlconnector.2.1.13.nupkg.sha512",

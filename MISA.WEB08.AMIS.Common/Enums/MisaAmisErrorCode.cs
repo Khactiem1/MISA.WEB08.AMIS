@@ -64,5 +64,17 @@ namespace MISA.WEB08.AMIS.Common.Enums
         /// Created by : Khắc Tiềm 21.09.2022
         /// </summary>
         Incurred = 8,
+
+        /// <summary>
+        /// Lỗi không tìm đấy dữ liệu
+        /// Created by : Khắc Tiềm 21.09.2022
+        /// </summary>
+        NotFoundData = 9,
+
+        /// <summary>
+        /// Tệp không đúng định dạng
+        /// Created by : Khắc Tiềm 21.09.2022
+        /// </summary>
+        FileNotCorrect = 10,
     }
 }

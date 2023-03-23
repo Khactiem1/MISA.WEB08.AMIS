@@ -22,21 +22,21 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// id đơn vị
         /// </summary>7
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Mã đơn vị không được để trống.")]
-        public Guid? UnitID { get; set; }
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
+        public Guid? BranchID { get; set; }
 
         /// <summary>
         /// mã nhân viên
         /// </summary>
-        [Unique("Mã nhân viên <{0}> đã tồn tại trong hệ thống.")]
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Mã nhân viên không được để trống.")]
+        [Unique("validate.unique")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Mã nhân viên", Width = 16)]
         public string EmployeeCode { get; set; }
 
         /// <summary>
         /// tên nhân viên
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Tên nhân viên không được để trống.")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Tên nhân viên", Width = 40)]
         public string EmployeeName { get; set; }
 
@@ -44,20 +44,26 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// tên đơn vị
         /// </summary>
         [ColumnName(Name = "Tên đơn vị", Width = 50)]
-        public string UnitName { get; set; }
+        public string? BranchName { get; set; }
+
+        /// <summary>
+        /// mã đơn vị
+        /// </summary>
+        [ColumnName(Name = "Mã đơn vị", Width = 30)]
+        public string? BranchCode { get; set; }
 
         /// <summary>
         /// ngày sinh
         /// </summary>
         [ColumnName(Name = "Ngày sinh", Width = 20, IsDate = true)]
-        [Validate(MaxDateNow = true, ErrorMessage = "Ngày sinh phải nhỏ hơn ngày hiện tại.")]
+        [Validate(MaxDateNow = true, ErrorMessage = "validate.max_date_now")]
         public DateTime? DateOfBirth { get; set; }
 
         /// <summary>
         /// giới tính
         /// </summary>
         [ColumnName(Name = "Giới tính", Width = 10, IsGender = true)]
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
 
         /// <summary>
         /// chứng minh thư
@@ -93,7 +99,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// ngày cấp cmnd
         /// </summary>
         [ColumnName(Name = "Ngày cấp chứng minh thư", Width = 30, IsDate = true)]
-        [Validate(MaxDateNow = true, ErrorMessage = "Ngày cấp phải nhỏ hơn ngày hiện tại.")]
+        [Validate(MaxDateNow = true, ErrorMessage = "validate.max_date_now")]
         public DateTime? DayForIdentity { get; set; }
 
         /// <summary>
@@ -106,21 +112,21 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// số điện thoại
         /// </summary>
         [ColumnName(Name = "Điện thoại", Width = 20)]
-        [Validate(PhoneNumber = true, ErrorMessage = "Không đúng định dạng số điện thoại.")]
+        [Validate(PhoneNumber = true, ErrorMessage = "validate.malformed")]
         public string PhoneNumber { get; set; }
 
         /// <summary>
         /// số điện thoại cố định
         /// </summary>
         [ColumnName(Name = "Điện thoại cố định", Width = 20)]
-        [Validate(PhoneNumber = true, ErrorMessage = "Không đúng định dạng số điện thoại cố định.")]
+        [Validate(PhoneNumber = true, ErrorMessage = "validate.malformed")]
         public string LandlinePhone { get; set; }
 
         /// <summary>
         /// điạ chỉ email
         /// </summary>
         [ColumnName(Name = "Địa chỉ Email", Width = 30)]
-        [Validate(Email = true, ErrorMessage = "Không đúng định dạng email.")]
+        [Validate(Email = true, ErrorMessage = "validate.malformed")]
         public string EmployeeEmail { get; set; }
 
         /// <summary>
@@ -132,7 +138,19 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
+        [ColumnName(Name = "Là khách hàng", Width = 40)]
+        public bool? IsCustomer { get; set; } = false;
+
+        /// <summary>
+        /// Hoạt động hay không hoạt động
+        /// </summary>
+        [ColumnName(Name = "Là nhà cung cấp", Width = 40)]
+        public bool? IsVendor { get; set; } = false;
+
+        /// <summary>
+        /// Hoạt động hay không hoạt động
+        /// </summary>
         [ColumnName(Name = "Trạng thái", Width = 20)]
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

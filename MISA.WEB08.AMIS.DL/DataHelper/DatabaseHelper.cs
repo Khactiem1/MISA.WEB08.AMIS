@@ -32,7 +32,7 @@ namespace MISA.WEB08.AMIS.DL
                 result = mysqlConnection.Query<T>(
                     storeProcedureName,
                     parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
+                    commandType: CommandType.StoredProcedure
                     );
             }
             return result;
@@ -52,7 +52,7 @@ namespace MISA.WEB08.AMIS.DL
                 result = mysqlConnection.QueryFirstOrDefault<T>(
                     storeProcedureName,
                     parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
+                    commandType: CommandType.StoredProcedure
                     );
             }
             return result;
@@ -82,7 +82,7 @@ namespace MISA.WEB08.AMIS.DL
                         rowAffects += mysqlConnection.Execute(storeProcedureName,
                             parameters,
                             transaction: transaction,
-                            commandType: System.Data.CommandType.StoredProcedure
+                            commandType: CommandType.StoredProcedure
                             );
                         transaction.Commit();
                     }

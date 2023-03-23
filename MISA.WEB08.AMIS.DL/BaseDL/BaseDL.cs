@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using MISA.WEB08.AMIS.Common.Attributes;
 using MISA.WEB08.AMIS.Common.Resources;
+using MISA.WEB08.AMIS.Common.Result;
 using MySqlConnector;
 using System;
 using System.Collections.Generic;
@@ -138,7 +139,7 @@ namespace MISA.WEB08.AMIS.DL
                 result = mysqlConnection.QueryFirstOrDefault<string>(
                     storeProcedureName,
                     parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
+                    commandType: CommandType.StoredProcedure
                     );
             }
             return result;
@@ -152,11 +153,12 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="keyword">Từ khoá tìm kiếm</param>
         /// <param name="sort">Trường muốn sắp xếp</param>
         /// <param name="v_Query">Lọc theo yêu cầu</param>
+        /// <param name="v_Select">Trường muốn select</param>
         /// <returns>Danh sách record và tổng số bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public virtual object GetFitterRecords(int offset, int limit, string? keyword, string? sort, string v_Query)
+        public virtual Paging GetFitterRecords(int offset, int limit, string? keyword, string? sort, string v_Query, string v_Select)
         {
-            object result;
+            Paging result;
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("v_Offset", offset);
@@ -164,6 +166,7 @@ namespace MISA.WEB08.AMIS.DL
             parameters.Add("v_Sort", sort);
             parameters.Add("v_Where", keyword);
             parameters.Add("v_Query", v_Query);
+            parameters.Add("v_Select", v_Select != "" ?  ','+v_Select : "");
 
             // chuẩn bị câu lệnh MySQL
             string storeProcedureName = string.Format(Resource.Proc_GetFilterPaging, typeof(T).Name);
@@ -174,9 +177,9 @@ namespace MISA.WEB08.AMIS.DL
                 var records = mysqlConnection.QueryMultiple(
                     storeProcedureName,
                     parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
+                    commandType: CommandType.StoredProcedure
                     );
-                result = new
+                result = new Paging
                 {
                     recordList = records.Read<T>().ToList(),
                     totalCount = records.ReadSingle().totalCount,
@@ -210,7 +213,7 @@ namespace MISA.WEB08.AMIS.DL
                 result = mysqlConnection.QueryFirstOrDefault<int>(
                     storeProcedureName,
                     parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
+                    commandType: CommandType.StoredProcedure
                     );
             }
             if (result == 0)
@@ -294,6 +297,8 @@ namespace MISA.WEB08.AMIS.DL
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public virtual Guid UpdateRecord(Guid recordID, T record)
         {
+            var messError = "";
+
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
             var properties = typeof(T).GetProperties();
@@ -312,6 +317,8 @@ namespace MISA.WEB08.AMIS.DL
                     parameters.Add($"v_{propertyName}", propertyValue);
                 }
             }
+            parameters.Add($"v_messError", messError);
+
             // chuẩn bị câu lệnh MySQL
             string storeProcedureName = string.Format(Resource.Proc_UpdateOne, typeof(T).Name);
             int numberOfAffectdRows = _dbHelper.RunProcWithExecute(storeProcedureName, parameters);
@@ -353,9 +360,10 @@ namespace MISA.WEB08.AMIS.DL
         /// xóa nhiều bản ghi
         /// </summary>
         /// <param name="listRecordID">danh sách bản ghi cần xoá</param>
+        /// <param name="count">Số lượng bản ghi bị xoá</param>
         /// <returns>Số kết quả bản ghi đã xoá</returns>
         /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public virtual int DeleteMultiple(Guid[] listRecordID)
+        public virtual int DeleteMultiple(string listRecordID, int count)
         {
             var rowAffects = 0;
             using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
@@ -374,15 +382,14 @@ namespace MISA.WEB08.AMIS.DL
                         string storeProcedureName = string.Format(Resource.Proc_DeleteMultiple, typeof(T).Name);
                         // Khởi tạo các parameter để chèn vào trong Proc
                         DynamicParameters parameters = new DynamicParameters();
-                        string listID = string.Join(";", listRecordID);
-                        parameters.Add("v_ListID", listID);
+                        parameters.Add("v_ListID", listRecordID);
                         // thực hiện gọi vào DB
                         rowAffects += mysqlConnection.Execute(storeProcedureName,
                             parameters,
                             transaction: transaction,
-                            commandType: System.Data.CommandType.StoredProcedure
+                            commandType: CommandType.StoredProcedure
                             );
-                        if (rowAffects == listRecordID.Length)
+                        if (rowAffects == count)
                         {
                             transaction.Commit();
                         }
@@ -435,6 +442,61 @@ namespace MISA.WEB08.AMIS.DL
             {
                 return Guid.Empty;
             }
+        }
+
+        /// <summary>
+        /// Hhập khẩu dữ liệu từ tệp
+        /// </summary>
+        /// <param name="data">Json danh sách</param>
+        /// <param name="count">Số lượng record</param>
+        /// <returns></returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public bool ImportXLSX(string data, int count)
+        {
+            var affects = false;
+            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
+            {
+                //nếu như kết nối đang đóng thì tiến hành mở lại
+                if (mysqlConnection.State != ConnectionState.Open)
+                {
+                    mysqlConnection.Open();
+                }
+                //mở một giao dịch( nếu xóa thành công thì xóa hết, nếu lỗi giữa chừng thì dừng lại và khôi phục các dữ liệu đã bị xóa)
+                using (var transaction = mysqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        // chuẩn bị câu lệnh MySQL
+                        string storeProcedureName = string.Format(Resource.Proc_Import, typeof(T).Name);
+                        // Khởi tạo các parameter để chèn vào trong Proc
+                        DynamicParameters parameters = new DynamicParameters();
+                        parameters.Add("v_Data", data);
+                        // thực hiện gọi vào DB
+                        mysqlConnection.Execute(storeProcedureName,
+                            parameters,
+                            transaction: transaction,
+                            commandType: CommandType.StoredProcedure
+                            );
+                        transaction.Commit();
+                        affects = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                        //nếu thực hiện không thành công thì rollback
+                        transaction.Rollback();
+                        affects = false;
+                    }
+                    finally
+                    {
+                        if (mysqlConnection.State == ConnectionState.Open)
+                        {
+                            mysqlConnection.Close();
+                        }
+                    }
+                }
+            }
+            return affects;
         }
 
         #endregion

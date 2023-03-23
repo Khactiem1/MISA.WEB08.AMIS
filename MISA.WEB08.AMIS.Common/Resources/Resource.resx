@@ -194,7 +194,7 @@
     <comment>Tên file excel khi export</comment>
   </data>
   <data name="Path_SaveImage" xml:space="preserve">
-    <value>D:/Data/Bài tập CTM Misa/MISA.WEB08.AMIS/MISA.WEB08.AMIS.API/Assets/Images/</value>
+    <value>C:/Users/Khac Tiem/Downloads/test/Publish/Assets/Images/</value>
     <comment>Đường dẫn thư mục lưu hình ảnh</comment>
   </data>
   <data name="Path_SaveImageInDB" xml:space="preserve">
@@ -241,6 +241,10 @@
     <value>Proc_{0}_GetNewCode</value>
     <comment>Template string cho procedure lấy ra mã sinh tự động tăng của một bảng</comment>
   </data>
+  <data name="Proc_Import" xml:space="preserve">
+    <value>Proc_{0}_Import</value>
+    <comment>Template string cho procedure Import dữ liệu từ tệp</comment>
+  </data>
   <data name="Proc_InsertOne" xml:space="preserve">
     <value>Proc_{0}_InsertOne</value>
     <comment>Template string cho procedure thêm mới một bản ghi</comment>
@@ -270,7 +274,7 @@
     <comment>Message cho User đọc khi xoá nhiều bản ghi thât bại</comment>
   </data>
   <data name="UserMsg_Exception" xml:space="preserve">
-    <value>Có lỗi xảy ra! Vui lòng liên hệ với MISA</value>
+    <value>message.api.exception</value>
     <comment>Message cho User đọc khi gọi API gặp Exception</comment>
   </data>
   <data name="UserMsg_InsertFailed" xml:space="preserve">

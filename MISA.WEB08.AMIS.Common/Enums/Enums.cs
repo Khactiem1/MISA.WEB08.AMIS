@@ -64,4 +64,21 @@ namespace MISA.WEB08.AMIS.Common.Enums
         /// </summary>
         ToolTools = 5,
     }
+
+    /// <summary>
+    /// Kiểu join bảng
+    /// </summary>
+    /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
+    public enum TypeJoin: int
+    {
+        /// <summary>
+        /// Kiểu inner join
+        /// </summary>
+        InnerJoin = 1,
+
+        /// <summary>
+        /// Kiểu left join
+        /// </summary>
+        LeftJoin = 2,
+    }
 }

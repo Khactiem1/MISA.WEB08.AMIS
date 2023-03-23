@@ -79,9 +79,10 @@ namespace MISA.WEB08.AMIS.BL
         /// xóa nhiều bản ghi
         /// </summary>
         /// <param name="listRecordID">danh sách bản ghi cần xoá</param>
+        /// <param name="count">Số lượng bản ghi bị xoá</param>
         /// <returns>Số kết quả bản ghi đã xoá</returns>
         /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public ServiceResponse DeleteMultiple(Guid[] listRecordID);
+        public ServiceResponse DeleteMultiple(string listRecordID, int count);
 
         /// <summary>
         /// Hàm cập nhật toggle active bản ghi
@@ -90,5 +91,14 @@ namespace MISA.WEB08.AMIS.BL
         /// <returns>ID record sau khi cập nhật</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public ServiceResponse ToggleActive(Guid recordID);
+
+        /// <summary>
+        /// Hhập khẩu dữ liệu từ tệp
+        /// </summary>
+        /// <param name="data">Json danh sách</param>
+        /// <param name="count">Số lượng record</param>
+        /// <returns></returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        public bool ImportXLSX(string data, int count);
     }
 }

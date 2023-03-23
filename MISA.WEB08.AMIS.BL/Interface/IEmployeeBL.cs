@@ -19,6 +19,6 @@ namespace MISA.WEB08.AMIS.BL
         /// </summary>
         /// <returns>Danh sách tất cả bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public Stream GetEmployeeExport(string? keyword, string? sort);
+        public string GetEmployeeExport(Dictionary<string, object> formData);
     }
 }

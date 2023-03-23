@@ -1,4 +1,5 @@
 ﻿using MISA.WEB08.AMIS.Common.Attributes;
+using MISA.WEB08.AMIS.Common.Entities;
 using MISA.WEB08.AMIS.Common.Enums;
 using MISA.WEB08.AMIS.Common.Result;
 using MISA.WEB08.AMIS.DL;
@@ -44,7 +45,7 @@ namespace MISA.WEB08.AMIS.BL
         {
             // Validate dữ liệu đầu vào 
             var properties = typeof(T).GetProperties();
-            var validateFailures = new List<string>();
+            var validateFailures = "";
             foreach (var property in properties)
             {
                 // Kiểm tra không được rỗng
@@ -54,14 +55,16 @@ namespace MISA.WEB08.AMIS.BL
                 {
                     if (ValidateAttribute.IsNotNullOrEmpty && string.IsNullOrEmpty(propertyValue))
                     {
-                        validateFailures.Add(ValidateAttribute.ErrorMessage);
+                        validateFailures = ValidateAttribute.ErrorMessage;
+                        break;
                     }
                     // Kiểm tra phải đúng định dạng số điện thoại
                     else if (ValidateAttribute.PhoneNumber && !string.IsNullOrEmpty(propertyValue))
                     {
                         if (!Regex.IsMatch(propertyValue, @"(03|02|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b"))
                         {
-                            validateFailures.Add(ValidateAttribute.ErrorMessage);
+                            validateFailures = ValidateAttribute.ErrorMessage;
+                            break;
                         }
                     }
                     // kiểm tra phải đúng định dạng email
@@ -69,7 +72,8 @@ namespace MISA.WEB08.AMIS.BL
                     {
                         if (!Regex.IsMatch(propertyValue, @"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"))
                         {
-                            validateFailures.Add(ValidateAttribute.ErrorMessage);
+                            validateFailures = ValidateAttribute.ErrorMessage;
+                            break;
                         }
                     }
                     // Kiểm tra ngày không được lớn hơn ngày hiện tại
@@ -77,12 +81,13 @@ namespace MISA.WEB08.AMIS.BL
                     {
                         if (DateTime.Parse(propertyValue) > DateTime.Now)
                         {
-                            validateFailures.Add(ValidateAttribute.ErrorMessage);
+                            validateFailures = ValidateAttribute.ErrorMessage;
+                            break;
                         }
                     }
                 }
             }
-            if (validateFailures.Count > 0)
+            if (!string.IsNullOrEmpty(validateFailures))
             {
                 return new ServiceResponse
                 {
@@ -108,18 +113,19 @@ namespace MISA.WEB08.AMIS.BL
         {
             // Kiểm tra trùng dữ liệu đầu vào
             var properties = typeof(T).GetProperties();
-            var validateFailures = new List<string>();
+            var validateFailures = "";
             foreach (var property in properties)
             {
                 var propertyValue = property.GetValue(record, null)?.ToString();
                 var uniqueAttribute = (UniqueAttribute?)Attribute.GetCustomAttribute(property, typeof(UniqueAttribute));
                 if (uniqueAttribute != null && _baseDL.CheckDuplicate(property.Name, propertyValue, guidUpdate))
                 {
-                    validateFailures.Add(string.Format(uniqueAttribute.ErrorMessage, propertyValue));
+                    validateFailures = string.Format(uniqueAttribute.ErrorMessage, propertyValue);
+                    break;
                 }
             }
 
-            if (validateFailures.Count > 0)
+            if (!string.IsNullOrEmpty(validateFailures))
             {
                 return new ServiceResponse
                 {
@@ -152,21 +158,22 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="key">Column trong data base cần so sánh</param>
         /// <param name="value">Giá trị cần so sánh</param>
         /// <param name="typeSearch">Kiểu so sánh là chữ hay dạng số</param>
+        /// <param name="table">Table search</param>
         /// <param name="comparisonType">toán tử so sánh</param>
         /// <returns>truy vấn sau khi build</returns>
         ///  NK Tiềm 05/10/2022
-        public static string FormatQuery(string key, string value, string typeSearch, string comparisonType)
+        public static string FormatQuery(string key, string value, string typeSearch, string comparisonType, string table)
         {
             string v_Query = "";
             if ((comparisonType == "=" || comparisonType == ">" || comparisonType == ">=" || comparisonType == "<" || comparisonType == "<=") && (typeSearch == "number" || typeSearch == "date"))
             {
                 if (typeSearch == "number")
                 {
-                    v_Query += $" AND {key} {comparisonType} {value}";
+                    v_Query += $" AND {table}.{key} {comparisonType} {value}";
                 }
                 else
                 {
-                    v_Query += $" AND {key} {comparisonType} STR_TO_DATE('{DateTime.Parse(value).ToString("dd/MM/yyyy")}', '%d/%m/%Y')";
+                    v_Query += $" AND {table}.{key} {comparisonType} STR_TO_DATE('{DateTime.Parse(value).ToString("dd/MM/yyyy")}', '%d/%m/%Y')";
                 }
             }
             else if ((comparisonType == "=Null" || comparisonType == "!=Null" || comparisonType == "!=") && (typeSearch == "number" || typeSearch == "date"))
@@ -176,31 +183,31 @@ namespace MISA.WEB08.AMIS.BL
                     case "=Null":
                         if (typeSearch == "number")
                         {
-                            v_Query += $" AND ({key} IS NULL OR {key} = '' AND {key} != 0)";
+                            v_Query += $" AND ({table}.{key} IS NULL OR {table}.{key} = '' AND {table}.{key} != 0)";
                         }
                         else
                         {
-                            v_Query += $" AND {key} IS NULL";
+                            v_Query += $" AND {table}.{key} IS NULL";
                         }
                         break;
                     case "!=Null":
                         if (typeSearch == "number")
                         {
-                            v_Query += $" AND ({key} != NULL OR {key} != '' OR {key} = 0)";
+                            v_Query += $" AND ({table}.{key} != NULL OR {table}.{key} != '' OR {table}.{key} = 0)";
                         }
                         else
                         {
-                            v_Query += $" AND {key} IS NOT NULL";
+                            v_Query += $" AND {table}.{key} IS NOT NULL";
                         }
                         break;
                     case "!=":
                         if (typeSearch == "number")
                         {
-                            v_Query += $" AND ({key} != {value} OR {key} = '' OR {key} IS NULL)";
+                            v_Query += $" AND ({table}.{key} != {value} OR {table}.{key} = '' OR {table}.{key} IS NULL)";
                         }
                         else
                         {
-                            v_Query += $" AND {key} != STR_TO_DATE('{DateTime.Parse(value).ToString("dd/MM/yyyy")}', '%d/%m/%Y')";
+                            v_Query += $" AND {table}.{key} != STR_TO_DATE('{DateTime.Parse(value).ToString("dd/MM/yyyy")}', '%d/%m/%Y')";
                         }
                         break;
                 }
@@ -211,40 +218,41 @@ namespace MISA.WEB08.AMIS.BL
                 {
                     //Chứa
                     case "%%":
-                        v_Query += $" AND {key} LIKE '%{value}%'";
+                        v_Query += $" AND {table}.{key} LIKE '%{value}%'";
                         break;
                     //Rỗng
                     case "=Null":
-                        v_Query += $" AND ({key} IS NULL OR {key} = '')";
+                        v_Query += $" AND ({table}.{key} IS NULL OR {table}.{key} = '')";
                         break;
                     //Không rỗng
                     case "!=Null":
-                        v_Query += $" AND ({key} != NULL OR {key} != '')";
+                        v_Query += $" AND ({table}.{key} != NULL OR {table}.{key} != '')";
                         break;
                     //Bằng
                     case "=":
-                        v_Query += $" AND {key} = '{value}'";
+                        v_Query += $" AND {table}.{key} = '{value}'";
                         break;
                     //Khác
                     case "!=":
-                        v_Query += $" AND ({key} != '{value}' OR {key} = '' OR {key} IS NULL)";
+                        v_Query += $" AND ({table}.{key} != '{value}' OR {table}.{key} = '' OR {table}.{key} IS NULL)";
                         break;
                     //Không chứa
                     case "!%%":
-                        v_Query += $" AND ({key} NOT LIKE '%{value}%' OR {key} = '' OR {key} IS NULL)";
+                        v_Query += $" AND ({table}.{key} NOT LIKE '%{value}%' OR {table}.{key} = '' OR {table}.{key} IS NULL)";
                         break;
                     //Bắt đầu bởi
                     case "_%":
-                        v_Query += $" AND {key} LIKE '{value}%'";
+                        v_Query += $" AND {table}.{key} LIKE '{value}%'";
                         break;
                     //Kết thúc bởi
                     case "%_":
-                        v_Query += $" AND {key} LIKE '%{value}'";
+                        v_Query += $" AND {table}.{key} LIKE '%{value}'";
                         break;
                 }
             }
             return v_Query;
         }
+
         #endregion
     }
 }

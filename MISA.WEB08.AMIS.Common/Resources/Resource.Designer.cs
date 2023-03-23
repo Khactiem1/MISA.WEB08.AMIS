@@ -232,7 +232,7 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to D:/Data/Bài tập CTM Misa/MISA.WEB08.AMIS/MISA.WEB08.AMIS.API/Assets/Images/.
+        ///   Looks up a localized string similar to C:/Users/Khac Tiem/Downloads/test/Publish/Assets/Images/.
         /// </summary>
         public static string Path_SaveImage {
             get {
@@ -340,6 +340,15 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proc_{0}_Import.
+        /// </summary>
+        public static string Proc_Import {
+            get {
+                return ResourceManager.GetString("Proc_Import", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Proc_{0}_InsertOne.
         /// </summary>
         public static string Proc_InsertOne {
@@ -403,7 +412,7 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Có lỗi xảy ra! Vui lòng liên hệ với MISA.
+        ///   Looks up a localized string similar to message.api.exception.
         /// </summary>
         public static string UserMsg_Exception {
             get {

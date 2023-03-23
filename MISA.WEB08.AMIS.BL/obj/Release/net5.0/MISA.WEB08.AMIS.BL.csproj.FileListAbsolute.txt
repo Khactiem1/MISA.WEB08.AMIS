@@ -15,3 +15,20 @@ D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Release\net5.
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Release\net5.0\MISA.WEB08.AMIS.BL.dll
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Release\net5.0\ref\MISA.WEB08.AMIS.BL.dll
 D:\Data\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Release\net5.0\MISA.WEB08.AMIS.BL.pdb
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Release\net5.0\MISA.WEB08.AMIS.BL.deps.json
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Release\net5.0\MISA.WEB08.AMIS.BL.dll
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Release\net5.0\ref\MISA.WEB08.AMIS.BL.dll
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Release\net5.0\MISA.WEB08.AMIS.BL.pdb
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Release\net5.0\MISA.WEB08.AMIS.Common.dll
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Release\net5.0\MISA.WEB08.AMIS.DL.dll
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Release\net5.0\MISA.WEB08.AMIS.Common.pdb
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Release\net5.0\MISA.WEB08.AMIS.DL.pdb
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Release\net5.0\MISA.WEB08.AMIS.BL.csproj.AssemblyReference.cache
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Release\net5.0\MISA.WEB08.AMIS.BL.GeneratedMSBuildEditorConfig.editorconfig
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Release\net5.0\MISA.WEB08.AMIS.BL.AssemblyInfoInputs.cache
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Release\net5.0\MISA.WEB08.AMIS.BL.AssemblyInfo.cs
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Release\net5.0\MISA.WEB08.AMIS.BL.csproj.CoreCompileInputs.cache
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Release\net5.0\MISA.WEB08.AMIS.BL.csproj.CopyComplete
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Release\net5.0\MISA.WEB08.AMIS.BL.dll
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Release\net5.0\ref\MISA.WEB08.AMIS.BL.dll
+E:\SSD2\Khoá học\Bài tập CTM Misa\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Release\net5.0\MISA.WEB08.AMIS.BL.pdb

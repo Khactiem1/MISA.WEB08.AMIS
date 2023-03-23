@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -5,11 +6,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MISA.WEB08.AMIS.API.Middleware;
 using MISA.WEB08.AMIS.BL;
 using MISA.WEB08.AMIS.DL;
 using System.IO;
+using System.Text;
 
 namespace MISA.WEB08.AMIS.API
 {
@@ -27,9 +30,21 @@ namespace MISA.WEB08.AMIS.API
         {
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+                options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+                });
             services.AddControllers().ConfigureApiBehaviorOptions(options => {
                 options.SuppressModelStateInvalidFilter = true;
             });
@@ -42,8 +57,8 @@ namespace MISA.WEB08.AMIS.API
 
             services.AddScoped<IEmployeeBL, EmployeeBL>();
             services.AddScoped<IEmployeeDL, EmployeeDL>();
-            services.AddScoped<IUnitBL, UnitBL>();
-            services.AddScoped<IUnitDL, UnitDL>();
+            services.AddScoped<IBranchBL, BranchBL>();
+            services.AddScoped<IBranchDL, BranchDL>();
             services.AddScoped<IUnitCalculationBL, UnitCalculationBL>();
             services.AddScoped<IUnitCalculationDL, UnitCalculationDL>();
             services.AddScoped<IDepotBL, DepotBL>();
@@ -55,6 +70,7 @@ namespace MISA.WEB08.AMIS.API
             services.AddScoped(typeof(IBaseBL<>), typeof(BaseBL<>));
             services.AddScoped(typeof(IBaseDL<>), typeof(BaseDL<>));
             DataContext.MySqlConnectionString = Configuration.GetConnectionString("DefaultConnection");
+            DataContext.Path_root = Configuration["AppSettings:Path_root"];
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,13 +82,14 @@ namespace MISA.WEB08.AMIS.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MISA.WEB08.AMIS.API v1"));
             }
-            app.UseCors("CorsPolicy");
+            app.UseCors("AllowAll");
             app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
@@ -82,14 +99,14 @@ namespace MISA.WEB08.AMIS.API
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), @"Assets\Images")),
-                RequestPath = new PathString("/Assets/Images")
+                    Path.Combine(Directory.GetCurrentDirectory(), $@"{DataContext.Path_root}")),
+                RequestPath = new PathString("/Assets")
             });
             app.UseDirectoryBrowser(new DirectoryBrowserOptions
             {
                 FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), @"Assets\Images")),
-                RequestPath = new PathString("/Assets/Images")
+                    Path.Combine(Directory.GetCurrentDirectory(), $@"{DataContext.Path_root}")),
+                RequestPath = new PathString("/Assets")
             });
         }
     }

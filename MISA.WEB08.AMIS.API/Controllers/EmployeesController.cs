@@ -3,6 +3,11 @@ using System;
 using MISA.WEB08.AMIS.Common.Entities;
 using MISA.WEB08.AMIS.Common.Resources;
 using MISA.WEB08.AMIS.BL;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using MISA.WEB08.AMIS.Common.Result;
+using System.Collections.Generic;
+using MISA.WEB08.AMIS.Common.Enums;
 
 namespace MISA.WEB08.AMIS.API.Controllers
 {
@@ -10,6 +15,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
     /// API dữ liệu với bảng employee
     /// </summary>
     /// Created by : Nguyễn Khắc Tiềm (21/09/2022)
+    //[Authorize]
     public class EmployeesController : BasesController<Employee>
     {
         #region Field
@@ -36,13 +42,33 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// </summary>
         /// <returns>file Excel chứa dữ liệu danh sách </returns>
         /// CreatedBy: Nguyễn Khắc Tiềm (6/10/2022)
-        [HttpGet("export_data")]
-        public IActionResult GetEmployeeExport([FromQuery] string? keyword, [FromQuery] string? sort)
+        [HttpPost("export_data")]
+        public IActionResult GetEmployeeExport([FromBody] Dictionary<string, object> formData)
         {
-            var stream = _employeeBL.GetEmployeeExport(keyword, sort);
-            stream.Position = 0;
-            string excelName = $"{Resource.NameFileExcel} ({DateTime.Now.ToString("dd-MM-yyyy")}).xlsx";
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+            var excelName = _employeeBL.GetEmployeeExport(formData);
+            if (excelName != null)
+            {
+                return StatusCode(StatusCodes.Status200OK, new ServiceResponse
+                {
+                    Success = true,
+                    Data = excelName
+                });
+            }
+            else
+            {
+                return StatusCode(StatusCodes.Status200OK, new ServiceResponse
+                {
+                    Success = false,
+                    ErrorCode = MisaAmisErrorCode.InvalidInput,
+                    Data = new MisaAmisErrorResult(
+                            MisaAmisErrorCode.InvalidInput,
+                            Resource.DevMsg_ValidateFailed,
+                            "message.api.export_null",
+                            Resource.MoreInfo_Exception,
+                            HttpContext.TraceIdentifier
+                        )
+                });
+            }
         }
 
         #endregion

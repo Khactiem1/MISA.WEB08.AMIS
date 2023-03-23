@@ -1,11 +1,16 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MISA.WEB08.AMIS.BL;
 using MISA.WEB08.AMIS.Common.Enums;
 using MISA.WEB08.AMIS.Common.Resources;
 using MISA.WEB08.AMIS.Common.Result;
+using MISA.WEB08.AMIS.DL;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace MISA.WEB08.AMIS.API.Controllers
 {
@@ -45,10 +50,25 @@ namespace MISA.WEB08.AMIS.API.Controllers
         public virtual IActionResult GetAllRecords()
         {
             var recordList = _baseBL.GetAllRecords();
+            if (recordList != null)
+            {
+                return StatusCode(StatusCodes.Status200OK, new ServiceResponse
+                {
+                    Success = true,
+                    Data = recordList
+                });
+            }
             return StatusCode(StatusCodes.Status200OK, new ServiceResponse
             {
-                Success = true,
-                Data = recordList
+                Success = false,
+                ErrorCode = MisaAmisErrorCode.NotFoundData,
+                Data = new MisaAmisErrorResult(
+                            MisaAmisErrorCode.NotFoundData,
+                            Resource.DevMsg_ValidateFailed,
+                            "message.api.notFoundData",
+                            Resource.MoreInfo_Exception,
+                            HttpContext.TraceIdentifier
+                        )
             });
         }
 
@@ -61,10 +81,25 @@ namespace MISA.WEB08.AMIS.API.Controllers
         public virtual IActionResult GetAllRecordActive()
         {
             var recordList = _baseBL.GetAllRecordActive();
+            if(recordList != null)
+            {
+                return StatusCode(StatusCodes.Status200OK, new ServiceResponse
+                {
+                    Success = true,
+                    Data = recordList
+                });
+            }
             return StatusCode(StatusCodes.Status200OK, new ServiceResponse
             {
-                Success = true,
-                Data = recordList
+                Success = false,
+                ErrorCode = MisaAmisErrorCode.NotFoundData,
+                Data = new MisaAmisErrorResult(
+                            MisaAmisErrorCode.NotFoundData,
+                            Resource.DevMsg_ValidateFailed,
+                            "message.api.notFoundData",
+                            Resource.MoreInfo_Exception,
+                            HttpContext.TraceIdentifier
+                        )
             });
         }
 
@@ -78,10 +113,25 @@ namespace MISA.WEB08.AMIS.API.Controllers
         public virtual IActionResult GetRecordByID([FromRoute] Guid recordID)
         {
             var record = _baseBL.GetRecordByID(recordID.ToString());
+            if (record != null)
+            {
+                return StatusCode(StatusCodes.Status200OK, new ServiceResponse
+                {
+                    Success = true,
+                    Data = record
+                });
+            }
             return StatusCode(StatusCodes.Status200OK, new ServiceResponse
             {
-                Success = true,
-                Data = record
+                Success = false,
+                ErrorCode = MisaAmisErrorCode.NotFoundData,
+                Data = new MisaAmisErrorResult(
+                            MisaAmisErrorCode.NotFoundData,
+                            Resource.DevMsg_ValidateFailed,
+                            "message.api.notFoundData",
+                            Resource.MoreInfo_Exception,
+                            HttpContext.TraceIdentifier
+                        )
             });
         }
 
@@ -111,10 +161,25 @@ namespace MISA.WEB08.AMIS.API.Controllers
         public virtual IActionResult GetFitterRecords([FromBody] Dictionary<string, object> formData)
         {
             var records = _baseBL.GetFitterRecords(formData);
+            if (records != null)
+            {
+                return StatusCode(StatusCodes.Status200OK, new ServiceResponse
+                {
+                    Success = true,
+                    Data = records
+                });
+            }
             return StatusCode(StatusCodes.Status200OK, new ServiceResponse
             {
-                Success = true,
-                Data = records
+                Success = false,
+                ErrorCode = MisaAmisErrorCode.NotFoundData,
+                Data = new MisaAmisErrorResult(
+                        MisaAmisErrorCode.NotFoundData,
+                        Resource.DevMsg_Exception,
+                        "message.api.data_change",
+                        Resource.MoreInfo_Exception,
+                        HttpContext.TraceIdentifier
+                    )
             });
         }
 
@@ -142,25 +207,25 @@ namespace MISA.WEB08.AMIS.API.Controllers
             }
             else
             {
-                MisaAmisErrorCode errrorCode;
+                MisaAmisErrorCode errorCode;
                 if (result.ErrorCode == MisaAmisErrorCode.Duplicate)
                 {
-                    errrorCode = MisaAmisErrorCode.Duplicate;
+                    errorCode = MisaAmisErrorCode.Duplicate;
                 }
                 else if (result.ErrorCode == MisaAmisErrorCode.InsertFailed)
                 {
-                    errrorCode = MisaAmisErrorCode.InsertFailed;
+                    errorCode = MisaAmisErrorCode.InsertFailed;
                 }
                 else
                 {
-                    errrorCode = MisaAmisErrorCode.InvalidInput;
+                    errorCode = MisaAmisErrorCode.InvalidInput;
                 }
                 return StatusCode(StatusCodes.Status200OK, new ServiceResponse
                 {
                     Success = false,
-                    ErrorCode = errrorCode,
+                    ErrorCode = errorCode,
                     Data = new MisaAmisErrorResult(
-                            errrorCode,
+                            errorCode,
                             Resource.DevMsg_ValidateFailed,
                             result.Data,
                             Resource.MoreInfo_Exception,
@@ -177,9 +242,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <return> danh sách ID bản ghi sau khi xoá <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         [HttpPost("bulk_delete")]
-        public virtual IActionResult DeleteMultiple([FromBody] Guid[] listRecordID)
+        public virtual IActionResult DeleteMultiple([FromBody] List<Guid> listRecordID)
         {
-            var result = _baseBL.DeleteMultiple(listRecordID);
+            var result = _baseBL.DeleteMultiple(JsonConvert.SerializeObject(listRecordID.Select(ds => new { id = ds })), listRecordID.Count);
             if (result.Success)
             {
                 return StatusCode(StatusCodes.Status200OK, new ServiceResponse
@@ -188,21 +253,18 @@ namespace MISA.WEB08.AMIS.API.Controllers
                     Data = result
                 });
             }
-            else
+            return StatusCode(StatusCodes.Status200OK, new ServiceResponse
             {
-                return StatusCode(StatusCodes.Status200OK, new ServiceResponse
-                {
-                    Success = false,
-                    ErrorCode = MisaAmisErrorCode.DeleteMultiple,
-                    Data = new MisaAmisErrorResult(
+                Success = false,
+                ErrorCode = MisaAmisErrorCode.DeleteMultiple,
+                Data = new MisaAmisErrorResult(
                             MisaAmisErrorCode.DeleteMultiple,
                             Resource.DevMsg_DeleteMultipleFailed.ToString(),
-                            Resource.UserMsg_DeleteMultipleFailed,
+                            result.Data,
                             Resource.MoreInfo_Exception,
                             HttpContext.TraceIdentifier
                         )
-                });
-            }
+            });
         }
 
         #endregion
@@ -228,34 +290,31 @@ namespace MISA.WEB08.AMIS.API.Controllers
                     Data = result.Data
                 });
             }
+            MisaAmisErrorCode errorCode;
+            if (result.ErrorCode == MisaAmisErrorCode.Duplicate)
+            {
+                errorCode = MisaAmisErrorCode.Duplicate;
+            }
+            else if (result.ErrorCode == MisaAmisErrorCode.InsertFailed)
+            {
+                errorCode = MisaAmisErrorCode.InsertFailed;
+            }
             else
             {
-                MisaAmisErrorCode errrorCode;
-                if (result.ErrorCode == MisaAmisErrorCode.Duplicate)
-                {
-                    errrorCode = MisaAmisErrorCode.Duplicate;
-                }
-                else if (result.ErrorCode == MisaAmisErrorCode.InsertFailed)
-                {
-                    errrorCode = MisaAmisErrorCode.InsertFailed;
-                }
-                else
-                {
-                    errrorCode = MisaAmisErrorCode.InvalidInput;
-                }
-                return StatusCode(StatusCodes.Status200OK, new ServiceResponse
-                {
-                    Success = false,
-                    ErrorCode = errrorCode,
-                    Data = new MisaAmisErrorResult(
-                            errrorCode,
-                            Resource.DevMsg_ValidateFailed,
-                            result.Data,
-                            Resource.MoreInfo_Exception,
-                            HttpContext.TraceIdentifier
-                        )
-                });
+                errorCode = MisaAmisErrorCode.InvalidInput;
             }
+            return StatusCode(StatusCodes.Status200OK, new ServiceResponse
+            {
+                Success = false,
+                ErrorCode = errorCode,
+                Data = new MisaAmisErrorResult(
+                        errorCode,
+                        Resource.DevMsg_ValidateFailed,
+                        result.Data,
+                        Resource.MoreInfo_Exception,
+                        HttpContext.TraceIdentifier
+                    )
+            });
         }
 
         #endregion
@@ -280,21 +339,18 @@ namespace MISA.WEB08.AMIS.API.Controllers
                     Data = result
                 });
             }
-            else
+            return StatusCode(StatusCodes.Status200OK, new ServiceResponse
             {
-                return StatusCode(StatusCodes.Status200OK, new ServiceResponse
-                {
-                    Success = false,
-                    ErrorCode = result.ErrorCode,
-                    Data = new MisaAmisErrorResult(
+                Success = false,
+                ErrorCode = result.ErrorCode,
+                Data = new MisaAmisErrorResult(
                             (MisaAmisErrorCode)result.ErrorCode,
                             Resource.DevMsg_DeleteFailed.ToString(),
                             result.Data,
                             Resource.MoreInfo_Exception,
                             HttpContext.TraceIdentifier
                         )
-                });
-            }
+            });
         }
 
         /// <summary>
@@ -314,21 +370,66 @@ namespace MISA.WEB08.AMIS.API.Controllers
                     Data = result.Data
                 });
             }
-            else
+            return StatusCode(StatusCodes.Status200OK, new ServiceResponse
             {
-                return StatusCode(StatusCodes.Status200OK, new ServiceResponse
-                {
-                    Success = false,
-                    ErrorCode = MisaAmisErrorCode.Exception,
-                    Data = new MisaAmisErrorResult(
+                Success = false,
+                ErrorCode = MisaAmisErrorCode.Exception,
+                Data = new MisaAmisErrorResult(
                             MisaAmisErrorCode.Exception,
                             Resource.DevMsg_Exception,
                             result.Data,
                             Resource.MoreInfo_Exception,
                             HttpContext.TraceIdentifier
                         )
-                });
+            });
+        }
+
+        /// <summary>
+        /// API nhập khẩu dữ liệu từ tệp
+        /// </summary>
+        /// <param name="file">File Excel</param>
+        /// <returns></returns>
+        /// CreatedBy: Nguyễn Khắc Tiềm (6/10/2022)
+        [Route("import-xlsx")]
+        [HttpPost, DisableRequestSizeLimit]
+        public IActionResult ImportXLSX(IFormFile file)
+        {
+            var messageError = "";
+            if (file.Length > 0 && file.FileName.Contains(".xlsx"))
+            {
+                var result = false;
+                var filename = Guid.NewGuid().ToString().Replace("-", "") + ".xlsx";
+                var filePath = DataContext.Path_root + SaveFileImage.SaveExcelFileToDisk(file.OpenReadStream(), filename);
+                var data = SaveFileImage.ReadFromExcelFile(filePath, 1, out messageError);
+                string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+                var list = JsonConvert.DeserializeObject<List<T>>(json.ToString());
+                if (list != null && list.Count > 0)
+                {
+                    result = _baseBL.ImportXLSX(JsonConvert.SerializeObject(list), list.Count);
+                }
+                if (result)
+                {
+                    SaveFileImage.DeleteFile(filePath);
+                    return StatusCode(StatusCodes.Status200OK, new ServiceResponse
+                    {
+                        Success = true,
+                        Data = "message.api.import_success"
+                    });
+                }
+                SaveFileImage.DeleteFile(filePath);
             }
+            return StatusCode(StatusCodes.Status200OK, new ServiceResponse
+            {
+                Success = false,
+                ErrorCode = MisaAmisErrorCode.FileNotCorrect,
+                Data = new MisaAmisErrorResult(
+                        MisaAmisErrorCode.FileNotCorrect,
+                        messageError != "" ? messageError : Resource.DevMsg_Exception,
+                        "message.api.import_fail",
+                        Resource.MoreInfo_Exception,
+                        HttpContext.TraceIdentifier
+                    )
+            });
         }
 
         #endregion
