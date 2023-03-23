@@ -21,7 +21,6 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// mã đơn vị
         /// </summary>
-        [Unique("Mã đơn vị <{0}> đã tồn tại trong hệ thống, vui lòng kiểm tra lại.")]
         [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Mã đơn vị không được để trống")]
         public string BranchCode { get; set; }
 

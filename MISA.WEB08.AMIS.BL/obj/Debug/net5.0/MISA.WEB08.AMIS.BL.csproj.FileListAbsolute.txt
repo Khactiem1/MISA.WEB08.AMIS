@@ -66,3 +66,20 @@ C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Debug\ne
 C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Debug\net5.0\MISA.WEB08.AMIS.BL.dll
 C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Debug\net5.0\ref\MISA.WEB08.AMIS.BL.dll
 C:\Users\Admin\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Debug\net5.0\MISA.WEB08.AMIS.BL.pdb
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Debug\net5.0\MISA.WEB08.AMIS.BL.deps.json
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Debug\net5.0\MISA.WEB08.AMIS.BL.dll
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Debug\net5.0\ref\MISA.WEB08.AMIS.BL.dll
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Debug\net5.0\MISA.WEB08.AMIS.BL.pdb
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Debug\net5.0\MISA.WEB08.AMIS.Common.dll
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Debug\net5.0\MISA.WEB08.AMIS.DL.dll
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Debug\net5.0\MISA.WEB08.AMIS.Common.pdb
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\bin\Debug\net5.0\MISA.WEB08.AMIS.DL.pdb
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Debug\net5.0\MISA.WEB08.AMIS.BL.csproj.AssemblyReference.cache
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Debug\net5.0\MISA.WEB08.AMIS.BL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Debug\net5.0\MISA.WEB08.AMIS.BL.AssemblyInfoInputs.cache
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Debug\net5.0\MISA.WEB08.AMIS.BL.AssemblyInfo.cs
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Debug\net5.0\MISA.WEB08.AMIS.BL.csproj.CoreCompileInputs.cache
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Debug\net5.0\MISA.WEB08.AMIS.BL.csproj.CopyComplete
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Debug\net5.0\MISA.WEB08.AMIS.BL.dll
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Debug\net5.0\ref\MISA.WEB08.AMIS.BL.dll
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.BL\obj\Debug\net5.0\MISA.WEB08.AMIS.BL.pdb

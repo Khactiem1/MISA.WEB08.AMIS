@@ -103,45 +103,6 @@ namespace MISA.WEB08.AMIS.BL
         }
 
         /// <summary>
-        /// Hàm xử lý dữ liệu không được trùng
-        /// </summary>
-        /// <param name="record">Đối tượng cần validate</param>
-        /// <param name="guidUpdate">Nếu là update thì sẽ không kiểm tra trùng chính nó</param>
-        /// <returns>Danh sách các trường bị trùng</returns>
-        /// NK Tiềm 05/10/2022
-        public ServiceResponse CheckUnique(T record, Guid? guidUpdate)
-        {
-            // Kiểm tra trùng dữ liệu đầu vào
-            var properties = typeof(T).GetProperties();
-            var validateFailures = "";
-            foreach (var property in properties)
-            {
-                var propertyValue = property.GetValue(record, null)?.ToString();
-                var uniqueAttribute = (UniqueAttribute?)Attribute.GetCustomAttribute(property, typeof(UniqueAttribute));
-                if (uniqueAttribute != null && _baseDL.CheckDuplicate(property.Name, propertyValue, guidUpdate))
-                {
-                    validateFailures = string.Format(uniqueAttribute.ErrorMessage, propertyValue);
-                    break;
-                }
-            }
-
-            if (!string.IsNullOrEmpty(validateFailures))
-            {
-                return new ServiceResponse
-                {
-                    Success = false,
-                    ErrorCode = MisaAmisErrorCode.Duplicate,
-                    Data = validateFailures
-                };
-            }
-
-            return new ServiceResponse
-            {
-                Success = true
-            };
-        }
-
-        /// <summary>
         /// Hàm xử lý fomat số đúng định dạng
         /// </summary>
         /// <param name="pText"></param>

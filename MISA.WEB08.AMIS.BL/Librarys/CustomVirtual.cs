@@ -46,14 +46,6 @@ namespace MISA.WEB08.AMIS.BL
         {
         }
 
-        /// <summary>
-        /// Hàm xử lý lưu mã để tự sinh
-        /// </summary>
-        /// <param name="record">Bản ghi</param>
-        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public virtual void SaveCode(T record)
-        {
-        }
         #endregion
     }
 }

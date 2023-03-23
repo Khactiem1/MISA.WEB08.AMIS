@@ -118,12 +118,6 @@ namespace MISA.WEB08.AMIS.BL
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public virtual ServiceResponse InsertRecord(T record)
         {
-            Validate<T> Valid = new Validate<T>(_baseDL);
-            var validateUnique = Valid.CheckUnique(record, null);
-            if (!validateUnique.Success)
-            {
-                return validateUnique;
-            }
             var validateResult = Validate<T>.ValidateData(record);
             if (!validateResult.Success)
             {
@@ -134,22 +128,20 @@ namespace MISA.WEB08.AMIS.BL
             {
                 return validateCustom;
             }
-            SaveImage(ref record);
-            Guid result = _baseDL.InsertRecord(record);
-            if (result == Guid.Empty)
+            var result = _baseDL.InsertRecord(record);
+            if (!result.Success)
             {
                 return new ServiceResponse
                 {
                     Success = false,
                     ErrorCode = MisaAmisErrorCode.InsertFailed,
-                    Data = "message.api.data_change",
+                    Data = result.Data == Guid.Empty.ToString() ? "message.api.data_change" : result.Data,
                 };
             }
-            SaveCode(record);
             return new ServiceResponse
             {
                 Success = true,
-                Data = result,
+                Data = result.Data,
             };
         }
 
@@ -162,12 +154,6 @@ namespace MISA.WEB08.AMIS.BL
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public virtual ServiceResponse UpdateRecord(Guid recordID, T record)
         {
-            Validate<T> Valid = new Validate<T>(_baseDL);
-            //var validateUnique = Valid.CheckUnique(record, recordID);
-            //if (!validateUnique.Success)
-            //{
-            //    return validateUnique;
-            //}
             var validateResult = Validate<T>.ValidateData(record);
             if (!validateResult.Success)
             {
@@ -179,20 +165,20 @@ namespace MISA.WEB08.AMIS.BL
                 return validateCustom;
             }
             SaveImage(ref record);
-            Guid result = _baseDL.UpdateRecord(recordID, record);
-            if (result == Guid.Empty)
+            var result = _baseDL.UpdateRecord(recordID, record);
+            if (!result.Success)
             {
                 return new ServiceResponse
                 {
                     Success = false,
                     ErrorCode = MisaAmisErrorCode.UpdateFailed,
-                    Data = "message.api.data_change",
+                    Data = result.Data == Guid.Empty.ToString() ? "message.api.data_change" : result.Data,
                 };
             }
             return new ServiceResponse
             {
                 Success = true,
-                Data = result,
+                Data = result.Data,
             };
         }
 
@@ -207,7 +193,7 @@ namespace MISA.WEB08.AMIS.BL
             var checkIncurred = CheckIncurred(recordID);
             if (checkIncurred.Success)
             {
-                Guid result = _baseDL.DeleteRecord(recordID);
+                Guid result = _baseDL.DeleteRecord(recordID).Data;
                 if (result != Guid.Empty)
                 {
                     return new ServiceResponse
@@ -241,7 +227,7 @@ namespace MISA.WEB08.AMIS.BL
         /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
         public virtual ServiceResponse DeleteMultiple(string listRecordID, int count)
         {
-            int rowAffects = _baseDL.DeleteMultiple(listRecordID, count);
+            int rowAffects = _baseDL.DeleteMultiple(listRecordID, count).Data;
             if (rowAffects == 0)
             {
                 return new ServiceResponse
@@ -269,7 +255,7 @@ namespace MISA.WEB08.AMIS.BL
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public virtual ServiceResponse ToggleActive(Guid recordID)
         {
-            Guid result = _baseDL.ToggleActive(recordID);
+            Guid result = _baseDL.ToggleActive(recordID).Data;
             if (result != Guid.Empty)
             {
                 return new ServiceResponse
@@ -298,7 +284,7 @@ namespace MISA.WEB08.AMIS.BL
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public bool ImportXLSX(string data, int count)
         {
-            return _baseDL.ImportXLSX(data, count);
+            return _baseDL.ImportXLSX(data, count).Data;
         }
 
         #endregion

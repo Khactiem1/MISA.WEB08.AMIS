@@ -22,7 +22,6 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Mã kho
         /// </summary>
-        [Unique("Mã kho <{0}> đã tồn tại trong hệ thống.")]
         [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Mã kho không được để trống.")]
         [ColumnName(Name = "Mã kho", Width = 30)]
         public string DepotCode { get; set; }

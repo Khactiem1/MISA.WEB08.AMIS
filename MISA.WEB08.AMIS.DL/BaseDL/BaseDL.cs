@@ -16,7 +16,7 @@ namespace MISA.WEB08.AMIS.DL
     /// Dữ liệu thao tác với Database và trả về với bảng trong Database từ tầng DL
     /// </summary>
     /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
-    public class BaseDL<T> : IBaseDL<T>
+    public class BaseDL<T> : CustomParameter<T>, IBaseDL<T>
     {
 
         #region Field
@@ -232,12 +232,14 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="record"></param>
         /// <returns>ID bản ghi sau khi thêm</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public virtual Guid InsertRecord(T record)
+        public virtual ServiceResponse InsertRecord(T record)
         {
+            var v_MessOut = "";
             // tạo recordID
             Guid recordID = Guid.NewGuid();
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
+            CustomParameterForCreate(ref parameters, record);
             var properties = typeof(T).GetProperties();
             foreach (var property in properties)
             {
@@ -256,36 +258,20 @@ namespace MISA.WEB08.AMIS.DL
             }
             // chuẩn bị câu lệnh MySQL
             string storeProcedureName = string.Format(Resource.Proc_InsertOne, typeof(T).Name);
-            int numberOfAffectdRows = _dbHelper.RunProcWithExecute(storeProcedureName, parameters);
+            int numberOfAffectdRows = _dbHelper.RunProcWithExecute(storeProcedureName, parameters, ref v_MessOut);
             if (numberOfAffectdRows > 0)
             {
-                return recordID;
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = recordID
+                };
             }
-            else
+            return new ServiceResponse
             {
-                return Guid.Empty;
-            }
-        }
-
-        /// <summary>
-        /// Hàm cập nhật bản ghi mã tự sinh
-        /// </summary>
-        /// <param name="prefix">Phần tiền tố</param>
-        /// <param name="number">Phần số</param>
-        /// <param name="last">phần hậu tố</param>
-        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public virtual void SaveCode(string prefix, string number, string last)
-        {
-            // Khởi tạo các parameter để chèn vào trong Proc
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("v_TableName", typeof(T).Name);
-            parameters.Add("v_Prefix", prefix);
-            parameters.Add("v_ValueNumber", number);
-            parameters.Add("v_Last", last);
-            parameters.Add("v_LengthNumber", number.Length);
-            // chuẩn bị câu lệnh MySQL
-            string storeProcedureName = "Proc_coderecord_UpdateOne";
-            _dbHelper.RunProcWithExecute(storeProcedureName, parameters);
+                Success = false,
+                Data = !string.IsNullOrEmpty(v_MessOut) ? v_MessOut : Guid.Empty.ToString()
+            };
         }
 
         /// <summary>
@@ -295,12 +281,12 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="record"></param>
         /// <returns>ID record sau khi cập nhật</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public virtual Guid UpdateRecord(Guid recordID, T record)
+        public virtual ServiceResponse UpdateRecord(Guid recordID, T record)
         {
-            var messError = "";
-
+            var v_MessOut = "";
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
+            CustomParameterForUpdate(ref parameters, record);
             var properties = typeof(T).GetProperties();
             foreach (var property in properties)
             {
@@ -317,19 +303,23 @@ namespace MISA.WEB08.AMIS.DL
                     parameters.Add($"v_{propertyName}", propertyValue);
                 }
             }
-            parameters.Add($"v_messError", messError);
 
             // chuẩn bị câu lệnh MySQL
             string storeProcedureName = string.Format(Resource.Proc_UpdateOne, typeof(T).Name);
-            int numberOfAffectdRows = _dbHelper.RunProcWithExecute(storeProcedureName, parameters);
+            int numberOfAffectdRows = _dbHelper.RunProcWithExecute(storeProcedureName, parameters,ref v_MessOut);
             if (numberOfAffectdRows > 0)
             {
-                return recordID;
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = recordID
+                };
             }
-            else
+            return new ServiceResponse
             {
-                return Guid.Empty;
-            }
+                Success = false,
+                Data = !string.IsNullOrEmpty(v_MessOut) ? v_MessOut : Guid.Empty.ToString()
+            };
         }
 
         /// <summary>
@@ -338,22 +328,28 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="recordID"></param>
         /// <returns>ID record sau khi xoá</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public virtual Guid DeleteRecord(Guid recordID)
+        public virtual ServiceResponse DeleteRecord(Guid recordID)
         {
+            var v_MessOut = "";
             // chuẩn bị câu lệnh MySQL
             string storeProcedureName = string.Format(Resource.Proc_DeleteOne, typeof(T).Name);
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add($"v_{typeof(T).Name}ID", recordID);
-            int numberOfAffectdRows = _dbHelper.RunProcWithExecute(storeProcedureName, parameters);
+            int numberOfAffectdRows = _dbHelper.RunProcWithExecute(storeProcedureName, parameters, ref v_MessOut);
             if (numberOfAffectdRows > 0)
             {
-                return recordID;
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = recordID
+                };
             }
-            else
+            return new ServiceResponse
             {
-                return Guid.Empty;
-            }
+                Success = false,
+                Data = Guid.Empty
+            };
         }
 
         /// <summary>
@@ -363,7 +359,7 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="count">Số lượng bản ghi bị xoá</param>
         /// <returns>Số kết quả bản ghi đã xoá</returns>
         /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public virtual int DeleteMultiple(string listRecordID, int count)
+        public virtual ServiceResponse DeleteMultiple(string listRecordID, int count)
         {
             var rowAffects = 0;
             using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
@@ -384,6 +380,7 @@ namespace MISA.WEB08.AMIS.DL
                         DynamicParameters parameters = new DynamicParameters();
                         parameters.Add("v_ListID", listRecordID);
                         // thực hiện gọi vào DB
+                        parameters.Add($"v_MessOut", DbType.String, direction: ParameterDirection.Output, size: 255);
                         rowAffects += mysqlConnection.Execute(storeProcedureName,
                             parameters,
                             transaction: transaction,
@@ -416,7 +413,19 @@ namespace MISA.WEB08.AMIS.DL
                 }
             }
             //trả về kết quả(số bản ghi xóa được)
-            return rowAffects;
+            if (rowAffects == count)
+            {
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = rowAffects
+                };
+            }
+            return new ServiceResponse
+            {
+                Success = false,
+                Data = Guid.Empty
+            };
         }
 
         /// <summary>
@@ -425,23 +434,29 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="recordID"></param>
         /// <returns>ID record sau khi cập nhật</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public virtual Guid ToggleActive(Guid recordID)
+        public virtual ServiceResponse ToggleActive(Guid recordID)
         {
+            var v_MessOut = "";
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("v_ID", recordID);
             parameters.Add("v_ModifiedBy", Resource.DefaultUser);
             // chuẩn bị câu lệnh MySQL
             string storeProcedureName = string.Format(Resource.Proc_UpdateActive, typeof(T).Name);
-            int numberOfAffectdRows = _dbHelper.RunProcWithExecute(storeProcedureName, parameters);
+            int numberOfAffectdRows = _dbHelper.RunProcWithExecute(storeProcedureName, parameters, ref v_MessOut);
             if (numberOfAffectdRows > 0)
             {
-                return recordID;
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = recordID
+                };
             }
-            else
+            return new ServiceResponse
             {
-                return Guid.Empty;
-            }
+                Success = false,
+                Data = Guid.Empty
+            };
         }
 
         /// <summary>
@@ -451,52 +466,20 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="count">Số lượng record</param>
         /// <returns></returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public bool ImportXLSX(string data, int count)
+        public ServiceResponse ImportXLSX(string data, int count)
         {
-            var affects = false;
-            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
+            var v_MessOut = "";
+            // chuẩn bị câu lệnh MySQL
+            string storeProcedureName = string.Format(Resource.Proc_Import, typeof(T).Name);
+            // Khởi tạo các parameter để chèn vào trong Proc
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("v_Data", data);
+            _dbHelper.RunProcWithExecute(storeProcedureName, parameters, ref v_MessOut);
+            return new ServiceResponse
             {
-                //nếu như kết nối đang đóng thì tiến hành mở lại
-                if (mysqlConnection.State != ConnectionState.Open)
-                {
-                    mysqlConnection.Open();
-                }
-                //mở một giao dịch( nếu xóa thành công thì xóa hết, nếu lỗi giữa chừng thì dừng lại và khôi phục các dữ liệu đã bị xóa)
-                using (var transaction = mysqlConnection.BeginTransaction())
-                {
-                    try
-                    {
-                        // chuẩn bị câu lệnh MySQL
-                        string storeProcedureName = string.Format(Resource.Proc_Import, typeof(T).Name);
-                        // Khởi tạo các parameter để chèn vào trong Proc
-                        DynamicParameters parameters = new DynamicParameters();
-                        parameters.Add("v_Data", data);
-                        // thực hiện gọi vào DB
-                        mysqlConnection.Execute(storeProcedureName,
-                            parameters,
-                            transaction: transaction,
-                            commandType: CommandType.StoredProcedure
-                            );
-                        transaction.Commit();
-                        affects = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                        //nếu thực hiện không thành công thì rollback
-                        transaction.Rollback();
-                        affects = false;
-                    }
-                    finally
-                    {
-                        if (mysqlConnection.State == ConnectionState.Open)
-                        {
-                            mysqlConnection.Close();
-                        }
-                    }
-                }
-            }
-            return affects;
+                Success = true,
+                Data = true
+            };
         }
 
         #endregion

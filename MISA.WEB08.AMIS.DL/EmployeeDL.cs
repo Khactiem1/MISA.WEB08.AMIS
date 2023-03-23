@@ -33,6 +33,24 @@ namespace MISA.WEB08.AMIS.DL
 
         #region Method
 
+        /// <summary>
+        /// Hàm xử lý custom các tham số parameter truyền vào proc create ngoài những tham số mặc định
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="record"></param>
+        /// create by: nguyễn khắc tiềm (21/10/2022)
+        public override void CustomParameterForCreate(ref DynamicParameters? parameters, Employee record)
+        {
+            string prefix = "";
+            string number = "";
+            string last = "";
+            _dbHelper.SaveCode(record.EmployeeCode, ref prefix, ref number, ref last);
+            parameters.Add($"v_prefix", prefix);
+            parameters.Add($"v_number", number);
+            parameters.Add($"v_last", last);
+            parameters.Add($"v_lengthNumber", number.Length);
+        }
+
         #endregion
     }
 }

@@ -28,7 +28,6 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// mã nhân viên
         /// </summary>
-        [Unique("validate.unique")]
         [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Mã nhân viên", Width = 16)]
         public string EmployeeCode { get; set; }
@@ -138,13 +137,13 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
-        [ColumnName(Name = "Là khách hàng", Width = 40)]
+        [ColumnName(Name = "Là khách hàng", Width = 20, IsBollen = true)]
         public bool? IsCustomer { get; set; } = false;
 
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
-        [ColumnName(Name = "Là nhà cung cấp", Width = 40)]
+        [ColumnName(Name = "Là nhà cung cấp", Width = 20, IsBollen = true)]
         public bool? IsVendor { get; set; } = false;
 
         /// <summary>

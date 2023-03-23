@@ -63,7 +63,7 @@ namespace MISA.WEB08.AMIS.DL
         /// </summary>
         /// <returns>object</returns>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
-        public int RunProcWithExecute(string storeProcedureName, DynamicParameters? parameters)
+        public int RunProcWithExecute(string storeProcedureName, DynamicParameters? parameters, ref string? v_MessOut)
         {
             var rowAffects = 0;
             using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
@@ -79,11 +79,13 @@ namespace MISA.WEB08.AMIS.DL
                     try
                     {
                         // thực hiện gọi vào DB
+                        parameters.Add($"v_MessOut", DbType.String, direction: ParameterDirection.Output, size: 255);
                         rowAffects += mysqlConnection.Execute(storeProcedureName,
                             parameters,
                             transaction: transaction,
                             commandType: CommandType.StoredProcedure
                             );
+                        v_MessOut = parameters.Get<string>("v_MessOut");
                         transaction.Commit();
                     }
                     catch (Exception ex)
@@ -103,6 +105,49 @@ namespace MISA.WEB08.AMIS.DL
                 }
             }
             return rowAffects;
+        }
+
+        /// <summary>
+        /// Hàm tạo mã tự sinh
+        /// </summary>
+        /// <param name="code">Mã</param>
+        /// <param name="prefix">Phần chữ đầu</param>
+        /// <param name="number">Số lượng số</param>
+        /// <param name="last">Phần sau</param>
+        /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
+        public void SaveCode(string code, ref string prefix, ref string number, ref string last)
+        {
+            for (int i = 0; i < code.Length; i++)
+            {
+                char[] keyNumber = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+                char temp = code[i];
+                if ((keyNumber.Contains(temp)) && last == "")
+                {
+                    if (number == "" && temp == '0')
+                    {
+                        prefix += temp;
+                    }
+                    else
+                    {
+                        number += temp;
+                    }
+                }
+                else
+                {
+                    if (number != "")
+                    {
+                        last += temp;
+                    }
+                    else
+                    {
+                        prefix += temp;
+                    }
+                }
+            }
+            if (number == "")
+            {
+                number = "0";
+            }
         }
 
         #endregion

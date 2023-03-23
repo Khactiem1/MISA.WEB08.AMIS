@@ -22,7 +22,6 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Mã kho
         /// </summary>
-        [Unique("Nhóm vật tư <{0}> đã tồn tại trong hệ thống.")]
         [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Mã Nhóm vật tư không được để trống.")]
         [ColumnName(Name = "Mã Nhóm vật tư", Width = 35)]
         public string CommodityCode { get; set; }

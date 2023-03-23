@@ -22,7 +22,6 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Tên đơn vị tính
         /// </summary>
-        [Unique("Đơn vị <{0}> đã tồn tại trong hệ thống.")]
         [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Đơn vị không được để trống.")]
         [ColumnName(Name = "Đơn vị", Width = 16)]
         public string UnitCalculationName { get; set; }

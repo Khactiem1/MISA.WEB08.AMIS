@@ -44,36 +44,6 @@ namespace MISA.WEB08.AMIS.Common.Attributes
     }
 
     /// <summary>
-    /// Attributes xác định 1 không được trùng
-    /// Create by: Nguyễn Khắc Tiềm 23.09.2022
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Property)]
-    public class UniqueAttribute : Attribute
-    {
-        #region Filed
-
-        /// <summary>
-        /// Lỗi trả về cho client
-        /// </summary>
-        public string ErrorMessage;
-
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// Hàm khởi tạo 
-        /// </summary>
-        /// <param name="errorMessage"></param>
-        public UniqueAttribute(string errorMessage)
-        {
-            ErrorMessage = errorMessage;
-        }
-
-        #endregion
-    }
-
-    /// <summary>
     /// Attribute column tên của Property
     /// </summary>
     /// Create by: Nguyễn Khắc Tiềm 23.09.2022
@@ -106,6 +76,11 @@ namespace MISA.WEB08.AMIS.Common.Attributes
         /// Là số hay không
         /// </summary>
         public bool IsNumber = false;
+
+        /// <summary>
+        /// Là số hay không
+        /// </summary>
+        public bool IsBollen = false;
 
         #endregion
     }

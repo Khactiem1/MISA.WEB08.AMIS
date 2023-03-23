@@ -28,7 +28,6 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// mã hàng hoá vật tư
         /// </summary>
-        [Unique("Mã hàng hoá vật tư <{0}> đã tồn tại trong hệ thống.")]
         [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Mã hàng hoá vật tư không được để trống.")]
         [ColumnName(Name = "Mã hàng hoá vật tư", Width = 16)]
         public string InventoryItemCode { get; set; }

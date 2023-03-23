@@ -143,13 +143,19 @@ namespace MISA.WEB08.AMIS.BL
                             // xử lí các datetime ở ngày nhân viên
                             if ((displayNameAttributes[0] as ColumnName).IsDate)
                             {
-                                sheet.Cells[indexRow + 4, indexBody].Value = property.GetValue(employeeItem) != null ? property.GetValue(employeeItem) : "" ;
-                                //sheet.Cells[indexRow + 4, indexBody].Value = property.GetValue(employeeItem) != null ? DateTime.ParseExact(property.GetValue(employeeItem).ToString(), "d/M/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : "";
+                                //sheet.Cells[indexRow + 4, indexBody].Value = property.GetValue(employeeItem) != null ? property.GetValue(employeeItem) : "" ;
+                                sheet.Cells[indexRow + 4, indexBody].Value = property.GetValue(employeeItem) != null ? DateTime.ParseExact(property.GetValue(employeeItem).ToString(), "M/d/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : "";
                                 sheet.Cells[indexRow + 4, indexBody].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                             }
                             else if ((displayNameAttributes[0] as ColumnName).IsGender)
                             {
                                 sheet.Cells[indexRow + 4, indexBody].Value = (Gender)property.GetValue(employeeItem) == Gender.Male ? Resource.GenderMale : (Gender)property.GetValue(employeeItem) == Gender.Female ? Resource.GenderFemale : Resource.GenderOther;
+                                sheet.Cells[indexRow + 4, indexBody].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            }
+                            else if ((displayNameAttributes[0] as ColumnName).IsBollen)
+                            {
+                                sheet.Cells[indexRow + 4, indexBody].Value = (bool)property.GetValue(employeeItem) == true ? "Có" : "Không";
+                                sheet.Cells[indexRow + 4, indexBody].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                             }
                             else if ((displayNameAttributes[0] as ColumnName).Name == "Trạng thái")
                             {
@@ -200,50 +206,6 @@ namespace MISA.WEB08.AMIS.BL
                     Success = true
                 };
             }
-        }
-
-        /// <summary>
-        /// Hàm xử lý lưu mã để tự sinh
-        /// </summary>
-        /// <param name="record">Bản ghi</param>
-        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public override void SaveCode(Employee record)
-        {
-            string prefix = "";
-            string number = "";
-            string last = "";
-            for (int i = 0; i < record.EmployeeCode.Length; i++)
-            {
-                char[] keyNumber = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
-                char temp = record.EmployeeCode[i];
-                if ((keyNumber.Contains(temp)) && last == "")
-                {
-                    if (number == "" && temp == '0')
-                    {
-                        prefix += temp;
-                    }
-                    else
-                    {
-                        number += temp;
-                    }
-                }
-                else
-                {
-                    if (number != "")
-                    {
-                        last += temp;
-                    }
-                    else
-                    {
-                        prefix += temp;
-                    }
-                }
-            }
-            if (number == "")
-            {
-                number = "0";
-            }
-            _employeeDL.SaveCode(prefix, number, last);
         }
 
         #endregion

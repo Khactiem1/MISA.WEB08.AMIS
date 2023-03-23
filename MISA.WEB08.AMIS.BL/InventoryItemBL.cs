@@ -170,49 +170,6 @@ namespace MISA.WEB08.AMIS.BL
             }
         }
 
-        /// <summary>
-        /// Hàm xử lý lưu mã để tự sinh
-        /// </summary>
-        /// <param name="record">Bản ghi</param>
-        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public override void SaveCode(InventoryItem record)
-        {
-            string prefix = "";
-            string number = "";
-            string last = "";
-            for (int i = 0; i < record.InventoryItemCode.Length; i++)
-            {
-                char[] keyNumber = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
-                char temp = record.InventoryItemCode[i];
-                if ((keyNumber.Contains(temp)) && last == "")
-                {
-                    if (number == "" && temp == '0')
-                    {
-                        prefix += temp;
-                    }
-                    else
-                    {
-                        number += temp;
-                    }
-                }
-                else
-                {
-                    if (number != "")
-                    {
-                        last += temp;
-                    }
-                    else
-                    {
-                        prefix += temp; 
-                    }
-                }
-            }
-            if (number == "")
-            {
-                number = "0";
-            }
-            _inventoryItemBL.SaveCode(prefix, number, last);
-        }
         #endregion
     }
 }

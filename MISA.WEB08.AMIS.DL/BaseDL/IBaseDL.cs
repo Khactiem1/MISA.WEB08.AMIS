@@ -87,7 +87,7 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="record"></param>
         /// <returns>ID bản ghi sau khi thêm</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public Guid InsertRecord(T record);
+        public ServiceResponse InsertRecord(T record);
 
         /// <summary>
         /// Hàm cập nhật thông tin một bản ghi theo ID
@@ -96,16 +96,7 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="record"></param>
         /// <returns>ID record sau khi cập nhật</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public Guid UpdateRecord(Guid recordID, T record);
-
-        /// <summary>
-        /// Hàm cập nhật bản ghi mã tự sinh
-        /// </summary>
-        /// <param name="prefix">Phần tiền tố</param>
-        /// <param name="number">Phần số</param>
-        /// <param name="last">phần hậu tố</param>
-        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public void SaveCode(string prefix, string number, string last);
+        public ServiceResponse UpdateRecord(Guid recordID, T record);
 
         /// <summary>
         /// Xoá một bản ghi theo ID
@@ -113,7 +104,7 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="recordID"></param>
         /// <returns>ID record sau khi xoá</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public Guid DeleteRecord(Guid recordID);
+        public ServiceResponse DeleteRecord(Guid recordID);
 
         /// <summary>
         /// xóa nhiều bản ghi
@@ -122,7 +113,7 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="count">Số lượng bản ghi bị xoá</param>
         /// <returns>Dữ liệu của bản ghi nếu như bản ghi đó có tồn tại trong hệ thống</returns>
         /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public int DeleteMultiple(string listRecordID, int count);
+        public ServiceResponse DeleteMultiple(string listRecordID, int count);
 
         /// <summary>
         /// Hàm cập nhật toggle active bản ghi
@@ -130,7 +121,7 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="recordID"></param>
         /// <returns>ID record sau khi cập nhật</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public Guid ToggleActive(Guid recordID);
+        public ServiceResponse ToggleActive(Guid recordID);
 
         /// <summary>
         /// Hhập khẩu dữ liệu từ tệp
@@ -139,6 +130,6 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="count">Số lượng record</param>
         /// <returns></returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public bool ImportXLSX(string data, int count);
+        public ServiceResponse ImportXLSX(string data, int count);
     }
 }
