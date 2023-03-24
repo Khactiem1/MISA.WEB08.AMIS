@@ -15,11 +15,22 @@ namespace MISA.WEB08.AMIS.API.Controllers
     /// Created by : Nguyễn Khắc Tiềm (21/09/2022)
     public class BranchsController : BasesController<Branch>
     {
+        #region Field
+
+        private IBranchBL _unitBL;
+
+        #endregion
+
         #region Contructor
 
         public BranchsController(IBranchBL unitBL) : base(unitBL)
         {
+            _unitBL = unitBL;
         }
+
+        #endregion
+
+        #region Method
 
         #endregion
     }

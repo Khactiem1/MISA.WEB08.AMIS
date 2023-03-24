@@ -177,6 +177,26 @@
     <value>Khác</value>
     <comment>Giới tính Khác hiển thị giao diện</comment>
   </data>
+  <data name="Message_data_change" xml:space="preserve">
+    <value>message.api.data_change</value>
+    <comment>i18n</comment>
+  </data>
+  <data name="Message_export_null" xml:space="preserve">
+    <value>message.api.export_null</value>
+    <comment>i18n</comment>
+  </data>
+  <data name="Message_import_fail" xml:space="preserve">
+    <value>message.api.import_fail</value>
+    <comment>i18n</comment>
+  </data>
+  <data name="Message_import_success" xml:space="preserve">
+    <value>message.api.import_success</value>
+    <comment>i18n</comment>
+  </data>
+  <data name="Message_notFoundData" xml:space="preserve">
+    <value>message.api.notFoundData</value>
+    <comment>i18n</comment>
+  </data>
   <data name="MoreInfo_Exception" xml:space="preserve">
     <value>https://openapi.google.com/api/errorcode</value>
     <comment>Đường dẫn mô tả lỗi khi gọi API gặp Exception</comment>

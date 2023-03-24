@@ -63,7 +63,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
                     Data = new MisaAmisErrorResult(
                             MisaAmisErrorCode.InvalidInput,
                             Resource.DevMsg_ValidateFailed,
-                            "message.api.export_null",
+                            Resource.Message_export_null,
                             Resource.MoreInfo_Exception,
                             HttpContext.TraceIdentifier
                         )

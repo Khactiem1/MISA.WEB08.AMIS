@@ -196,6 +196,51 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to message.api.data_change.
+        /// </summary>
+        public static string Message_data_change {
+            get {
+                return ResourceManager.GetString("Message_data_change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to message.api.export_null.
+        /// </summary>
+        public static string Message_export_null {
+            get {
+                return ResourceManager.GetString("Message_export_null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to message.api.import_fail.
+        /// </summary>
+        public static string Message_import_fail {
+            get {
+                return ResourceManager.GetString("Message_import_fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to message.api.import_success.
+        /// </summary>
+        public static string Message_import_success {
+            get {
+                return ResourceManager.GetString("Message_import_success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to message.api.notFoundData.
+        /// </summary>
+        public static string Message_notFoundData {
+            get {
+                return ResourceManager.GetString("Message_notFoundData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://openapi.google.com/api/errorcode.
         /// </summary>
         public static string MoreInfo_Exception {

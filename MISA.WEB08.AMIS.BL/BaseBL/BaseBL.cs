@@ -135,7 +135,7 @@ namespace MISA.WEB08.AMIS.BL
                 {
                     Success = false,
                     ErrorCode = MisaAmisErrorCode.InsertFailed,
-                    Data = result.Data == Guid.Empty.ToString() ? "message.api.data_change" : result.Data,
+                    Data = result.Data == Guid.Empty.ToString() ? Resource.Message_data_change : result.Data,
                 };
             }
             return new ServiceResponse
@@ -172,7 +172,7 @@ namespace MISA.WEB08.AMIS.BL
                 {
                     Success = false,
                     ErrorCode = MisaAmisErrorCode.UpdateFailed,
-                    Data = result.Data == Guid.Empty.ToString() ? "message.api.data_change" : result.Data,
+                    Data = result.Data == Guid.Empty.ToString() ? Resource.Message_data_change : result.Data,
                 };
             }
             return new ServiceResponse
@@ -208,7 +208,7 @@ namespace MISA.WEB08.AMIS.BL
                     {
                         Success = false,
                         ErrorCode = MisaAmisErrorCode.DeleteFailed,
-                        Data = "message.api.data_change",
+                        Data = Resource.Message_data_change,
                     };
                 }
             }
@@ -234,7 +234,7 @@ namespace MISA.WEB08.AMIS.BL
                 {
                     Success = false,
                     ErrorCode = MisaAmisErrorCode.DeleteMultiple,
-                    Data = "message.api.data_change"
+                    Data = Resource.Message_data_change
                 };
             }
             else
@@ -270,7 +270,7 @@ namespace MISA.WEB08.AMIS.BL
                 {
                     Success = false,
                     ErrorCode = MisaAmisErrorCode.UpdateFailed,
-                    Data = "message.api.data_change",
+                    Data = Resource.Message_data_change,
                 };
             }
         }

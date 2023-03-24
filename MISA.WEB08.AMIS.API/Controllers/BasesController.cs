@@ -65,7 +65,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
                 Data = new MisaAmisErrorResult(
                             MisaAmisErrorCode.NotFoundData,
                             Resource.DevMsg_ValidateFailed,
-                            "message.api.notFoundData",
+                            Resource.Message_notFoundData,
                             Resource.MoreInfo_Exception,
                             HttpContext.TraceIdentifier
                         )
@@ -96,7 +96,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
                 Data = new MisaAmisErrorResult(
                             MisaAmisErrorCode.NotFoundData,
                             Resource.DevMsg_ValidateFailed,
-                            "message.api.notFoundData",
+                            Resource.Message_notFoundData,
                             Resource.MoreInfo_Exception,
                             HttpContext.TraceIdentifier
                         )
@@ -128,7 +128,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
                 Data = new MisaAmisErrorResult(
                             MisaAmisErrorCode.NotFoundData,
                             Resource.DevMsg_ValidateFailed,
-                            "message.api.notFoundData",
+                            Resource.Message_notFoundData,
                             Resource.MoreInfo_Exception,
                             HttpContext.TraceIdentifier
                         )
@@ -176,7 +176,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
                 Data = new MisaAmisErrorResult(
                         MisaAmisErrorCode.NotFoundData,
                         Resource.DevMsg_Exception,
-                        "message.api.data_change",
+                        Resource.Message_data_change,
                         Resource.MoreInfo_Exception,
                         HttpContext.TraceIdentifier
                     )
@@ -413,7 +413,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
                     return StatusCode(StatusCodes.Status200OK, new ServiceResponse
                     {
                         Success = true,
-                        Data = "message.api.import_success"
+                        Data = Resource.Message_import_success
                     });
                 }
                 SaveFileImage.DeleteFile(filePath);
@@ -425,7 +425,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
                 Data = new MisaAmisErrorResult(
                         MisaAmisErrorCode.FileNotCorrect,
                         messageError != "" ? messageError : Resource.DevMsg_Exception,
-                        "message.api.import_fail",
+                        Resource.Message_import_fail,
                         Resource.MoreInfo_Exception,
                         HttpContext.TraceIdentifier
                     )
