@@ -1,9 +1,5 @@
 ﻿using MISA.WEB08.AMIS.Common.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.Common.Entities
 {
@@ -22,14 +18,14 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Mã kho
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Mã kho không được để trống.")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Mã kho", Width = 30)]
         public string DepotCode { get; set; }
 
         /// <summary>
         /// Tên kho
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Tên kho không được để trống.")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Tên kho", Width = 50)]
         public string DepotName { get; set; }
 
@@ -43,6 +39,6 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// Hoạt động hay không hoạt động
         /// </summary>
         [ColumnName(Name = "Trạng thái", Width = 20)]
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

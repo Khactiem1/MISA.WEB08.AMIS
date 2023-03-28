@@ -1,14 +1,8 @@
 ﻿using MISA.WEB08.AMIS.Common.Attributes;
-using MISA.WEB08.AMIS.Common.Entities;
 using MISA.WEB08.AMIS.Common.Enums;
 using MISA.WEB08.AMIS.Common.Result;
-using MISA.WEB08.AMIS.DL;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.BL
 {
@@ -18,21 +12,6 @@ namespace MISA.WEB08.AMIS.BL
     /// <typeparam name="T"></typeparam>
     public class Validate<T>
     {
-        #region Field
-
-        private IBaseDL<T> _baseDL;
-
-        #endregion
-
-        #region Contructor
-
-        public Validate(IBaseDL<T> baseDL)
-        {
-            _baseDL = baseDL;
-        }
-
-        #endregion
-
         #region Method
 
         /// <summary>

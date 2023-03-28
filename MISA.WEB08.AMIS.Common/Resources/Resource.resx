@@ -213,14 +213,6 @@
     <value>Danh_sach_nhan_vien</value>
     <comment>Tên file excel khi export</comment>
   </data>
-  <data name="Path_SaveImage" xml:space="preserve">
-    <value>C:/Users/Khac Tiem/Downloads/test/Publish/Assets/Images/</value>
-    <comment>Đường dẫn thư mục lưu hình ảnh</comment>
-  </data>
-  <data name="Path_SaveImageInDB" xml:space="preserve">
-    <value>/Assets/Images/</value>
-    <comment>Đường dẫn hình ảnh api</comment>
-  </data>
   <data name="Proc_DeleteMultiple" xml:space="preserve">
     <value>Proc_{0}_DeleteMultiple</value>
     <comment>Template string cho procedure xoá nhiều bản ghi</comment>
@@ -249,6 +241,10 @@
     <value>Proc_{0}_GetDetailOne</value>
     <comment>Template string cho procedure lấy ra thông tin chi tiết của một bản ghi</comment>
   </data>
+  <data name="Proc_GetDropdown" xml:space="preserve">
+    <value>Proc_{0}_GetDropdown</value>
+    <comment>Template string cho procedure lấy ra danh sách đổ vào dropdown list</comment>
+  </data>
   <data name="Proc_GetFilterExport" xml:space="preserve">
     <value>Proc_{0}_GetFilterExport</value>
     <comment>Template string cho procedure lấy ra danh sách tìm kiếm không phân trang</comment>
@@ -276,10 +272,6 @@
   <data name="Proc_UpdateOne" xml:space="preserve">
     <value>Proc_{0}_UpdateOne</value>
     <comment>Template string cho procedure cập nhật một bản ghi</comment>
-  </data>
-  <data name="TitleFileExportEmployee" xml:space="preserve">
-    <value>DANH SÁCH NHÂN VIÊN</value>
-    <comment>Tên file khi export nhân viên</comment>
   </data>
   <data name="UserMsg_CheckIncurred" xml:space="preserve">
     <value>Đã có phát sinh bản ghi này với bảng {0}. Bạn phải xóa các phát sinh liên quan trước khi xóa.</value>

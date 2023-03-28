@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "s3CzlBDRv3To7mnAcPIuzfnKr120SAnIDZjxAnqkbTpRfXRjISLUvQJaGLMgYdU1E93h4JkjO8FIgGuqMLQtyw==",
+  "dgSpecHash": "H6+BJL8NkaEUfzqglzUzwFZvXlEWrrccPuAcvgdTx1w2QTP2r5oday+TgCE/GCTGZ4vyiT3S8qM2EWOFvrx6YA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\MISA.WEB08.AMIS.API.csproj",
+  "projectFilePath": "N:\\SSD2\\Khoá học\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\MISA.WEB08.AMIS.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\epplus\\5.8.14\\epplus.5.8.14.nupkg.sha512",

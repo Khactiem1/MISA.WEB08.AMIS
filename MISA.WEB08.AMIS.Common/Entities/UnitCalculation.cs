@@ -1,10 +1,5 @@
 ﻿using MISA.WEB08.AMIS.Common.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace MISA.WEB08.AMIS.Common.Entities
 {
     /// <summary>
@@ -22,7 +17,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Tên đơn vị tính
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Đơn vị không được để trống.")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Đơn vị", Width = 16)]
         public string UnitCalculationName { get; set; }
 
@@ -36,6 +31,6 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// Hoạt động hay không hoạt động
         /// </summary>
         [ColumnName(Name = "Trạng thái", Width = 20)]
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

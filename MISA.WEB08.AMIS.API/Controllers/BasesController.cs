@@ -73,15 +73,15 @@ namespace MISA.WEB08.AMIS.API.Controllers
         }
 
         /// <summary>
-        /// API lấy ra danh sách tất bản ghi đang hoạt động trong 1 bảng
-        /// <summary>
-        /// <return> Danh sách tất cả bản ghi <return>
-        /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
-        [HttpGet("active")]
-        public virtual IActionResult GetAllRecordActive()
+        /// Hàm Lấy danh sách dropdown
+        /// </summary>
+        /// <returns>Danh sách tất cả bản ghi</returns>
+        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        [HttpGet("dropdown")]
+        public virtual IActionResult GetDropdown()
         {
-            var recordList = _baseBL.GetAllRecordActive();
-            if(recordList != null)
+            var recordList = _baseBL.GetDropdown();
+            if (recordList != null)
             {
                 return StatusCode(StatusCodes.Status200OK, new ServiceResponse
                 {
@@ -205,34 +205,18 @@ namespace MISA.WEB08.AMIS.API.Controllers
                     Data = result.Data
                 });
             }
-            else
+            return StatusCode(StatusCodes.Status200OK, new ServiceResponse
             {
-                MisaAmisErrorCode errorCode;
-                if (result.ErrorCode == MisaAmisErrorCode.Duplicate)
-                {
-                    errorCode = MisaAmisErrorCode.Duplicate;
-                }
-                else if (result.ErrorCode == MisaAmisErrorCode.InsertFailed)
-                {
-                    errorCode = MisaAmisErrorCode.InsertFailed;
-                }
-                else
-                {
-                    errorCode = MisaAmisErrorCode.InvalidInput;
-                }
-                return StatusCode(StatusCodes.Status200OK, new ServiceResponse
-                {
-                    Success = false,
-                    ErrorCode = errorCode,
-                    Data = new MisaAmisErrorResult(
-                            errorCode,
+                Success = false,
+                ErrorCode = result.ErrorCode,
+                Data = new MisaAmisErrorResult(
+                            (MisaAmisErrorCode)result.ErrorCode,
                             Resource.DevMsg_ValidateFailed,
                             result.Data,
                             Resource.MoreInfo_Exception,
                             HttpContext.TraceIdentifier
                         )
-                });
-            }
+            });
         }
 
         /// <summary> 
@@ -290,25 +274,12 @@ namespace MISA.WEB08.AMIS.API.Controllers
                     Data = result.Data
                 });
             }
-            MisaAmisErrorCode errorCode;
-            if (result.ErrorCode == MisaAmisErrorCode.Duplicate)
-            {
-                errorCode = MisaAmisErrorCode.Duplicate;
-            }
-            else if (result.ErrorCode == MisaAmisErrorCode.InsertFailed)
-            {
-                errorCode = MisaAmisErrorCode.InsertFailed;
-            }
-            else
-            {
-                errorCode = MisaAmisErrorCode.InvalidInput;
-            }
             return StatusCode(StatusCodes.Status200OK, new ServiceResponse
             {
                 Success = false,
-                ErrorCode = errorCode,
+                ErrorCode = result.ErrorCode,
                 Data = new MisaAmisErrorResult(
-                        errorCode,
+                        (MisaAmisErrorCode)result.ErrorCode,
                         Resource.DevMsg_ValidateFailed,
                         result.Data,
                         Resource.MoreInfo_Exception,
@@ -429,6 +400,38 @@ namespace MISA.WEB08.AMIS.API.Controllers
                         Resource.MoreInfo_Exception,
                         HttpContext.TraceIdentifier
                     )
+            });
+        }
+
+        /// <summary>
+        /// Export data ra file excel
+        /// </summary>
+        /// <param name="formData">Trường muốn filter và sắp xếp</param>
+        /// <returns>file Excel chứa dữ liệu danh sách </returns>
+        /// CreatedBy: Nguyễn Khắc Tiềm (6/10/2022)
+        [HttpPost("export_data")]
+        public IActionResult ExportData([FromBody] Dictionary<string, object> formData)
+        {
+            var excelName = _baseBL.ExportData(formData);
+            if (!string.IsNullOrEmpty(excelName))
+            {
+                return StatusCode(StatusCodes.Status200OK, new ServiceResponse
+                {
+                    Success = true,
+                    Data = excelName
+                });
+            }
+            return StatusCode(StatusCodes.Status200OK, new ServiceResponse
+            {
+                Success = false,
+                ErrorCode = MisaAmisErrorCode.InvalidInput,
+                Data = new MisaAmisErrorResult(
+                            MisaAmisErrorCode.InvalidInput,
+                            Resource.DevMsg_ValidateFailed,
+                            Resource.Message_export_null,
+                            Resource.MoreInfo_Exception,
+                            HttpContext.TraceIdentifier
+                        )
             });
         }
 

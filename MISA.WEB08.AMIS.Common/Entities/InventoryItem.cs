@@ -1,10 +1,6 @@
 ﻿using MISA.WEB08.AMIS.Common.Attributes;
 using MISA.WEB08.AMIS.Common.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.Common.Entities
 {
@@ -215,6 +211,6 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// Hoạt động hay không hoạt động
         /// </summary>
         [ColumnName(Name = "Trạng thái", Width = 20)]
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

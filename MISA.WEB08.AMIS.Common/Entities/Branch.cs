@@ -1,8 +1,5 @@
 ﻿using MISA.WEB08.AMIS.Common.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.Common.Entities
 {
@@ -21,12 +18,27 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// mã đơn vị
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Mã đơn vị không được để trống")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
+        [ColumnName(Name = "Mã đơn vị", Width = 16)]
         public string BranchCode { get; set; }
 
         /// <summary>
         /// tên đơn vị
         /// </summary>
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
+        [ColumnName(Name = "Tên đơn vị", Width = 40)]
         public string BranchName { get; set; }
+
+        /// <summary>
+        /// Mô tả
+        /// </summary>
+        [ColumnName(Name = "Mô tả", Width = 25)]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Hoạt động hay không hoạt động
+        /// </summary>
+        [ColumnName(Name = "Trạng thái", Width = 20)]
+        public bool? IsActive { get; set; }
     }
 }

@@ -1,9 +1,5 @@
 ﻿using MISA.WEB08.AMIS.Common.Result;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.DL
 {
@@ -21,11 +17,12 @@ namespace MISA.WEB08.AMIS.DL
         public object GetAllRecords();
 
         /// <summary>
-        /// Hàm Lấy danh sách tất cả bản ghi trong 1 bảng đang hoạt động
+        /// Hàm Lấy danh sách dropdown
         /// </summary>
         /// <returns>Danh sách tất cả bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetAllRecordActive();
+        public object GetDropdown();
+
         /// <summary>
         /// Hàm lấy ra bản ghi theo ID
         /// </summary>
@@ -53,33 +50,6 @@ namespace MISA.WEB08.AMIS.DL
         /// <returns>Danh sách record và tổng số bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public Paging GetFitterRecords(int offset, int limit, string? keyword, string? sort,string v_Query, string v_Select);
-
-        /// <summary>
-        /// Hàm Lấy danh sách bản ghi theo từ khoá tìm kiếm không phân trang
-        /// </summary>
-        /// <returns>Danh sách tất cả bản ghi</returns>
-        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetsDataExport(string? keyword, string? sort);
-
-        /// <summary>
-        /// Validate trùng mã nếu mã bản ghi đã tồn tại trong hệ thống
-        /// </summary>
-        /// <param name="propertyName">Trường cần kiểm tra mã trùng </param>
-        /// <param name="propertyValue">Giá trị cần kiểm tra </param>
-        /// <param name="guidUpdate">Ko kiểm tra chính nó khi update </param>
-        /// <returns>true- mã bị trùng; false-mã k bị trùng</returns>
-        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public bool CheckDuplicate(string propertyName, object propertyValue, Guid? guidUpdate);
-
-        /// <summary>
-        /// Hàm kiểm tra giá trị phát sinh khi xoá
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columnName"></param>
-        /// <param name="valueCheck"></param>
-        /// <returns>true hoặc false tương ứng với phát sinh hoặc không</returns>
-        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public bool CheckIncurred(string tableName, string columnName, string valueCheck);
 
         /// <summary>
         /// Hàm thêm mới một bản ghi

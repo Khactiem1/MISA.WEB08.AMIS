@@ -4,11 +4,8 @@ using MISA.WEB08.AMIS.Common.Resources;
 using MISA.WEB08.AMIS.Common.Result;
 using MySqlConnector;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.DL
 {
@@ -48,30 +45,14 @@ namespace MISA.WEB08.AMIS.DL
         }
 
         /// <summary>
-        /// Hàm Lấy danh sách tất cả bản ghi trong 1 bảng đang hoạt động
+        /// Hàm Lấy danh sách dropdown
         /// </summary>
         /// <returns>Danh sách tất cả bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public virtual object GetAllRecordActive()
+        public virtual object GetDropdown()
         {
-            string storeProcedureName = string.Format(Resource.Proc_GetAllActive, typeof(T).Name);
+            string storeProcedureName = string.Format(Resource.Proc_GetDropdown, typeof(T).Name);
             return _dbHelper.RunProcWithQuery(storeProcedureName, null);
-        }
-
-        /// <summary>
-        /// Hàm Lấy danh sách bản ghi theo từ khoá tìm kiếm không phân trang
-        /// </summary>
-        /// <returns>Danh sách tất cả bản ghi</returns>
-        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public virtual object GetsDataExport(string? keyword, string? sort)
-        {
-            // Khởi tạo các parameter để chèn vào trong Proc
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("v_Sort", sort);
-            parameters.Add("v_Where", keyword);
-            // Khai báo stored procedure
-            string storeProcedureName = string.Format(Resource.Proc_GetFilterExport, typeof(T).Name);
-            return _dbHelper.RunProcWithQuery(storeProcedureName, parameters);
         }
 
         /// <summary>
@@ -88,37 +69,6 @@ namespace MISA.WEB08.AMIS.DL
             // Khai báo stored procedure
             string storeProcedureName = string.Format(Resource.Proc_GetDetailOne, typeof(T).Name);
             return _dbHelper.RunProcWithQueryFirstOrDefault(storeProcedureName, parameters);
-        }
-
-        /// <summary>
-        /// Validate trùng mã nếu mã bản ghi đã tồn tại trong hệ thống
-        /// </summary>
-        /// <param name="propertyName">Trường cần kiểm tra mã trùng </param>
-        /// <param name="propertyValue">Giá trị cần kiểm tra </param>
-        /// <param name="guidUpdate">Ko kiểm tra chính nó khi update </param>
-        /// <returns>true- mã bị trùng; false-mã k bị trùng</returns>
-        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public virtual bool CheckDuplicate(string propertyName, object propertyValue, Guid? guidUpdate)
-        {
-            object result;
-            // Khởi tạo các parameter để chèn vào trong Proc
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("v_PropertyName", propertyName);
-            parameters.Add("v_Table", typeof(T).Name);
-            parameters.Add("v_PropertyValue", propertyValue.ToString().Trim());
-            parameters.Add("v_GuidUpdate", guidUpdate);
-
-            //Khai báo stored truy vấn
-            string storeProcedureName = Resource.Proc_GetDataByAttribute;
-            result = _dbHelper.RunProcWithQueryFirstOrDefault(storeProcedureName, parameters);
-            if (result != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         /// <summary>
@@ -186,44 +136,6 @@ namespace MISA.WEB08.AMIS.DL
                 };
             }
             return result;
-        }
-
-        /// <summary>
-        /// Hàm kiểm tra giá trị phát sinh khi xoá
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columnName"></param>
-        /// <param name="valueCheck"></param>
-        /// <returns>true hoặc false tương ứng với phát sinh hoặc không</returns>
-        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public virtual bool CheckIncurred(string tableName, string columnName, string valueCheck)
-        {
-            int result;
-            // Khởi tạo các parameter để chèn vào trong Proc
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("v_TableName", tableName);
-            parameters.Add("v_ColumnName", columnName);
-            parameters.Add("v_ValueCheck", valueCheck);
-
-            //Khai báo stored truy vấn
-            string storeProcedureName = Resource.Proc_GetDataByCheckIncurred;
-            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
-            {
-                // thực hiện gọi vào DB
-                result = mysqlConnection.QueryFirstOrDefault<int>(
-                    storeProcedureName,
-                    parameters,
-                    commandType: CommandType.StoredProcedure
-                    );
-            }
-            if (result == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         /// <summary>
@@ -348,7 +260,7 @@ namespace MISA.WEB08.AMIS.DL
             return new ServiceResponse
             {
                 Success = false,
-                Data = Guid.Empty
+                Data = !string.IsNullOrEmpty(v_MessOut) ? v_MessOut : Guid.Empty.ToString()
             };
         }
 

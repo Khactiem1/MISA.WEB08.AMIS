@@ -1,9 +1,6 @@
 ﻿using MISA.WEB08.AMIS.Common.Result;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OfficeOpenXml;
+using System.Reflection;
 
 namespace MISA.WEB08.AMIS.BL
 {
@@ -25,25 +22,28 @@ namespace MISA.WEB08.AMIS.BL
         }
 
         /// <summary>
-        /// Hàm xử lý kiểm tra phát sinh
+        /// Hàm custom dữ liệu xuất file
         /// </summary>
-        /// <param name="record">Record cần custom validate</param>
-        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public virtual ServiceResponse CheckIncurred(Guid record)
+        /// <param name="property">Cột dữ liệu cần custom</param>
+        /// <returns>Trả ra false khi không custom gì</returns>
+        ///  NK Tiềm 05/10/2022
+        public virtual bool CustomValuePropertieExport(PropertyInfo property, ref ExcelWorksheet sheet, int indexRow, int indexBody, T record)
         {
-            return new ServiceResponse
-            {
-                Success = true
-            };
+            return false;
         }
 
         /// <summary>
-        /// Hàm xử lý lưu hình ảnh
-        /// <param name="record">Record cần custom </param>
+        /// Hàm custom dữ liệu tên file, header, ... khi xuất file
         /// </summary>
-        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public virtual void SaveImage(ref T record)
+        /// <returns></returns>
+        ///  NK Tiềm 05/10/2022
+        public virtual OptionExport CustomOptionExport()
         {
+            return new OptionExport
+            {
+                FileName = "Danh sách",
+                Header = "DANH SÁCH"
+            };
         }
 
         #endregion

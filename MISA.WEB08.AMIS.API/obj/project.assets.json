@@ -1720,11 +1720,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\MISA.WEB08.AMIS.API.csproj",
+      "projectUniqueName": "N:\\SSD2\\Khoá học\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\MISA.WEB08.AMIS.API.csproj",
       "projectName": "MISA.WEB08.AMIS.API",
-      "projectPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\MISA.WEB08.AMIS.API.csproj",
+      "projectPath": "N:\\SSD2\\Khoá học\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\MISA.WEB08.AMIS.API.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\obj\\",
+      "outputPath": "N:\\SSD2\\Khoá học\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1741,11 +1741,11 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj": {
-              "projectPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj"
+            "N:\\SSD2\\Khoá học\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj": {
+              "projectPath": "N:\\SSD2\\Khoá học\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.BL\\MISA.WEB08.AMIS.BL.csproj"
             },
-            "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
-              "projectPath": "C:\\Users\\Admin\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj"
+            "N:\\SSD2\\Khoá học\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
+              "projectPath": "N:\\SSD2\\Khoá học\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj"
             }
           }
         }

@@ -1,10 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MISA.WEB08.AMIS.Common.Entities;
+﻿using MISA.WEB08.AMIS.Common.Entities;
 using MISA.WEB08.AMIS.BL;
 
 namespace MISA.WEB08.AMIS.API.Controllers

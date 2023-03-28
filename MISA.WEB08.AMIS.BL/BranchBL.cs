@@ -1,10 +1,6 @@
 ﻿using MISA.WEB08.AMIS.Common.Entities;
+using MISA.WEB08.AMIS.Common.Result;
 using MISA.WEB08.AMIS.DL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.BL
 {
@@ -14,10 +10,35 @@ namespace MISA.WEB08.AMIS.BL
     /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
     public class BranchBL : BaseBL<Branch>, IBranchBL
     {
+        #region Field
+
+        private IBranchDL _branchDL;
+
+        #endregion
+
         #region Contructor
 
-        public BranchBL(IBranchDL unitDL) : base(unitDL)
+        public BranchBL(IBranchDL branchDL) : base(branchDL)
         {
+            _branchDL = branchDL;
+        }
+
+        #endregion
+
+        #region Method
+
+        /// <summary>
+        /// Hàm custom dữ liệu tên file, header, ... khi xuất file
+        /// </summary>
+        /// <returns></returns>
+        ///  NK Tiềm 05/10/2022
+        public override OptionExport CustomOptionExport()
+        {
+            return new OptionExport
+            {
+                FileName = "Danh sách đơn vị",
+                Header = "DANH SÁCH ĐƠN VỊ"
+            };
         }
 
         #endregion

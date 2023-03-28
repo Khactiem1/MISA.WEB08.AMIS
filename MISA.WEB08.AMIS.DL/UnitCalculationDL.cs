@@ -1,12 +1,4 @@
-﻿using Dapper;
-using MISA.WEB08.AMIS.Common.Entities;
-using MISA.WEB08.AMIS.Common.Resources;
-using MySqlConnector;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MISA.WEB08.AMIS.Common.Entities;
 
 namespace MISA.WEB08.AMIS.DL
 {

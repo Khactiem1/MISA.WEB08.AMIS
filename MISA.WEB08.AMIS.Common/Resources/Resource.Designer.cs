@@ -277,24 +277,6 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to C:/Users/Khac Tiem/Downloads/test/Publish/Assets/Images/.
-        /// </summary>
-        public static string Path_SaveImage {
-            get {
-                return ResourceManager.GetString("Path_SaveImage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to /Assets/Images/.
-        /// </summary>
-        public static string Path_SaveImageInDB {
-            get {
-                return ResourceManager.GetString("Path_SaveImageInDB", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Proc_{0}_DeleteMultiple.
         /// </summary>
         public static string Proc_DeleteMultiple {
@@ -358,6 +340,15 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proc_{0}_GetDropdown.
+        /// </summary>
+        public static string Proc_GetDropdown {
+            get {
+                return ResourceManager.GetString("Proc_GetDropdown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Proc_{0}_GetFilterExport.
         /// </summary>
         public static string Proc_GetFilterExport {
@@ -417,15 +408,6 @@ namespace MISA.WEB08.AMIS.Common.Resources {
         public static string Proc_UpdateOne {
             get {
                 return ResourceManager.GetString("Proc_UpdateOne", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DANH SÁCH NHÂN VIÊN.
-        /// </summary>
-        public static string TitleFileExportEmployee {
-            get {
-                return ResourceManager.GetString("TitleFileExportEmployee", resourceCulture);
             }
         }
         

@@ -1,9 +1,6 @@
 ﻿using MISA.WEB08.AMIS.Common.Result;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.BL
 {
@@ -21,11 +18,11 @@ namespace MISA.WEB08.AMIS.BL
         public object GetAllRecords();
 
         /// <summary>
-        /// Hàm Lấy danh sách tất cả bản ghi của 1 bảng đang hoạt động
+        /// Hàm Lấy danh sách dropdown
         /// </summary>
         /// <returns>Danh sách tất cả bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetAllRecordActive();
+        public object GetDropdown();
 
         /// <summary>
         /// Hàm lấy ra bản ghi theo ID
@@ -100,5 +97,13 @@ namespace MISA.WEB08.AMIS.BL
         /// <returns></returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public bool ImportXLSX(string data, int count);
+
+        /// <summary>
+        /// Export data ra file excel
+        /// </summary>
+        /// <param name="formData">Trường muốn filter và sắp xếp</param>
+        /// <returns>file Excel chứa dữ liệu danh sách </returns>
+        /// CreatedBy: Nguyễn Khắc Tiềm (6/10/2022)
+        public string ExportData(Dictionary<string, object> formData);
     }
 }
