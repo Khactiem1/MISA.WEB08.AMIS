@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Downloads\\test\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj": {}
+    "C:\\Users\\Khac Tiem\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Downloads\\test\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
+    "C:\\Users\\Khac Tiem\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Downloads\\test\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj",
+        "projectUniqueName": "C:\\Users\\Khac Tiem\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj",
         "projectName": "MISA.WEB08.AMIS.Common",
-        "projectPath": "C:\\Users\\Admin\\Downloads\\test\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Downloads\\test\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\obj\\",
+        "projectPath": "C:\\Users\\Khac Tiem\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj",
+        "packagesPath": "C:\\Users\\Khac Tiem\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Khac Tiem\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Khac Tiem\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -54,21 +54,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.415\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Admin\\Downloads\\test\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj": {
+    "C:\\Users\\Khac Tiem\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Downloads\\test\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj",
+        "projectUniqueName": "C:\\Users\\Khac Tiem\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj",
         "projectName": "MISA.WEB08.AMIS.DL",
-        "projectPath": "C:\\Users\\Admin\\Downloads\\test\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Downloads\\test\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\obj\\",
+        "projectPath": "C:\\Users\\Khac Tiem\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\MISA.WEB08.AMIS.DL.csproj",
+        "packagesPath": "C:\\Users\\Khac Tiem\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Khac Tiem\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.DL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Khac Tiem\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -82,8 +82,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Admin\\Downloads\\test\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
-                "projectPath": "C:\\Users\\Admin\\Downloads\\test\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj"
+              "C:\\Users\\Khac Tiem\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj": {
+                "projectPath": "C:\\Users\\Khac Tiem\\Downloads\\BackEnd\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj"
               }
             }
           }
@@ -126,7 +126,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.415\\RuntimeIdentifierGraph.json"
         }
       }
     }

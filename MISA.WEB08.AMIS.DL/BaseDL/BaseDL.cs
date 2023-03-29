@@ -299,7 +299,7 @@ namespace MISA.WEB08.AMIS.DL
                             transaction: transaction,
                             commandType: CommandType.StoredProcedure
                             );
-                        if (rowAffects == count)
+                        if (rowAffects >= count)
                         {
                             transaction.Commit();
                         }
@@ -326,7 +326,7 @@ namespace MISA.WEB08.AMIS.DL
                 }
             }
             //trả về kết quả(số bản ghi xóa được)
-            if (rowAffects == count)
+            if (rowAffects >= count)
             {
                 return new ServiceResponse
                 {
