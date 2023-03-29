@@ -1,5 +1,10 @@
-﻿using MISA.WEB08.AMIS.BL;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using MISA.WEB08.AMIS.BL;
 using MISA.WEB08.AMIS.Common.Entities;
+using MISA.WEB08.AMIS.Common.Enums;
+using MISA.WEB08.AMIS.Common.Resources;
+using MISA.WEB08.AMIS.Common.Result;
 
 namespace MISA.WEB08.AMIS.API.Controllers
 {
@@ -27,6 +32,37 @@ namespace MISA.WEB08.AMIS.API.Controllers
         #region Method
 
         #region API GET
+
+        /// <summary>
+        /// API lấy ra tổng số lượng hàng sắp hết và hết hàng
+        /// </summary>
+        /// <returns></returns>
+        //// Create by: Nguyễn Khắc Tiềm (26/09/2022)
+        [HttpGet("GetInventoryStatus")]
+        public IActionResult GetInventoryStatus()
+        {
+            var result = _inventoryItemBL.GetInventoryStatus();
+            if(result != null)
+            {
+                return StatusCode(StatusCodes.Status201Created, new ServiceResponse
+                {
+                    Success = true,
+                    Data = result
+                });
+            }
+            return StatusCode(StatusCodes.Status200OK, new ServiceResponse
+            {
+                Success = false,
+                ErrorCode = MisaAmisErrorCode.NotFoundData,
+                Data = new MisaAmisErrorResult(
+                            MisaAmisErrorCode.NotFoundData,
+                            Resource.DevMsg_ValidateFailed,
+                            Resource.Message_notFoundData,
+                            Resource.MoreInfo_Exception,
+                            HttpContext.TraceIdentifier
+                        )
+            });
+        }
 
         #endregion
 

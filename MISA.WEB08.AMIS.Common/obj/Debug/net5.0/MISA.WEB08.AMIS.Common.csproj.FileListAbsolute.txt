@@ -68,3 +68,17 @@ C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.dll
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\ref\MISA.WEB08.AMIS.Common.dll
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.pdb
+C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\bin\Debug\net5.0\MISA.WEB08.AMIS.Common.deps.json
+C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\bin\Debug\net5.0\MISA.WEB08.AMIS.Common.dll
+C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\bin\Debug\net5.0\ref\MISA.WEB08.AMIS.Common.dll
+C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\bin\Debug\net5.0\MISA.WEB08.AMIS.Common.pdb
+C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.csproj.AssemblyReference.cache
+C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.Resources.Resource.resources
+C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.csproj.GenerateResource.cache
+C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.AssemblyInfoInputs.cache
+C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.AssemblyInfo.cs
+C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.dll
+C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\ref\MISA.WEB08.AMIS.Common.dll
+C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.Common\obj\Debug\net5.0\MISA.WEB08.AMIS.Common.pdb

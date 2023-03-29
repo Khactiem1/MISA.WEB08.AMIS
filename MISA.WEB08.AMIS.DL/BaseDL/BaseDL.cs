@@ -134,6 +134,7 @@ namespace MISA.WEB08.AMIS.DL
                     recordList = records.Read<T>().ToList(),
                     totalCount = records.ReadSingle().totalCount,
                 };
+                CustomResultProc(records, ref result);
             }
             return result;
         }

@@ -24,14 +24,14 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// mã hàng hoá vật tư
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Mã hàng hoá vật tư không được để trống.")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Mã hàng hoá vật tư", Width = 16)]
         public string InventoryItemCode { get; set; }
 
         /// <summary>
         /// tên hàng hoá vật tư
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Tên hàng hoá vật tư không được để trống.")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Tên hàng hoá vật tư", Width = 40)]
         public string InventoryItemName { get; set; }
 
@@ -43,7 +43,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Mã nhóm vật tư hàng hoá
         /// </summary>
-        [ColumnName(Name = "Mã nhóm vật tư hàng hoá", Width = 50)]
+        //[ColumnName(Name = "Mã nhóm vật tư hàng hoá", Width = 50)]
         public string CommodityCode { get; set; }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// tính chất
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "Tính chất không được để trống.")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Tính chất", Width = 40)]
         public Nature Nature { get; set; }
 
@@ -116,6 +116,12 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// ID kho
         /// </summary>
         public Guid? DepotID { get; set; }
+
+        /// <summary>
+        /// Mã nhà kho
+        /// </summary>
+        [ColumnName(Name = "Mã nhà kho", Width = 40)]
+        public string? DepotCode { get; set; }
 
         /// <summary>
         /// Tên nhà kho

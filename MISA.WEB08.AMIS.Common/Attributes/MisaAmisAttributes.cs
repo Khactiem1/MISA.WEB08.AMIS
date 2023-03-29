@@ -75,7 +75,7 @@ namespace MISA.WEB08.AMIS.Common.Attributes
         public bool IsNumber = false;
 
         /// <summary>
-        /// Là số hay không
+        /// Là kiểu có hay không
         /// </summary>
         public bool IsBollen = false;
 

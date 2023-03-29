@@ -404,7 +404,15 @@ namespace MISA.WEB08.AMIS.BL
                             {
                                 if (!CustomValuePropertieExport(property, ref sheet, indexRow, indexBody, recordItem))
                                 {
-                                    sheet.Cells[indexRow + 4, indexBody].Value = property.GetValue(recordItem);
+                                    if ((displayNameAttributes[0] as ColumnName).IsNumber && !string.IsNullOrEmpty(Convert.ToString(property.GetValue(recordItem))))
+                                    {
+                                        sheet.Cells[indexRow + 4, indexBody].Value = Validate<T>.FormatNumber(double.Parse(property.GetValue(recordItem) + ""));
+                                        sheet.Cells[indexRow + 4, indexBody].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                                    }
+                                    else
+                                    {
+                                        sheet.Cells[indexRow + 4, indexBody].Value = property.GetValue(recordItem);
+                                    }
                                 }
                             }
                             indexBody++;

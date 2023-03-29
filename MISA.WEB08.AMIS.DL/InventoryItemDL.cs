@@ -4,6 +4,7 @@ using MISA.WEB08.AMIS.Common.Resources;
 using MISA.WEB08.AMIS.Common.Result;
 using MySqlConnector;
 using System.Linq;
+using static Dapper.SqlMapper;
 
 namespace MISA.WEB08.AMIS.DL
 {
@@ -27,7 +28,41 @@ namespace MISA.WEB08.AMIS.DL
         }
 
         #endregion
+
         #region Method
+
+        /// <summary>
+        /// Hàm xử lý custom các tham số parameter truyền vào proc create ngoài những tham số mặc định
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="record"></param>
+        /// create by: nguyễn khắc tiềm (21/10/2022)
+        public override void CustomParameterForCreate(ref DynamicParameters? parameters, InventoryItem record)
+        {
+            string prefix = "";
+            string number = "";
+            string last = "";
+            _dbHelper.SaveCode(record.InventoryItemCode, ref prefix, ref number, ref last);
+            parameters.Add($"v_prefix", prefix);
+            parameters.Add($"v_number", number);
+            parameters.Add($"v_last", last);
+            parameters.Add($"v_lengthNumber", number.Length);
+        }
+
+        /// <summary>
+        /// Hàm xử lý custom các tham số trả ra của proc
+        /// </summary>
+        /// <param name="records"></param>
+        /// <param name="result"></param>
+        /// create by: nguyễn khắc tiềm (21/10/2022)
+        public override void CustomResultProc(GridReader records, ref Paging result)
+        {
+            result.dataMore = new
+            {
+                // Tổng số lượng tồn
+                quantityInStock = records.ReadSingle().quantityInStock,
+            };
+        }
 
         /// <summary>
         /// Hàm lấy ra tổng số lượng hàng sắp hết và hết hàng
@@ -49,50 +84,10 @@ namespace MISA.WEB08.AMIS.DL
 
                 result = new
                 {
-                    result1 = records.ReadSingle().result1,
-                    result2 = records.ReadSingle().result2,
-                };
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Hàm lấy ra danh sách record có lọc và phân trang over lại để lấy thêm những giá trị
-        /// </summary>
-        /// <param name="offset">Thứ tự bản ghi bắt đầu lấy</param>
-        /// <param name="limit">Số lượng bản ghi muốn lấy</param>
-        /// <param name="keyword">Từ khoá tìm kiếm</param>
-        /// <param name="sort">Trường muốn sắp xếp</param>
-        /// <param name="v_Query">Lọc theo yêu cầu</param>
-        /// <returns>Danh sách record và tổng số bản ghi</returns>
-        /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public override Paging GetFitterRecords(int offset, int limit, string? keyword, string? sort, string v_Query, string v_Select)
-        {
-            Paging result;
-            // Khởi tạo các parameter để chèn vào trong Proc
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("v_Offset", offset);
-            parameters.Add("v_Limit", limit);
-            parameters.Add("v_Sort", sort);
-            parameters.Add("v_Where", keyword);
-            parameters.Add("v_Query", v_Query);
-
-            // chuẩn bị câu lệnh MySQL
-            string storeProcedureName = string.Format(Resource.Proc_GetFilterPaging, "InventoryItem");
-
-            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
-            {
-                // thực hiện gọi vào DB
-                var records = mysqlConnection.QueryMultiple(
-                    storeProcedureName,
-                    parameters,
-                    commandType: System.Data.CommandType.StoredProcedure
-                    );
-                result = new Paging
-                {
-                    recordList = records.Read<InventoryItem>().ToList(),
-                    totalCount = records.ReadSingle().totalCount,
-                    dataMore = records.ReadSingle().result1,
+                    // Sắp Hết hàng
+                    outOfStockSoon = records.ReadSingle().outOfStockSoon,
+                    // Hết hàng
+                    outOfStock = records.ReadSingle().outOfStock,
                 };
             }
             return result;

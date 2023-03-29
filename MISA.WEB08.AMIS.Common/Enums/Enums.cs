@@ -39,7 +39,6 @@ namespace MISA.WEB08.AMIS.Common.Enums
         /// Dịch vụ
         /// Created by : Khắc Tiềm 21.09.2022
         /// </summary>
-
         Service = 2,
 
         /// <summary>

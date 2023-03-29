@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "N:\\SSD2\\Khoá học\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Downloads\\test\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj",
       "projectName": "MISA.WEB08.AMIS.Common",
-      "projectPath": "N:\\SSD2\\Khoá học\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj",
+      "projectPath": "C:\\Users\\Admin\\Downloads\\test\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\MISA.WEB08.AMIS.Common.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "N:\\SSD2\\Khoá học\\Bài tập CTM Misa\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\obj\\",
+      "outputPath": "C:\\Users\\Admin\\Downloads\\test\\MISA.WEB08.AMIS\\MISA.WEB08.AMIS.Common\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
