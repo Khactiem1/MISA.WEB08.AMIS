@@ -28,5 +28,20 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// ngày sửa
         /// </summary>
         public DateTime? ModifiedDate { get; set; }
+
+        /// <summary>
+        /// Vị trí cột khi nhập khẩu
+        /// </summary>
+        public int? LineExcel { get; set; }
+
+        /// <summary>
+        /// Trạng thái nhập khẩu
+        /// </summary>
+        public string? StatusImportExcel { get; set; }
+
+        /// <summary>
+        /// Chi tiết lỗi khi nhập từ excel
+        /// </summary>
+        public string? ErrorDetail { get; set; }
     }
 }

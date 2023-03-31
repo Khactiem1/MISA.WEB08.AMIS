@@ -17,19 +17,21 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Tên đơn vị tính
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty", MaxLength = 100)]
         [ColumnName(Name = "Đơn vị", Width = 16)]
         public string UnitCalculationName { get; set; }
 
         /// <summary>
         /// Mô tả đơn vị tính
         /// </summary>
+        [Validate(MaxLength = 255)]
         [ColumnName(Name = "Mô tả", Width = 25)]
         public string UnitCalculationDetail { get; set; }
 
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
+        [Validate(IsNotNullOrEmpty = true)]
         [ColumnName(Name = "Trạng thái", Width = 20)]
         public bool? IsActive { get; set; }
     }

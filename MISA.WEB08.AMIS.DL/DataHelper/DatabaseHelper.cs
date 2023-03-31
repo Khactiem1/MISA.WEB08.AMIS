@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using MISA.WEB08.AMIS.Common.Resources;
 using MySqlConnector;
 using System;
 using System.Data;
@@ -88,6 +89,7 @@ namespace MISA.WEB08.AMIS.DL
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex);
+                        v_MessOut = Resource.UserMsg_Exception;
                         //nếu thực hiện không thành công thì rollback
                         transaction.Rollback();
                         rowAffects = 0;

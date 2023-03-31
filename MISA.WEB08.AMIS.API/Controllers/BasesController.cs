@@ -365,29 +365,10 @@ namespace MISA.WEB08.AMIS.API.Controllers
         [HttpPost, DisableRequestSizeLimit]
         public IActionResult ImportXLSX(IFormFile file)
         {
-            var messageError = "";
-            if (file.Length > 0 && file.FileName.Contains(".xlsx"))
+            var result = _baseBL.ImportXLSX(file);
+            if (result.Success)
             {
-                var result = false;
-                var filename = Guid.NewGuid().ToString().Replace("-", "") + ".xlsx";
-                var filePath = DataContext.Path_root + SaveFileImage.SaveExcelFileToDisk(file.OpenReadStream(), filename);
-                var data = SaveFileImage.ReadFromExcelFile(filePath, 1, out messageError);
-                string json = JsonConvert.SerializeObject(data, Formatting.Indented);
-                var list = JsonConvert.DeserializeObject<List<T>>(json.ToString());
-                if (list != null && list.Count > 0)
-                {
-                    result = _baseBL.ImportXLSX(JsonConvert.SerializeObject(list), list.Count);
-                }
-                if (result)
-                {
-                    SaveFileImage.DeleteFile(filePath);
-                    return StatusCode(StatusCodes.Status200OK, new ServiceResponse
-                    {
-                        Success = true,
-                        Data = Resource.Message_import_success
-                    });
-                }
-                SaveFileImage.DeleteFile(filePath);
+                return StatusCode(StatusCodes.Status200OK, result);
             }
             return StatusCode(StatusCodes.Status200OK, new ServiceResponse
             {
@@ -395,7 +376,7 @@ namespace MISA.WEB08.AMIS.API.Controllers
                 ErrorCode = MisaAmisErrorCode.FileNotCorrect,
                 Data = new MisaAmisErrorResult(
                         MisaAmisErrorCode.FileNotCorrect,
-                        messageError != "" ? messageError : Resource.DevMsg_Exception,
+                        result.Data,
                         Resource.Message_import_fail,
                         Resource.MoreInfo_Exception,
                         HttpContext.TraceIdentifier

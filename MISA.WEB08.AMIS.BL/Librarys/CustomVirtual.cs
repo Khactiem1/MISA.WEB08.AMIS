@@ -1,5 +1,6 @@
 ﻿using MISA.WEB08.AMIS.Common.Result;
 using OfficeOpenXml;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace MISA.WEB08.AMIS.BL
@@ -19,6 +20,43 @@ namespace MISA.WEB08.AMIS.BL
             {
                 Success = true
             };
+        }
+
+        /// <summary>
+        /// Hàm xử lý custom tham số cho bản ghi cần validate
+        /// </summary>
+        /// <param name="record">Record cần custom validate</param>
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public virtual void CustomParameterValidate(ref T record)
+        {
+
+        }
+
+        /// <summary>
+        /// Hàm xử lý custom validate đối với nhập từ tệp
+        /// </summary>
+        /// <param name="listRecord">Danh sách từ tệp</param>
+        /// <param name="record">Record cần custom validate</param>
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public virtual ServiceResponse CustomValidateImportXlsx(T record, List<T> listRecord)
+        {
+            return new ServiceResponse
+            {
+                Success = true
+            };
+        }
+
+        /// <summary>
+        /// Hàm xử lý custom kết quả validate cho bản ghi cần validate
+        /// </summary>
+        /// <param name="record">Record cần custom validate</param>
+        /// <param name="line">Line nhập khẩu</param>
+        /// <param name="errorDetail">Lỗi chi tiết khi nhập</param>
+        /// <param name="status">Trạng thái nhập khẩu</param>
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public virtual void CustomResultValidate(ref T record, int line, string? errorDetail, string? status)
+        {
+
         }
 
         /// <summary>

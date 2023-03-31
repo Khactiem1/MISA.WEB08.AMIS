@@ -1,5 +1,6 @@
 ﻿using MISA.WEB08.AMIS.Common.Result;
 using System;
+using System.Collections.Generic;
 
 namespace MISA.WEB08.AMIS.DL
 {
@@ -100,6 +101,6 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="count">Số lượng record</param>
         /// <returns></returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public ServiceResponse ImportXLSX(string data, int count);
+        public ServiceResponse ImportXLSX(List<T> listData);
     }
 }

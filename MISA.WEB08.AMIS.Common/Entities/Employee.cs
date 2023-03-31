@@ -25,14 +25,14 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// mã nhân viên
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty", MaxLength = 20)]
         [ColumnName(Name = "Mã nhân viên", Width = 16)]
         public string EmployeeCode { get; set; }
 
         /// <summary>
         /// tên nhân viên
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty", MaxLength = 80)]
         [ColumnName(Name = "Tên nhân viên", Width = 40)]
         public string EmployeeName { get; set; }
 
@@ -58,36 +58,42 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// giới tính
         /// </summary>
+        [Validate(IsNotNullOrEmpty = true)]
         [ColumnName(Name = "Giới tính", Width = 10, IsGender = true)]
         public Gender? Gender { get; set; }
 
         /// <summary>
         /// chứng minh thư
         /// </summary>
+        [Validate(MaxLength = 80)]
         [ColumnName(Name = "Chứng minh thư", Width = 20)]
         public string IdentityCard { get; set; }
 
         /// <summary>
         /// chi nhánh ngân hàng
         /// </summary>
+        [Validate(MaxLength = 255)]
         [ColumnName(Name = "Chi nhánh ngân hàng", Width = 40)]
         public string BranchBank { get; set; }
 
         /// <summary>
         /// chức danh
         /// </summary>
+        [Validate(MaxLength = 100)]
         [ColumnName(Name = "Chức danh", Width = 20)]
         public string EmployeeTitle { get; set; }
 
         /// <summary>
         /// số tài khoản
         /// </summary>
+        [Validate(MaxLength = 80)]
         [ColumnName(Name = "Số tài khoản", Width = 20)]
         public string BankAccount { get; set; }
 
         /// <summary>
         /// tên ngân hàng
         /// </summary>
+        [Validate(MaxLength = 100)]
         [ColumnName(Name = "Tên ngân hàng", Width = 40)]
         public string NameBank { get; set; }
 
@@ -101,6 +107,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// địa chỉ cấp cmnd
         /// </summary>
+        [Validate(MaxLength = 255)]
         [ColumnName(Name = "Nơi cấp", Width = 40)]
         public string GrantAddressIdentity { get; set; }
 
@@ -108,44 +115,48 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// số điện thoại
         /// </summary>
         [ColumnName(Name = "Điện thoại", Width = 20)]
-        [Validate(PhoneNumber = true, ErrorMessage = "validate.malformed")]
+        [Validate(PhoneNumber = true, ErrorMessage = "validate.malformed", MaxLength = 50)]
         public string PhoneNumber { get; set; }
 
         /// <summary>
         /// số điện thoại cố định
         /// </summary>
         [ColumnName(Name = "Điện thoại cố định", Width = 20)]
-        [Validate(PhoneNumber = true, ErrorMessage = "validate.malformed")]
+        [Validate(PhoneNumber = true, ErrorMessage = "validate.malformed", MaxLength = 50)]
         public string LandlinePhone { get; set; }
 
         /// <summary>
         /// điạ chỉ email
         /// </summary>
         [ColumnName(Name = "Địa chỉ Email", Width = 30)]
-        [Validate(Email = true, ErrorMessage = "validate.malformed")]
+        [Validate(Email = true, ErrorMessage = "validate.malformed", MaxLength = 100)]
         public string EmployeeEmail { get; set; }
 
         /// <summary>
         /// địa chỉ nhân viên
         /// </summary>
+        [Validate(MaxLength = 255)]
         [ColumnName(Name = "Địa chỉ", Width = 40)]
         public string EmployeeAddress { get; set; }
 
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
+        [Validate(IsNotNullOrEmpty = true)]
         [ColumnName(Name = "Là khách hàng", Width = 20, IsBollen = true)]
         public bool? IsCustomer { get; set; } = false;
 
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
+        [Validate(IsNotNullOrEmpty = true)]
         [ColumnName(Name = "Là nhà cung cấp", Width = 20, IsBollen = true)]
         public bool? IsVendor { get; set; } = false;
 
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
+        [Validate(IsNotNullOrEmpty = true)]
         [ColumnName(Name = "Trạng thái", Width = 20)]
         public bool? IsActive { get; set; }
     }

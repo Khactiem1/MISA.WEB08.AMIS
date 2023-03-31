@@ -34,7 +34,7 @@ namespace MISA.WEB08.AMIS.BL
                 {
                     if (ValidateAttribute.IsNotNullOrEmpty && string.IsNullOrEmpty(propertyValue))
                     {
-                        validateFailures = ValidateAttribute.ErrorMessage;
+                        validateFailures = $"{ValidateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
                         break;
                     }
                     // Kiểm tra phải đúng định dạng số điện thoại
@@ -42,7 +42,7 @@ namespace MISA.WEB08.AMIS.BL
                     {
                         if (!Regex.IsMatch(propertyValue, @"(03|02|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b"))
                         {
-                            validateFailures = ValidateAttribute.ErrorMessage;
+                            validateFailures = $"{ValidateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
                             break;
                         }
                     }
@@ -51,7 +51,7 @@ namespace MISA.WEB08.AMIS.BL
                     {
                         if (!Regex.IsMatch(propertyValue, @"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"))
                         {
-                            validateFailures = ValidateAttribute.ErrorMessage;
+                            validateFailures = $"{ValidateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
                             break;
                         }
                     }
@@ -60,7 +60,16 @@ namespace MISA.WEB08.AMIS.BL
                     {
                         if (DateTime.Parse(propertyValue) > DateTime.Now)
                         {
-                            validateFailures = ValidateAttribute.ErrorMessage;
+                            validateFailures = $"{ValidateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
+                            break;
+                        }
+                    }
+                    // Kiểm tra độ dài
+                    else if (ValidateAttribute.MaxLength > 0 && !string.IsNullOrEmpty(propertyValue))
+                    {
+                        if(propertyValue.Length > ValidateAttribute.MaxLength)
+                        {
+                            validateFailures = $"validate.max_length MESSAGE.VALID.SPLIT {property.Name} MESSAGE.VALID.SPLIT {ValidateAttribute.MaxLength}";
                             break;
                         }
                     }

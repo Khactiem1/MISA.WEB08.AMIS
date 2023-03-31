@@ -1,4 +1,5 @@
-﻿using MISA.WEB08.AMIS.Common.Result;
+﻿using Microsoft.AspNetCore.Http;
+using MISA.WEB08.AMIS.Common.Result;
 using System;
 using System.Collections.Generic;
 
@@ -96,7 +97,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="count">Số lượng record</param>
         /// <returns></returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public bool ImportXLSX(string data, int count);
+        public ServiceResponse ImportXLSX(IFormFile file);
 
         /// <summary>
         /// Export data ra file excel

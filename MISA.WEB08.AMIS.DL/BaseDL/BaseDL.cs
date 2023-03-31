@@ -3,7 +3,9 @@ using MISA.WEB08.AMIS.Common.Attributes;
 using MISA.WEB08.AMIS.Common.Resources;
 using MISA.WEB08.AMIS.Common.Result;
 using MySqlConnector;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
@@ -379,19 +381,27 @@ namespace MISA.WEB08.AMIS.DL
         /// <param name="count">Số lượng record</param>
         /// <returns></returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public ServiceResponse ImportXLSX(string data, int count)
+        public ServiceResponse ImportXLSX(List<T> listData)
         {
             var v_MessOut = "";
             // chuẩn bị câu lệnh MySQL
             string storeProcedureName = string.Format(Resource.Proc_Import, typeof(T).Name);
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("v_Data", data);
+            parameters.Add("v_Data", JsonConvert.SerializeObject(listData));
             _dbHelper.RunProcWithExecute(storeProcedureName, parameters, ref v_MessOut);
+            if (string.IsNullOrEmpty(v_MessOut))
+            {
+                return new ServiceResponse
+                {
+                    Success = true,
+                    Data = true
+                };
+            }
             return new ServiceResponse
             {
-                Success = true,
-                Data = true
+                Success = false,
+                Data = v_MessOut
             };
         }
 

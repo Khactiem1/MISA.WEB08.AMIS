@@ -18,14 +18,14 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Mã kho
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty", MaxLength = 25)]
         [ColumnName(Name = "Mã Nhóm vật tư", Width = 35)]
         public string CommodityCode { get; set; }
 
         /// <summary>
         /// Tên kho
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty", MaxLength = 100)]
         [ColumnName(Name = "Tên nhóm vật tư", Width = 50)]
         public string CommodityName { get; set; }
 
@@ -37,6 +37,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
+        [Validate(IsNotNullOrEmpty = true)]
         [ColumnName(Name = "Trạng thái", Width = 20)]
         public bool? IsActive { get; set; }
     }

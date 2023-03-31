@@ -18,26 +18,28 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Mã kho
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty", MaxLength = 20)]
         [ColumnName(Name = "Mã kho", Width = 30)]
         public string DepotCode { get; set; }
 
         /// <summary>
         /// Tên kho
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty", MaxLength = 255)]
         [ColumnName(Name = "Tên kho", Width = 50)]
         public string DepotName { get; set; }
 
         /// <summary>
         /// Địa chỉ
         /// </summary>
+        [Validate(MaxLength = 255)]
         [ColumnName(Name = "Địa chỉ", Width = 100)]
         public string DepotDelivery { get; set; }
 
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
+        [Validate(IsNotNullOrEmpty = true)]
         [ColumnName(Name = "Trạng thái", Width = 20)]
         public bool? IsActive { get; set; }
     }

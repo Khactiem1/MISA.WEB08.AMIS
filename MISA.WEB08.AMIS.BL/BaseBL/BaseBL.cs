@@ -1,4 +1,5 @@
-﻿using MISA.WEB08.AMIS.Common.Attributes;
+﻿using Microsoft.AspNetCore.Http;
+using MISA.WEB08.AMIS.Common.Attributes;
 using MISA.WEB08.AMIS.Common.Entities;
 using MISA.WEB08.AMIS.Common.Enums;
 using MISA.WEB08.AMIS.Common.Resources;
@@ -267,9 +268,91 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="count">Số lượng record</param>
         /// <returns></returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public bool ImportXLSX(string data, int count)
+        public ServiceResponse ImportXLSX(IFormFile file)
         {
-            return _baseDL.ImportXLSX(data, count).Data;
+            var messageError = "";
+            if (file.Length > 0 && file.FileName.Contains(".xlsx"))
+            {
+                ServiceResponse result;
+                //Tạo tên file và lưu file
+                var filename = Guid.NewGuid().ToString().Replace("-", "") + ".xlsx";
+                var filePath = DataContext.Path_root + SaveFileImage.SaveExcelFileToDisk(file.OpenReadStream(), filename);
+                // Đọc file từ excel
+                var data = SaveFileImage.ReadFromExcelFile(filePath, 1, out messageError);
+                SaveFileImage.DeleteFile(filePath);
+                string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+                List<T> list = new List<T>();
+                // Chuyển dữ liệu đọc được thành kiểu list<T>
+                try
+                {
+                    list = JsonConvert.DeserializeObject<List<T>>(json.ToString());
+                }
+                catch(Exception ex)
+                {
+                    messageError = ex.Message;
+                }
+                if (list != null && list.Count > 0 && string.IsNullOrEmpty(messageError))
+                {
+                    // Danh sách dữ liệu sai
+                    List<T> listFail = new List<T>();
+                    // Danh sách dữ liệu đúng
+                    List<T> listPass = new List<T>();
+                    // Tiến hành validate
+                    int count = 1;
+                    foreach (var temp in list)
+                    {
+                        count++;
+                        var item = temp;
+                        CustomParameterValidate(ref item);
+                        var validateResult = Validate<T>.ValidateData(item);
+                        if (!validateResult.Success)
+                        {
+                            CustomResultValidate(ref item, count, validateResult.Data, "common.illegal");
+                            listFail.Add(item);
+                            continue;
+                        }
+                        var validateCustom = CustomValidate(item);
+                        if (!validateCustom.Success)
+                        {
+                            CustomResultValidate(ref item, count, validateCustom.Data, "common.illegal");
+                            listFail.Add(item);
+                            continue;
+                        }
+                        var validatCustomValidateImportXlsx = CustomValidateImportXlsx(item, list);
+                        if (!validatCustomValidateImportXlsx.Success)
+                        {
+                            CustomResultValidate(ref item, count, validatCustomValidateImportXlsx.Data, "common.illegal");
+                            listFail.Add(item);
+                            continue;
+                        }
+                        CustomResultValidate(ref item, count, null, "common.valid");
+                        listPass.Add(item);
+                    }
+                    if(listPass.Count > 0)
+                    {
+                        // Nhập từ tệp những bản ghi hợp lệ
+                        result = _baseDL.ImportXLSX(listPass);
+                        if (!result.Success)
+                        {
+                            return result;
+                        }
+                    }
+                    return new ServiceResponse
+                    {
+                        Success = true,
+                        Data = new
+                        {
+                            listFail = listFail,
+                            listPass = listPass
+                        }
+                    };
+                }
+            }
+            return new ServiceResponse
+            {
+                Success = false,
+                Data = !string.IsNullOrEmpty(messageError) ? messageError : Resource.DevMsg_Exception,
+            };
         }
 
         /// <summary>

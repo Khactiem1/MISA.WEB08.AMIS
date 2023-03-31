@@ -38,6 +38,11 @@ namespace MISA.WEB08.AMIS.Common.Attributes
         /// xác định trường là Date và có điều kiện đầu vào ngày không được lớn hơn ngày hiện tại
         /// </summary>
         public bool MaxDateNow = false;
+
+        /// <summary>
+        /// Xác định độ dài tối đa của cột
+        /// </summary>
+        public int MaxLength = -1;
     }
 
     /// <summary>
