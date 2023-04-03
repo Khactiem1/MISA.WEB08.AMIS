@@ -105,6 +105,10 @@ namespace MISA.WEB08.AMIS.BL
                 // Có ít nhất 2 bản ghi trong danh sách "DSEmployee" có EmployeeCode trùng với EmployeeCode của đối tượng "employee"
                 validateFailures = $"validate.unique_import MESSAGE.VALID.SPLIT EmployeeCode MESSAGE.VALID.SPLIT {record.EmployeeCode}";
             }
+            else if (string.IsNullOrEmpty(record.BranchCode))
+            {
+                validateFailures = $"validate.empty MESSAGE.VALID.SPLIT BranchCode";
+            }
             if (!string.IsNullOrEmpty(validateFailures))
             {
                 return new ServiceResponse
@@ -118,6 +122,21 @@ namespace MISA.WEB08.AMIS.BL
             {
                 Success = true
             };
+        }
+
+        /// <summary>
+        /// Hàm xử lý đưa những bản ghi không hợp lệ vào list Fail, xoá bản ghi không hợp lệ ở list pass sau khi nhận kết quả từ proc
+        /// </summary>
+        /// <param name="listFail">Danh sách bản ghi không hợp lệ</param>
+        /// <param name="listPass">Danh sách bản ghi  hợp lệ</param>
+        /// <param name="listFailResultProc">Danh sách bản ghi không hơp lệ trả về từ Proc</param>
+        public override void CustomListFailResultImportXlsx(ref List<Employee> listFail, ref List<Employee> listPass, List<Employee> listFailResultProc)
+        {
+            foreach(var item in listFailResultProc)
+            {
+                listFail.Add(item);
+                listPass.RemoveAll(x => x.EmployeeCode == item.EmployeeCode);
+            }
         }
 
         /// <summary>

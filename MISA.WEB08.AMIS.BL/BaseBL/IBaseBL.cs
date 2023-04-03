@@ -28,10 +28,11 @@ namespace MISA.WEB08.AMIS.BL
         /// <summary>
         /// Hàm lấy ra bản ghi theo ID
         /// </summary>
-        /// <param name="recordID"></param>
+        /// <param name="recordID">ID bản ghi</param>
+        /// <param name="stateForm">Trạng thái lấy (sửa hay nhân bản, ...)</param>
         /// <returns>Thông tin chi tiết một bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetRecordByID(string recordID);
+        public object GetRecordByID(string recordID, string? stateForm);
 
         /// <summary>
         /// Hàm lấy ra mã record tự sinh
@@ -93,8 +94,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <summary>
         /// Hhập khẩu dữ liệu từ tệp
         /// </summary>
-        /// <param name="data">Json danh sách</param>
-        /// <param name="count">Số lượng record</param>
+        /// <param name="file">File execl</param>
         /// <returns></returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public ServiceResponse ImportXLSX(IFormFile file);

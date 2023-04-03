@@ -63,12 +63,13 @@ namespace MISA.WEB08.AMIS.BL
         /// <summary>
         /// Hàm lấy ra bản ghi theo ID
         /// </summary>
-        /// <param name="recordID"></param>
+        /// <param name="recordID">ID bản ghi</param>
+        /// <param name="stateForm">Trạng thái lấy (sửa hay nhân bản, ...)</param>
         /// <returns>Thông tin chi tiết một bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public virtual object GetRecordByID(string recordID)
+        public virtual object GetRecordByID(string recordID, string? stateForm)
         {
-            return _baseDL.GetRecordByID(recordID);
+            return _baseDL.GetRecordByID(recordID, stateForm);
         }
 
         /// <summary>
@@ -101,14 +102,7 @@ namespace MISA.WEB08.AMIS.BL
             {
                 if (!string.IsNullOrEmpty(item.ValueSearch) || item.ComparisonType == "!=Null" || item.ComparisonType == "=Null")
                 {
-                    if (item.Join == null || string.IsNullOrEmpty(item.Join.TableJoin))
-                    {
-                        v_Query += Validate<T>.FormatQuery(item.ColumnSearch, item.ValueSearch.Trim(), item.TypeSearch, item.ComparisonType, typeof(T).Name);
-                    }
-                    else
-                    {
-                        v_Query += Validate<T>.FormatQuery(item.ColumnSearch, item.ValueSearch.Trim(), item.TypeSearch, item.ComparisonType, item.Join.TableJoin);
-                    }
+                    v_Query += Validate<T>.FormatQuery(item.ColumnSearch, item.ValueSearch.Trim(), item.TypeSearch, item.ComparisonType);
                 }
             }
             return _baseDL.GetFitterRecords(v_Offset, v_Limit, v_Where, v_Sort, v_Query, string.Join(", ", v_Select));
@@ -264,8 +258,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <summary>
         /// Hhập khẩu dữ liệu từ tệp
         /// </summary>
-        /// <param name="data">Json danh sách</param>
-        /// <param name="count">Số lượng record</param>
+        /// <param name="file">File execl</param>
         /// <returns></returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         public ServiceResponse ImportXLSX(IFormFile file)
@@ -336,6 +329,11 @@ namespace MISA.WEB08.AMIS.BL
                         {
                             return result;
                         }
+                        var listFailResultProc = (List<T>)result.Data;
+                        if (listFailResultProc.Count > 0)
+                        {
+                            CustomListFailResultImportXlsx(ref listFail, ref listPass, listFailResultProc);
+                        }
                     }
                     return new ServiceResponse
                     {
@@ -376,19 +374,12 @@ namespace MISA.WEB08.AMIS.BL
             {
                 if (!string.IsNullOrEmpty(item.ValueSearch) || item.ComparisonType == "!=Null" || item.ComparisonType == "=Null")
                 {
-                    if (item.Join == null || string.IsNullOrEmpty(item.Join.TableJoin))
-                    {
-                        v_Query += Validate<T>.FormatQuery(item.ColumnSearch, item.ValueSearch.Trim(), item.TypeSearch, item.ComparisonType, typeof(T).Name);
-                    }
-                    else
-                    {
-                        v_Query += Validate<T>.FormatQuery(item.ColumnSearch, item.ValueSearch.Trim(), item.TypeSearch, item.ComparisonType, item.Join.TableJoin);
-                    }
+                    v_Query += Validate<T>.FormatQuery(item.ColumnSearch, item.ValueSearch.Trim(), item.TypeSearch, item.ComparisonType);
                 }
             }
             List<T> records = (List<T>)_baseDL.GetFitterRecords(v_Offset, v_Limit, v_Where, v_Sort, v_Query, string.Join(", ", v_Select)).recordList;
             if (records == null || records.Count == 0 || v_Select.Count == 0) return null;
-            string column = SaveFileImage.GetColumnName(v_Select.Count);
+            string column = SaveFileImage.GetColumnName(v_Select.Count + 1);
             var stream = new MemoryStream();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (var package = new ExcelPackage(stream ?? new MemoryStream()))

@@ -58,7 +58,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// giới tính
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true)]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Giới tính", Width = 10, IsGender = true)]
         public Gender? Gender { get; set; }
 
@@ -142,22 +142,22 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true)]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Là khách hàng", Width = 20, IsBollen = true)]
         public bool? IsCustomer { get; set; } = false;
 
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true)]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Là nhà cung cấp", Width = 20, IsBollen = true)]
         public bool? IsVendor { get; set; } = false;
 
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true)]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Trạng thái", Width = 20)]
-        public bool? IsActive { get; set; }
+        public bool? IsActive { get; set; } = true;
     }
 }

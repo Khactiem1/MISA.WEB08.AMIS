@@ -138,3 +138,6 @@ C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Rel
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\ref\MISA.WEB08.AMIS.API.dll
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\MISA.WEB08.AMIS.API.pdb
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\MISA.WEB08.AMIS.API.genruntimeconfig.cache
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Release\net5.0\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Release\net5.0\Microsoft.Extensions.Primitives.dll
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Release\net5.0\System.IO.Pipelines.dll

@@ -30,6 +30,13 @@ namespace MISA.WEB08.AMIS.DL
         public int RunProcWithExecute(string storeProcedureName, DynamicParameters? parameters, ref string? v_MessOut);
 
         /// <summary>
+        /// Chạy proc với Query trong dapper kết hợp với Transaction
+        /// </summary>
+        /// <returns>object</returns>
+        /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
+        public object RunProcWithQueryCombineTransaction(string storeProcedureName, DynamicParameters? parameters, ref string? v_MessOut);
+
+        /// <summary>
         /// Hàm tạo mã tự sinh
         /// </summary>
         /// <param name="code">Mã</param>

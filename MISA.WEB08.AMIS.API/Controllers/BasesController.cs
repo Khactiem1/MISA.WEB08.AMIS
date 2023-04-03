@@ -110,9 +110,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <returns>Thông tin chi tiết một bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         [HttpGet("{recordID}")]
-        public virtual IActionResult GetRecordByID([FromRoute] Guid recordID)
+        public virtual IActionResult GetRecordByID([FromRoute] Guid recordID, [FromQuery] string? stateForm)
         {
-            var record = _baseBL.GetRecordByID(recordID.ToString());
+            var record = _baseBL.GetRecordByID(recordID.ToString(), stateForm);
             if (record != null)
             {
                 return StatusCode(StatusCodes.Status200OK, new ServiceResponse

@@ -9,6 +9,8 @@ C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Rel
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\PubTmp\Out\Dapper.dll
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\PubTmp\Out\EPPlus.dll
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\PubTmp\Out\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\PubTmp\Out\Microsoft.Extensions.Primitives.dll
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\PubTmp\Out\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\PubTmp\Out\Microsoft.IdentityModel.Logging.dll
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\PubTmp\Out\Microsoft.IdentityModel.Protocols.dll
@@ -23,6 +25,7 @@ C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Rel
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\PubTmp\Out\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\PubTmp\Out\System.IO.Pipelines.dll
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\PubTmp\Out\MISA.WEB08.AMIS.BL.dll
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\PubTmp\Out\MISA.WEB08.AMIS.Common.dll
 C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Release\net5.0\PubTmp\Out\MISA.WEB08.AMIS.DL.dll

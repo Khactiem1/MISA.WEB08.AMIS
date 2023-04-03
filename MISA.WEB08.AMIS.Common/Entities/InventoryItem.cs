@@ -18,20 +18,20 @@ namespace MISA.WEB08.AMIS.Common.Entities
 
         /// <summary>
         /// id đơn vị tính
-        /// </summary>7
+        /// </summary>
         public Guid? UnitCalculationID { get; set; }
 
         /// <summary>
         /// mã hàng hoá vật tư
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
-        [ColumnName(Name = "Mã hàng hoá vật tư", Width = 16)]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty", MaxLength = 25)]
+        [ColumnName(Name = "Mã", Width = 16)]
         public string InventoryItemCode { get; set; }
 
         /// <summary>
         /// tên hàng hoá vật tư
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty", MaxLength = 255)]
         [ColumnName(Name = "Tên hàng hoá vật tư", Width = 40)]
         public string InventoryItemName { get; set; }
 
@@ -45,11 +45,6 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// </summary>
         //[ColumnName(Name = "Mã nhóm vật tư hàng hoá", Width = 50)]
         public string CommodityCode { get; set; }
-
-        /// <summary>
-        /// Hình ảnh
-        /// </summary>
-        public string Avatar { get; set; }
 
         /// <summary>
         /// tính chất
@@ -67,12 +62,14 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Giảm thuế
         /// </summary>
+        [Validate(MaxLength = 255)]
         [ColumnName(Name = "Giảm thuế", Width = 40)]
-        public string DepreciatedTax { get; set; }
+        public DepreciatedTax? DepreciatedTax { get; set; }
 
         /// <summary>
         /// Thời hạn bảo hành
         /// </summary>
+        [Validate(MaxLength = 100)]
         [ColumnName(Name = "Thời hạn bảo hành", Width = 40)]
         public string WarrantyPeriod { get; set; }
 
@@ -91,24 +88,34 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Nguồn gốc
         /// </summary>
+        [Validate(MaxLength = 255)]
         [ColumnName(Name = "Nguồn gốc", Width = 40)]
         public string Origin { get; set; }
 
         /// <summary>
         /// Mô tả
         /// </summary>
+        [Validate(MaxLength = 255)]
         [ColumnName(Name = "Mô tả", Width = 40)]
         public string Description { get; set; }
 
         /// <summary>
+        /// Hình ảnh
+        /// </summary>
+        [ColumnName(Name = "Hình ảnh", Width = 50)]
+        public string? Avatar { get; set; }
+
+        /// <summary>
         /// Diễn giải khi mua
         /// </summary>
+        [Validate(MaxLength = 255)]
         [ColumnName(Name = "Diễn giải khi mua", Width = 40)]
         public string ExplanationBuy { get; set; }
 
         /// <summary>
         /// Diễn giải khi bán
         /// </summary>
+        [Validate(MaxLength = 255)]
         [ColumnName(Name = "Diễn giải khi bán", Width = 40)]
         public string ExplanationSell { get; set; }
 
@@ -132,36 +139,42 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Tài khoản kho
         /// </summary>
+        [Validate(MaxLength = 100)]
         [ColumnName(Name = "Tài khoản kho", Width = 40)]
         public string AccountDepot { get; set; }
 
         /// <summary>
         /// Tài khoản doanh thu
         /// </summary>
+        [Validate(MaxLength = 100)]
         [ColumnName(Name = "Tài khoản doanh thu", Width = 40)]
         public string AccountRevenue { get; set; }
 
         /// <summary>
         /// Tài khoản chiết khấu
         /// </summary>
+        [Validate(MaxLength = 100)]
         [ColumnName(Name = "Tài khoản chiết khấu", Width = 40)]
         public string AccountDiscount { get; set; }
 
         /// <summary>
         /// Tài khoản giảm giá
         /// </summary>
+        [Validate(MaxLength = 100)]
         [ColumnName(Name = "Tài khoản giảm giá", Width = 40)]
         public string AccountSale { get; set; }
 
         /// <summary>
         /// Tài khoản trả lại
         /// </summary>
+        [Validate(MaxLength = 100)]
         [ColumnName(Name = "Tài khoản trả lại", Width = 40)]
         public string AccountReturn { get; set; }
 
         /// <summary>
         /// Tài khoản chi phí
         /// </summary>
+        [Validate(MaxLength = 100)]
         [ColumnName(Name = "Tài khoản chi phí", Width = 40)]
         public string AccountCost { get; set; }
 
@@ -192,7 +205,8 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Nhóm hàng hoá dịch vụ chịu thuế tiêu thụ đặc biệt
         /// </summary>
-        [ColumnName(Name = "Nhóm hàng hoá dịch vụ chịu thuế tiêu thụ đặc biệt", Width = 40)]
+        [Validate(MaxLength = 255)]
+        [ColumnName(Name = "Nhóm hàng hoá dịch vụ chịu thuế tiêu thụ đặc biệt", Width = 50)]
         public string VATGroupExciceTax { get; set; }
 
         /// <summary>
@@ -216,6 +230,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Trạng thái", Width = 20)]
         public bool? IsActive { get; set; }
     }

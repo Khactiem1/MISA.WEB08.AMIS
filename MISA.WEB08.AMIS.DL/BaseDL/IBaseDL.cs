@@ -27,10 +27,11 @@ namespace MISA.WEB08.AMIS.DL
         /// <summary>
         /// Hàm lấy ra bản ghi theo ID
         /// </summary>
-        /// <param name="recordID"></param>
+        /// <param name="recordID">ID bản ghi</param>
+        /// <param name="stateForm">Trạng thái lấy (sửa hay nhân bản, ...)</param>
         /// <returns>Thông tin chi tiết một bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetRecordByID(string recordID);
+        public object GetRecordByID(string recordID, string? stateForm);
 
         /// <summary>
         /// Hàm lấy ra mã record tự sinh

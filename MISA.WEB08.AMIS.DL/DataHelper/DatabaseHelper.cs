@@ -107,6 +107,56 @@ namespace MISA.WEB08.AMIS.DL
         }
 
         /// <summary>
+        /// Chạy proc với Query trong dapper kết hợp với Transaction
+        /// </summary>
+        /// <returns>object</returns>
+        /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
+        public virtual object RunProcWithQueryCombineTransaction(string storeProcedureName, DynamicParameters? parameters, ref string? v_MessOut)
+        {
+            object result;
+            using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
+            {
+                //nếu như kết nối đang đóng thì tiến hành mở lại
+                if (mysqlConnection.State != ConnectionState.Open)
+                {
+                    mysqlConnection.Open();
+                }
+                //mở một giao dịch( nếu xóa thành công thì xóa hết, nếu lỗi giữa chừng thì dừng lại và khôi phục các dữ liệu đã bị xóa)
+                using (var transaction = mysqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        // thực hiện gọi vào DB
+                        parameters.Add($"v_MessOut", DbType.String, direction: ParameterDirection.Output, size: 255);
+                        result = mysqlConnection.Query<T>(storeProcedureName,
+                            parameters,
+                            transaction: transaction,
+                            commandType: CommandType.StoredProcedure
+                            );
+                        v_MessOut = parameters.Get<string>("v_MessOut");
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                        v_MessOut = Resource.UserMsg_Exception;
+                        //nếu thực hiện không thành công thì rollback
+                        transaction.Rollback();
+                        result = null;
+                    }
+                    finally
+                    {
+                        if (mysqlConnection.State == ConnectionState.Open)
+                        {
+                            mysqlConnection.Close();
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Hàm tạo mã tự sinh
         /// </summary>
         /// <param name="code">Mã</param>

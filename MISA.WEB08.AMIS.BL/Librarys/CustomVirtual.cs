@@ -60,6 +60,17 @@ namespace MISA.WEB08.AMIS.BL
         }
 
         /// <summary>
+        /// Hàm xử lý đưa những bản ghi không hợp lệ vào list Fail, xoá bản ghi không hợp lệ ở list pass sau khi nhận kết quả từ proc
+        /// </summary>
+        /// <param name="listFail">Danh sách bản ghi không hợp lệ</param>
+        /// <param name="listPass">Danh sách bản ghi  hợp lệ</param>
+        /// <param name="listFailResultProc">Danh sách bản ghi không hơp lệ trả về từ Proc</param>
+        public virtual void CustomListFailResultImportXlsx(ref List<T> listFail, ref List<T> listPass, List<T> listFailResultProc)
+        {
+
+        }
+
+        /// <summary>
         /// Hàm custom dữ liệu xuất file
         /// </summary>
         /// <param name="property">Cột dữ liệu cần custom</param>

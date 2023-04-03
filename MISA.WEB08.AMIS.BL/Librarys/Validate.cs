@@ -93,7 +93,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <summary>
         /// Hàm xử lý fomat số đúng định dạng
         /// </summary>
-        /// <param name="pText"></param>
+        /// <param name="number"></param>
         /// <returns></returns>
         /// NK Tiềm 05/10/2022
         public static string FormatNumber(double number)
@@ -107,22 +107,21 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="key">Column trong data base cần so sánh</param>
         /// <param name="value">Giá trị cần so sánh</param>
         /// <param name="typeSearch">Kiểu so sánh là chữ hay dạng số</param>
-        /// <param name="table">Table search</param>
         /// <param name="comparisonType">toán tử so sánh</param>
         /// <returns>truy vấn sau khi build</returns>
         ///  NK Tiềm 05/10/2022
-        public static string FormatQuery(string key, string value, string typeSearch, string comparisonType, string table)
+        public static string FormatQuery(string key, string value, string typeSearch, string comparisonType)
         {
             string v_Query = "";
             if ((comparisonType == "=" || comparisonType == ">" || comparisonType == ">=" || comparisonType == "<" || comparisonType == "<=") && (typeSearch == "number" || typeSearch == "date"))
             {
                 if (typeSearch == "number")
                 {
-                    v_Query += $" AND {table}.{key} {comparisonType} {value}";
+                    v_Query += $" AND {key} {comparisonType} {value}";
                 }
                 else
                 {
-                    v_Query += $" AND {table}.{key} {comparisonType} STR_TO_DATE('{DateTime.Parse(value).ToString("dd/MM/yyyy")}', '%d/%m/%Y')";
+                    v_Query += $" AND {key} {comparisonType} STR_TO_DATE('{DateTime.Parse(value).ToString("dd/MM/yyyy")}', '%d/%m/%Y')";
                 }
             }
             else if ((comparisonType == "=Null" || comparisonType == "!=Null" || comparisonType == "!=") && (typeSearch == "number" || typeSearch == "date"))
@@ -132,31 +131,31 @@ namespace MISA.WEB08.AMIS.BL
                     case "=Null":
                         if (typeSearch == "number")
                         {
-                            v_Query += $" AND ({table}.{key} IS NULL OR {table}.{key} = '' AND {table}.{key} != 0)";
+                            v_Query += $" AND ({key} IS NULL OR {key} = '' AND {key} != 0)";
                         }
                         else
                         {
-                            v_Query += $" AND {table}.{key} IS NULL";
+                            v_Query += $" AND {key} IS NULL";
                         }
                         break;
                     case "!=Null":
                         if (typeSearch == "number")
                         {
-                            v_Query += $" AND ({table}.{key} != NULL OR {table}.{key} != '' OR {table}.{key} = 0)";
+                            v_Query += $" AND ({key} != NULL OR {key} != '' OR {key} = 0)";
                         }
                         else
                         {
-                            v_Query += $" AND {table}.{key} IS NOT NULL";
+                            v_Query += $" AND {key} IS NOT NULL";
                         }
                         break;
                     case "!=":
                         if (typeSearch == "number")
                         {
-                            v_Query += $" AND ({table}.{key} != {value} OR {table}.{key} = '' OR {table}.{key} IS NULL)";
+                            v_Query += $" AND ({key} != {value} OR {key} = '' OR {key} IS NULL)";
                         }
                         else
                         {
-                            v_Query += $" AND {table}.{key} != STR_TO_DATE('{DateTime.Parse(value).ToString("dd/MM/yyyy")}', '%d/%m/%Y')";
+                            v_Query += $" AND {key} != STR_TO_DATE('{DateTime.Parse(value).ToString("dd/MM/yyyy")}', '%d/%m/%Y')";
                         }
                         break;
                 }
@@ -167,35 +166,35 @@ namespace MISA.WEB08.AMIS.BL
                 {
                     //Chứa
                     case "%%":
-                        v_Query += $" AND {table}.{key} LIKE '%{value}%'";
+                        v_Query += $" AND {key} LIKE '%{value}%'";
                         break;
                     //Rỗng
                     case "=Null":
-                        v_Query += $" AND ({table}.{key} IS NULL OR {table}.{key} = '')";
+                        v_Query += $" AND ({key} IS NULL OR {key} = '')";
                         break;
                     //Không rỗng
                     case "!=Null":
-                        v_Query += $" AND ({table}.{key} != NULL OR {table}.{key} != '')";
+                        v_Query += $" AND ({key} != NULL OR {key} != '')";
                         break;
                     //Bằng
                     case "=":
-                        v_Query += $" AND {table}.{key} = '{value}'";
+                        v_Query += $" AND {key} = '{value}'";
                         break;
                     //Khác
                     case "!=":
-                        v_Query += $" AND ({table}.{key} != '{value}' OR {table}.{key} = '' OR {table}.{key} IS NULL)";
+                        v_Query += $" AND ({key} != '{value}' OR {key} = '' OR {key} IS NULL)";
                         break;
                     //Không chứa
                     case "!%%":
-                        v_Query += $" AND ({table}.{key} NOT LIKE '%{value}%' OR {table}.{key} = '' OR {table}.{key} IS NULL)";
+                        v_Query += $" AND ({key} NOT LIKE '%{value}%' OR {key} = '' OR {key} IS NULL)";
                         break;
                     //Bắt đầu bởi
                     case "_%":
-                        v_Query += $" AND {table}.{key} LIKE '{value}%'";
+                        v_Query += $" AND {key} LIKE '{value}%'";
                         break;
                     //Kết thúc bởi
                     case "%_":
-                        v_Query += $" AND {table}.{key} LIKE '%{value}'";
+                        v_Query += $" AND {key} LIKE '%{value}'";
                         break;
                 }
             }

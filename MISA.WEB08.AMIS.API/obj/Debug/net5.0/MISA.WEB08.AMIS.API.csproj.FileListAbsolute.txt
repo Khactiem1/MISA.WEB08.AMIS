@@ -288,3 +288,6 @@ C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\obj\Debug\net5
 C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\Microsoft.AspNetCore.Http.Features.dll
 C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
 C:\Users\Admin\Downloads\test\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\System.IO.Pipelines.dll
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+C:\Users\Khac Tiem\Downloads\BackEnd\MISA.WEB08.AMIS\MISA.WEB08.AMIS.API\bin\Debug\net5.0\System.IO.Pipelines.dll

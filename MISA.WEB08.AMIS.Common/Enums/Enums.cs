@@ -27,6 +27,10 @@ namespace MISA.WEB08.AMIS.Common.Enums
         Other = 2,
     }
 
+    /// <summary>
+    /// Loại hàng hoá
+    /// </summary>
+    /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
     public enum Nature : int
     {
         /// <summary>
@@ -59,6 +63,31 @@ namespace MISA.WEB08.AMIS.Common.Enums
         /// </summary>
         ToolTools = 5,
     }
+    /// <summary>
+    /// Kiểu giảm thuế
+    /// </summary>
+    /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
+    public enum DepreciatedTax : int
+    {
+        /// <summary>
+        /// Không xác định
+        /// Created by : Khắc Tiềm 21.09.2022
+        /// </summary>
+        undefined = 1,
+
+        /// <summary>
+        /// Không giảm thuế
+        /// Created by : Khắc Tiềm 21.09.2022
+        /// </summary>
+        no_tax_reduction = 2,
+
+        /// <summary>
+        /// Giảm thuế
+        /// Created by : Khắc Tiềm 21.09.2022
+        /// </summary>
+        tax_reduction = 3,
+    }
+
 
     /// <summary>
     /// Kiểu join bảng

@@ -37,7 +37,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Hoạt động hay không hoạt động
         /// </summary>
-        [Validate(IsNotNullOrEmpty = true)]
+        [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Trạng thái", Width = 20)]
         public bool? IsActive { get; set; }
     }

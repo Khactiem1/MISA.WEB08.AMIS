@@ -60,14 +60,16 @@ namespace MISA.WEB08.AMIS.DL
         /// <summary>
         /// Hàm lấy ra bản ghi theo ID
         /// </summary>
-        /// <param name="recordID"></param>
+        /// <param name="recordID">ID bản ghi</param>
+        /// <param name="stateForm">Trạng thái lấy (sửa hay nhân bản, ...)</param>
         /// <returns>Thông tin chi tiết một bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public virtual object GetRecordByID(string recordID)
+        public virtual object GetRecordByID(string recordID, string? stateForm)
         {
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add($"v_{typeof(T).Name}ID", recordID);
+            parameters.Add($"v_StateForm", stateForm);
             // Khai báo stored procedure
             string storeProcedureName = string.Format(Resource.Proc_GetDetailOne, typeof(T).Name);
             return _dbHelper.RunProcWithQueryFirstOrDefault(storeProcedureName, parameters);
@@ -339,7 +341,7 @@ namespace MISA.WEB08.AMIS.DL
             return new ServiceResponse
             {
                 Success = false,
-                Data = Guid.Empty
+                Data = rowAffects
             };
         }
 
@@ -389,13 +391,13 @@ namespace MISA.WEB08.AMIS.DL
             // Khởi tạo các parameter để chèn vào trong Proc
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("v_Data", JsonConvert.SerializeObject(listData));
-            _dbHelper.RunProcWithExecute(storeProcedureName, parameters, ref v_MessOut);
+            object result = _dbHelper.RunProcWithQueryCombineTransaction(storeProcedureName, parameters, ref v_MessOut);
             if (string.IsNullOrEmpty(v_MessOut))
             {
                 return new ServiceResponse
                 {
                     Success = true,
-                    Data = true
+                    Data = result
                 };
             }
             return new ServiceResponse

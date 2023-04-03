@@ -56,6 +56,11 @@ namespace MISA.WEB08.AMIS.BL
                 sheet.Cells[indexRow + 4, indexBody].Value = inventoryItem.Nature == Nature.Goods ? "Hàng hoá" : inventoryItem.Nature == Nature.Service ? "Dịch vụ" : inventoryItem.Nature == Nature.Materials ? "Nguyên vật liệu" : inventoryItem.Nature == Nature.FinishedProduct ? "Thành phẩm" : "Dụng cụ công cụ";
                 return true;
             }
+            else if (property.Name == "DepreciatedTax")
+            {
+                sheet.Cells[indexRow + 4, indexBody].Value = inventoryItem.DepreciatedTax == DepreciatedTax.undefined ? "Không xác định" : inventoryItem.DepreciatedTax == DepreciatedTax.no_tax_reduction ? "Không giảm thuế" : inventoryItem.DepreciatedTax == DepreciatedTax.tax_reduction ? "Giảm thuế" : "";
+                return true;
+            }
             return false;
         }
 
@@ -127,6 +132,21 @@ namespace MISA.WEB08.AMIS.BL
             {
                 Success = true
             };
+        }
+
+        /// <summary>
+        /// Hàm xử lý đưa những bản ghi không hợp lệ vào list Fail, xoá bản ghi không hợp lệ ở list pass sau khi nhận kết quả từ proc
+        /// </summary>
+        /// <param name="listFail">Danh sách bản ghi không hợp lệ</param>
+        /// <param name="listPass">Danh sách bản ghi  hợp lệ</param>
+        /// <param name="listFailResultProc">Danh sách bản ghi không hơp lệ trả về từ Proc</param>
+        public override void CustomListFailResultImportXlsx(ref List<InventoryItem> listFail, ref List<InventoryItem> listPass, List<InventoryItem> listFailResultProc)
+        {
+            foreach (var item in listFailResultProc)
+            {
+                listFail.Add(item);
+                listPass.RemoveAll(x => x.InventoryItemCode == item.InventoryItemCode);
+            }
         }
 
         #endregion

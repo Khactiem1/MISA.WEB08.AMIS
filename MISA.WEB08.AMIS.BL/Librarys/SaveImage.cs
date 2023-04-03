@@ -45,18 +45,12 @@ namespace MISA.WEB08.AMIS.BL
         /// CreatedBy: Nguyễn Khắc Tiềm (6/10/2022)
         public static string GetColumnName(int index)
         {
-            const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            int baseNumber = letters.Length;
-            List<int> digits = new List<int>();
+            string columnName = "";
             while (index > 0)
             {
-                digits.Add(index % baseNumber);
-                index = (index / baseNumber);
-            }
-            string columnName = "";
-            for (int i = digits.Count - 1; i >= 0; i--)
-            {
-                columnName += letters[digits[i]];
+                int remainder = (index - 1) % 26;
+                columnName = (char)(65 + remainder) + columnName;
+                index = (index - 1) / 26;
             }
             return columnName;
         }
@@ -137,7 +131,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <summary>
         /// Hàm thực hiện xoá file
         /// </summary>
-        /// <param name="fileName"></param>
+        /// <param name="pathFileName">Đường dẫn file và tên file</param>
         /// CreatedBy: Nguyễn Khắc Tiềm (6/10/2022)
         public static void DeleteFile(string pathFileName)
         {
