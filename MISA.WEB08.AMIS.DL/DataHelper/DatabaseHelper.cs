@@ -26,12 +26,21 @@ namespace MISA.WEB08.AMIS.DL
             // Khai báo stored procedure
             using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
             {
+                //nếu như kết nối đang đóng thì tiến hành mở lại
+                if (mysqlConnection.State != ConnectionState.Open)
+                {
+                    mysqlConnection.Open();
+                }
                 // thực hiện gọi vào DB
                 result = mysqlConnection.Query<T>(
                     storeProcedureName,
                     parameters,
                     commandType: CommandType.StoredProcedure
                     );
+                if (mysqlConnection.State == ConnectionState.Open)
+                {
+                    mysqlConnection.Close();
+                }
             }
             return result;
         }
@@ -46,12 +55,21 @@ namespace MISA.WEB08.AMIS.DL
             object result;
             using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
             {
+                //nếu như kết nối đang đóng thì tiến hành mở lại
+                if (mysqlConnection.State != ConnectionState.Open)
+                {
+                    mysqlConnection.Open();
+                }
                 // thực hiện gọi vào DB
                 result = mysqlConnection.QueryFirstOrDefault<T>(
                     storeProcedureName,
                     parameters,
                     commandType: CommandType.StoredProcedure
                     );
+                if (mysqlConnection.State == ConnectionState.Open)
+                {
+                    mysqlConnection.Close();
+                }
             }
             return result;
         }

@@ -89,12 +89,21 @@ namespace MISA.WEB08.AMIS.DL
             parameters.Add("v_TableName", typeof(T).Name);
             using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
             {
+                //nếu như kết nối đang đóng thì tiến hành mở lại
+                if (mysqlConnection.State != ConnectionState.Open)
+                {
+                    mysqlConnection.Open();
+                }
                 // thực hiện gọi vào DB
                 result = mysqlConnection.QueryFirstOrDefault<string>(
                     storeProcedureName,
                     parameters,
                     commandType: CommandType.StoredProcedure
                     );
+                if (mysqlConnection.State == ConnectionState.Open)
+                {
+                    mysqlConnection.Close();
+                }
             }
             return result;
         }
@@ -127,6 +136,11 @@ namespace MISA.WEB08.AMIS.DL
 
             using (var mysqlConnection = new MySqlConnection(DataContext.MySqlConnectionString))
             {
+                //nếu như kết nối đang đóng thì tiến hành mở lại
+                if (mysqlConnection.State != ConnectionState.Open)
+                {
+                    mysqlConnection.Open();
+                }
                 // thực hiện gọi vào DB
                 var records = mysqlConnection.QueryMultiple(
                     storeProcedureName,
@@ -139,6 +153,10 @@ namespace MISA.WEB08.AMIS.DL
                     totalCount = records.ReadSingle().totalCount,
                 };
                 CustomResultProc(records, ref result);
+                if (mysqlConnection.State == ConnectionState.Open)
+                {
+                    mysqlConnection.Close();
+                }
             }
             return result;
         }
