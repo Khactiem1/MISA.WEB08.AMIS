@@ -2,6 +2,7 @@
 using MISA.WEB08.AMIS.Common.Enums;
 using MISA.WEB08.AMIS.Common.Result;
 using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace MISA.WEB08.AMIS.BL
@@ -29,47 +30,47 @@ namespace MISA.WEB08.AMIS.BL
             {
                 // Kiểm tra không được rỗng
                 var propertyValue = property.GetValue(record)?.ToString();
-                var ValidateAttribute = (ValidateAttribute?)Attribute.GetCustomAttribute(property, typeof(ValidateAttribute));
-                if (ValidateAttribute != null)
+                var validateAttribute = (ValidateAttribute?)Attribute.GetCustomAttribute(property, typeof(ValidateAttribute));
+                if (validateAttribute != null)
                 {
-                    if (ValidateAttribute.IsNotNullOrEmpty && string.IsNullOrEmpty(propertyValue))
+                    if (validateAttribute.IsNotNullOrEmpty && string.IsNullOrEmpty(propertyValue))
                     {
-                        validateFailures = $"{ValidateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
+                        validateFailures = $"{validateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
                         break;
                     }
                     // Kiểm tra phải đúng định dạng số điện thoại
-                    else if (ValidateAttribute.PhoneNumber && !string.IsNullOrEmpty(propertyValue))
+                    else if (validateAttribute.PhoneNumber && !string.IsNullOrEmpty(propertyValue))
                     {
                         if (!Regex.IsMatch(propertyValue, @"(03|02|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b"))
                         {
-                            validateFailures = $"{ValidateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
+                            validateFailures = $"{validateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
                             break;
                         }
                     }
                     // kiểm tra phải đúng định dạng email
-                    else if (ValidateAttribute.Email && !string.IsNullOrEmpty(propertyValue))
+                    else if (validateAttribute.Email && !string.IsNullOrEmpty(propertyValue))
                     {
                         if (!Regex.IsMatch(propertyValue, @"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"))
                         {
-                            validateFailures = $"{ValidateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
+                            validateFailures = $"{validateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
                             break;
                         }
                     }
                     // Kiểm tra ngày không được lớn hơn ngày hiện tại
-                    else if (ValidateAttribute.MaxDateNow && !string.IsNullOrEmpty(propertyValue))
+                    else if (validateAttribute.MaxDateNow && !string.IsNullOrEmpty(propertyValue))
                     {
                         if (DateTime.Parse(propertyValue) > DateTime.Now)
                         {
-                            validateFailures = $"{ValidateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
+                            validateFailures = $"{validateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
                             break;
                         }
                     }
                     // Kiểm tra độ dài
-                    else if (ValidateAttribute.MaxLength > 0 && !string.IsNullOrEmpty(propertyValue))
+                    else if (validateAttribute.MaxLength > 0 && !string.IsNullOrEmpty(propertyValue))
                     {
-                        if(propertyValue.Length > ValidateAttribute.MaxLength)
+                        if(propertyValue.Length > validateAttribute.MaxLength)
                         {
-                            validateFailures = $"validate.max_length MESSAGE.VALID.SPLIT {property.Name} MESSAGE.VALID.SPLIT {ValidateAttribute.MaxLength}";
+                            validateFailures = $"validate.max_length MESSAGE.VALID.SPLIT {property.Name} MESSAGE.VALID.SPLIT {validateAttribute.MaxLength}";
                             break;
                         }
                     }
@@ -199,6 +200,88 @@ namespace MISA.WEB08.AMIS.BL
                 }
             }
             return v_Query;
+        }
+
+        /// <summary>
+        /// Hàm kiểm tra chuỗi có đúng định dạng ngày tháng
+        /// </summary>
+        /// <param name="dateString">Dữ liệu cần kiểm tra</param>
+        /// <param name="format">Kiểu kiểm tra, mặc định là yyyy-MM-dd</param>
+        /// <returns>bool</returns>
+        ///  NK Tiềm 05/10/2022
+        public static bool IsDateFormatValid(string dateString, string format = "yyyy-MM-dd")
+        {
+            DateTime result;
+            return DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, DateTimeStyles.None | DateTimeStyles.AllowTrailingWhite, out result);
+        }
+
+        /// <summary>
+        /// Hàm kiểm tra chuỗi có phải kiểu boolen
+        /// </summary>
+        /// <param name="input">Chuỗi cần kiểm tra</param>
+        /// <returns>bool</returns>
+        ///  NK Tiềm 05/10/2022
+        public static bool IsBoolean(string input)
+        {
+            bool result;
+            return bool.TryParse(input, out result);
+        }
+
+        /// <summary>
+        /// Hàm kiểm tra chuỗi có phải kiểu số
+        /// </summary>
+        /// <param name="input">Chuỗi cần kiểm tra</param>
+        /// <returns>bool</returns>
+        ///  NK Tiềm 05/10/2022
+        public static bool IsNumeric(string input)
+        {
+            double result;
+            return double.TryParse(input, out result);
+        }
+
+        /// <summary>
+        /// Hàm kiểm tra chuỗi có phải kiểu Gender
+        /// </summary>
+        /// <param name="input">Chuỗi cần kiểm tra</param>
+        /// <returns>bool</returns>
+        ///  NK Tiềm 05/10/2022
+        public static bool IsGender(string input)
+        {
+            if (IsNumeric(input))
+            {
+                return Enum.IsDefined(typeof(Gender), int.Parse(input));
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm kiểm tra chuỗi có phải kiểu Nature
+        /// </summary>
+        /// <param name="input">Chuỗi cần kiểm tra</param>
+        /// <returns>bool</returns>
+        ///  NK Tiềm 05/10/2022
+        public static bool IsNature(string input)
+        {
+            if (IsNumeric(input))
+            {
+                return Enum.IsDefined(typeof(Nature), int.Parse(input));
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm kiểm tra chuỗi có phải kiểu DepreciatedTax
+        /// </summary>
+        /// <param name="input">Chuỗi cần kiểm tra</param>
+        /// <returns>bool</returns>
+        ///  NK Tiềm 05/10/2022
+        public static bool IsDepreciatedTax(string input)
+        {
+            if (IsNumeric(input))
+            {
+                return Enum.IsDefined(typeof(DepreciatedTax), int.Parse(input));
+            }
+            return false;
         }
 
         #endregion

@@ -41,4 +41,37 @@ namespace MISA.WEB08.AMIS.Common.Entities
         [ColumnName(Name = "Trạng thái", Width = 20)]
         public bool? IsActive { get; set; }
     }
+
+    /// <summary>
+    /// Nhóm vật liệu ứng với bảng CommodityGroup trong database Import
+    /// </summary>
+    /// Created by : Nguyễn Khắc Tiềm 21.09.2022
+    public class CommodityGroupImport : BaseEntity
+    {
+        /// <summary>
+        /// id nhóm vật liệu
+        /// </summary>
+        public string? CommodityGroupID { get; set; }
+
+        /// <summary>
+        /// Mã kho
+        /// </summary>
+        public string CommodityCode { get; set; }
+
+        /// <summary>
+        /// Tên kho
+        /// </summary>
+        public string CommodityName { get; set; }
+
+        /// <summary>
+        /// Nhóm vật tư cha
+        /// </summary>
+        public string ParentID { get; set; } = "0";
+
+        /// <summary>
+        /// Hoạt động hay không hoạt động
+        /// </summary>
+        [ValidateString(IsBoolean = true)]
+        public string? IsActive { get; set; }
+    }
 }

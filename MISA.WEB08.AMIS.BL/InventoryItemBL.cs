@@ -1,7 +1,9 @@
-﻿using MISA.WEB08.AMIS.Common.Entities;
+﻿using MISA.WEB08.AMIS.Common.Attributes;
+using MISA.WEB08.AMIS.Common.Entities;
 using MISA.WEB08.AMIS.Common.Enums;
 using MISA.WEB08.AMIS.Common.Result;
 using MISA.WEB08.AMIS.DL;
+using Newtonsoft.Json;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -93,14 +95,12 @@ namespace MISA.WEB08.AMIS.BL
         /// Hàm xử lý custom kết quả validate cho bản ghi cần validate
         /// </summary>
         /// <param name="record">Record cần custom validate</param>
-        /// <param name="line">Line nhập khẩu</param>
         /// <param name="errorDetail">Lỗi chi tiết khi nhập</param>
         /// <param name="status">Trạng thái nhập khẩu</param>
         /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public override void CustomResultValidate(ref InventoryItem record, int line, string? errorDetail, string? status)
+        public override void CustomResultValidate(ref InventoryItem record, string? errorDetail, string? status)
         {
             record.InventoryItemID = Guid.NewGuid();
-            record.LineExcel = line;
             record.ErrorDetail = errorDetail;
             record.StatusImportExcel = status;
         }
@@ -140,12 +140,99 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="listFail">Danh sách bản ghi không hợp lệ</param>
         /// <param name="listPass">Danh sách bản ghi  hợp lệ</param>
         /// <param name="listFailResultProc">Danh sách bản ghi không hơp lệ trả về từ Proc</param>
-        public override void CustomListFailResultImportXlsx(ref List<InventoryItem> listFail, ref List<InventoryItem> listPass, List<InventoryItem> listFailResultProc)
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public override void CustomListFailResultImportXlsx(ref List<object> listFail, ref List<InventoryItem> listPass, List<InventoryItem> listFailResultProc)
         {
             foreach (var item in listFailResultProc)
             {
+                item.InventoryItemID = Guid.NewGuid();
                 listFail.Add(item);
                 listPass.RemoveAll(x => x.InventoryItemCode == item.InventoryItemCode);
+            }
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy những dữ liệu chuẩn đưa vào list để tiến hành nhập từ tệp
+        /// </summary>
+        /// <param name="json">Dữ liệu sẽ được chuẩn hoá</param>
+        /// <param name="listFail">Danh sách dữ liệu không hợp lệ</param>
+        /// <param name="list">Danh sách dữ liệu đúng kiểu</param>
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public override void CustomListTypeImportXlsx(string json, ref List<object> listFail, ref List<InventoryItem> list)
+        {
+            void setFail(ref InventoryItemImport item, ref List<object> listFail, ref bool check, string propertyName)
+            {
+                item.InventoryItemID = Guid.NewGuid().ToString();
+                item.ErrorDetail = $"validate.malformed MESSAGE.VALID.SPLIT {propertyName}";
+                item.StatusImportExcel = "common.illegal";
+                listFail.Add(item);
+                check = true;
+            }
+            List<InventoryItemImport> listData = JsonConvert.DeserializeObject<List<InventoryItemImport>>(json.ToString());
+            int count = 1;
+            foreach (var temp in listData)
+            {
+                var item = temp;
+                count++;
+                item.LineExcel = count;
+                var properties = typeof(InventoryItemImport).GetProperties();
+                bool check = false;
+                foreach (var property in properties)
+                {
+                    var propertyValue = property.GetValue(item)?.ToString();
+                    var validateString = (ValidateString?)Attribute.GetCustomAttribute(property, typeof(ValidateString));
+                    if (validateString != null)
+                    {
+                        if (validateString.IsDate && !string.IsNullOrEmpty(propertyValue))
+                        {
+                            if (!Validate<InventoryItemImport>.IsDateFormatValid(propertyValue))
+                            {
+                                setFail(ref item, ref listFail, ref check, property.Name);
+                                break;
+                            }
+                        }
+                        if (validateString.IsBoolean && !string.IsNullOrEmpty(propertyValue))
+                        {
+                            if (!Validate<InventoryItemImport>.IsBoolean(propertyValue))
+                            {
+                                setFail(ref item, ref listFail, ref check, property.Name);
+                                break;
+                            }
+                        }
+                        if (validateString.IsNumber && !string.IsNullOrEmpty(propertyValue))
+                        {
+                            if (!Validate<InventoryItemImport>.IsNumeric(propertyValue))
+                            {
+                                setFail(ref item, ref listFail, ref check, property.Name);
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (check)
+                {
+                    continue;
+                }
+                if (!string.IsNullOrEmpty(item.Nature))
+                {
+                    if (!Validate<InventoryItemImport>.IsNature(item.Nature))
+                    {
+                        setFail(ref item, ref listFail, ref check, "Nature");
+                        continue;
+                    }
+                }
+                if (!string.IsNullOrEmpty(item.DepreciatedTax))
+                {
+                    if (!Validate<InventoryItemImport>.IsDepreciatedTax(item.DepreciatedTax))
+                    {
+                        setFail(ref item, ref listFail, ref check, "DepreciatedTax");
+                        continue;
+                    }
+                }
+                item.InventoryItemID = null;
+                item.DepotID = null;
+                item.UnitCalculationID = null;
+                list.Add(JsonConvert.DeserializeObject<InventoryItem>(JsonConvert.SerializeObject(item).ToString()));
             }
         }
 

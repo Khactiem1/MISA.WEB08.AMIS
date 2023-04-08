@@ -41,18 +41,18 @@ namespace MISA.WEB08.AMIS.Common.Result
         /// Danh sách
         /// </summary>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
-        public object recordList { get; set; }
+        public object RecordList { get; set; }
 
         /// <summary>
         /// Tổng số bản ghi
         /// </summary>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
-        public object totalCount { get; set; }
+        public object TotalCount { get; set; }
 
         /// <summary>
         /// Dữ liệu thêm
         /// </summary>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
-        public object? dataMore { get; set; }
+        public object? DataMore { get; set; }
     }
 }

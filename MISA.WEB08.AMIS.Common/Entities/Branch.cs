@@ -43,4 +43,37 @@ namespace MISA.WEB08.AMIS.Common.Entities
         [ColumnName(Name = "Trạng thái", Width = 20)]
         public bool? IsActive { get; set; }
     }
+
+    /// <summary>
+    /// Đơn vị ứng với bảng unit trong database Import
+    /// </summary>
+    /// Created by : Nguyễn Khắc Tiềm 21.09.2022
+    public class BranchImport : BaseEntity
+    {
+        /// <summary>
+        /// id đơn vị
+        /// </summary>
+        public string? BranchID { get; set; }
+
+        /// <summary>
+        /// mã đơn vị
+        /// </summary>
+        public string BranchCode { get; set; }
+
+        /// <summary>
+        /// tên đơn vị
+        /// </summary>
+        public string BranchName { get; set; }
+
+        /// <summary>
+        /// Mô tả
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Hoạt động hay không hoạt động
+        /// </summary>
+        [ValidateString(IsBoolean = true)]
+        public string? IsActive { get; set; }
+    }
 }

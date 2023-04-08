@@ -1,6 +1,7 @@
 ﻿using MISA.WEB08.AMIS.Common.Attributes;
 using MISA.WEB08.AMIS.Common.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace MISA.WEB08.AMIS.Common.Entities
 {
@@ -38,12 +39,13 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// ID nhóm vật tư hàng hoá
         /// </summary>
-        public string CommodityGroupID { get; set; }
+        [Validate(NotMapParameterProc = true)]
+        public List<Guid> CommodityGroupID { get; set; } = new List<Guid>();
 
         /// <summary>
         /// Mã nhóm vật tư hàng hoá
         /// </summary>
-        //[ColumnName(Name = "Mã nhóm vật tư hàng hoá", Width = 50)]
+        [ColumnName(Name = "Mã nhóm vật tư hàng hoá", Width = 50)]
         public string CommodityCode { get; set; }
 
         /// <summary>
@@ -51,7 +53,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// </summary>
         [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Tính chất", Width = 40)]
-        public Nature Nature { get; set; }
+        public Nature? Nature { get; set; }
 
         /// <summary>
         /// Tên đơn vị tính
@@ -102,7 +104,6 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Hình ảnh
         /// </summary>
-        [ColumnName(Name = "Hình ảnh", Width = 50)]
         public string? Avatar { get; set; }
 
         /// <summary>
@@ -233,5 +234,196 @@ namespace MISA.WEB08.AMIS.Common.Entities
         [Validate(IsNotNullOrEmpty = true, ErrorMessage = "validate.empty")]
         [ColumnName(Name = "Trạng thái", Width = 20)]
         public bool? IsActive { get; set; }
+    }
+
+    /// <summary>
+    /// Vật tư hàng hoá ứng với bảng InventoryItem trong database Import
+    /// </summary>
+    /// Created by : Nguyễn Khắc Tiềm 21.09.2022
+    public class InventoryItemImport : BaseEntity
+    {
+        /// <summary>
+        /// id hàng hoá
+        /// </summary>
+        public string? InventoryItemID { get; set; }
+
+        /// <summary>
+        /// id đơn vị tính
+        /// </summary>
+        public string? UnitCalculationID { get; set; }
+
+        /// <summary>
+        /// mã hàng hoá vật tư
+        /// </summary>
+        public string InventoryItemCode { get; set; }
+
+        /// <summary>
+        /// tên hàng hoá vật tư
+        /// </summary>
+        public string InventoryItemName { get; set; }
+
+        /// <summary>
+        /// ID nhóm vật tư hàng hoá
+        /// </summary>
+        public List<string> CommodityGroupID { get; set; } = new List<string>();
+
+        /// <summary>
+        /// Mã nhóm vật tư hàng hoá
+        /// </summary>
+        public string CommodityCode { get; set; }
+
+        /// <summary>
+        /// tính chất
+        /// </summary>
+        public string? Nature { get; set; }
+
+        /// <summary>
+        /// Tên đơn vị tính
+        /// </summary>
+        public string UnitCalculationName { get; set; }
+
+        /// <summary>
+        /// Giảm thuế
+        /// </summary>
+        public string? DepreciatedTax { get; set; }
+
+        /// <summary>
+        /// Thời hạn bảo hành
+        /// </summary>
+        public string WarrantyPeriod { get; set; }
+
+        /// <summary>
+        /// Số lượng tồn tối thiểu
+        /// </summary>
+        [ValidateString(IsNumber = true)]
+        public string? MinimumStock { get; set; }
+
+        /// <summary>
+        /// Số lượng tồn
+        /// </summary>
+        [ValidateString(IsNumber = true)]
+        public string? QuantityTock { get; set; }
+
+        /// <summary>
+        /// Nguồn gốc
+        /// </summary>
+        public string Origin { get; set; }
+
+        /// <summary>
+        /// Mô tả
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Hình ảnh
+        /// </summary>
+        public string? Avatar { get; set; }
+
+        /// <summary>
+        /// Diễn giải khi mua
+        /// </summary>
+        public string ExplanationBuy { get; set; }
+
+        /// <summary>
+        /// Diễn giải khi bán
+        /// </summary>
+        public string ExplanationSell { get; set; }
+
+        /// <summary>
+        /// ID kho
+        /// </summary>
+        public string? DepotID { get; set; }
+
+        /// <summary>
+        /// Mã nhà kho
+        public string? DepotCode { get; set; }
+
+        /// <summary>
+        /// Tên nhà kho
+        /// </summary>
+        public string? DepotName { get; set; }
+
+        /// <summary>
+        /// Tài khoản kho
+        /// </summary>
+        public string AccountDepot { get; set; }
+
+        /// <summary>
+        /// Tài khoản doanh thu
+        /// </summary>
+        public string AccountRevenue { get; set; }
+
+        /// <summary>
+        /// Tài khoản chiết khấu
+        /// </summary>
+        public string AccountDiscount { get; set; }
+
+        /// <summary>
+        /// Tài khoản giảm giá
+        /// </summary>
+        public string AccountSale { get; set; }
+
+        /// <summary>
+        /// Tài khoản trả lại
+        /// </summary>
+        public string AccountReturn { get; set; }
+
+        /// <summary>
+        /// Tài khoản chi phí
+        /// </summary>
+        public string AccountCost { get; set; }
+
+        /// <summary>
+        /// Tỉ lệ chiết khấu khuyến mại
+        /// </summary>
+        [ValidateString(IsNumber = true)]
+        public string? RatioDiscount { get; set; }
+
+        /// <summary>
+        /// Thuế giá trị gia tăng
+        /// </summary>
+        [ValidateString(IsNumber = true)]
+        public string? VATTax { get; set; }
+
+        /// <summary>
+        /// Thuế nhập khẩu
+        /// </summary>
+        [ValidateString(IsNumber = true)]
+        public string? VATImport { get; set; }
+
+        /// <summary>
+        /// Thuế xuất khẩu
+        /// </summary>
+        [ValidateString(IsNumber = true)]
+        public string? VATExport { get; set; }
+
+        /// <summary>
+        /// Nhóm hàng hoá dịch vụ chịu thuế tiêu thụ đặc biệt
+        /// </summary>
+        public string VATGroupExciceTax { get; set; }
+
+        /// <summary>
+        /// Đơn mua cố định
+        /// </summary>
+        [ValidateString(IsNumber = true)]
+        public string? OrderFix { get; set; }
+
+        /// <summary>
+        /// Đơn mua gần nhất
+        /// </summary>
+        [ValidateString(IsNumber = true)]
+        public string? OrderNearest { get; set; }
+
+        /// <summary>
+        /// Đơn giá bán
+        /// </summary>
+        [ValidateString(IsNumber = true)]
+        public string? OrderSell { get; set; }
+
+        /// <summary>
+        /// Hoạt động hay không hoạt động
+        /// </summary>
+        [ValidateString(IsBoolean = true)]
+        public string? IsActive { get; set; }
     }
 }

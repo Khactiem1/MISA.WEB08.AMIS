@@ -20,6 +20,11 @@ namespace MISA.WEB08.AMIS.Common.Attributes
         public bool PrimaryKey = false;
 
         /// <summary>
+        /// Xác định một thuộc tính không duyệt tự động đưa vào tham số Proc khi thêm sửa trong base
+        /// </summary>
+        public bool NotMapParameterProc = false;
+
+        /// <summary>
         /// xác định 1 property không được để trống
         /// </summary>
         public bool IsNotNullOrEmpty = false;
@@ -85,5 +90,28 @@ namespace MISA.WEB08.AMIS.Common.Attributes
         public bool IsBollen = false;
 
         #endregion
+    }
+
+    /// <summary>
+    /// Attributes xác định cần validate kiểu string
+    /// Create by: Nguyễn Khắc Tiềm 23.09.2022
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class ValidateString : Attribute
+    {
+        /// <summary>
+        /// xác định 1 property kiểu string phải có định dạng là DateTime
+        /// </summary>
+        public bool IsDate = false;
+
+        /// <summary>
+        /// xác định 1 property kiểu string phải có định dạng là số
+        /// </summary>
+        public bool IsNumber = false;
+
+        /// <summary>
+        /// xác định 1 property kiểu string phải có định dạng là Boolen
+        /// </summary>
+        public bool IsBoolean = false;
     }
 }

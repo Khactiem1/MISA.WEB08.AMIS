@@ -10,8 +10,6 @@ using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -88,7 +86,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="formData">Từ khoá tìm kiếm</param>
         /// <returns>Danh sách record và tổng số bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public virtual object GetFitterRecords(Dictionary<string, object> formData)
+        public virtual Paging GetFitterRecords(Dictionary<string, object> formData)
         {
             var v_Offset = int.Parse(formData["v_Offset"].ToString());
             var v_Limit = int.Parse(formData["v_Limit"].ToString());
@@ -275,10 +273,14 @@ namespace MISA.WEB08.AMIS.BL
                 SaveFileImage.DeleteFile(filePath);
                 string json = JsonConvert.SerializeObject(data, Formatting.Indented);
                 List<T> list = new List<T>();
+                // Danh sách dữ liệu sai
+                List<object> listFail = new List<object>();
+                // Danh sách dữ liệu đúng
+                List<T> listPass = new List<T>();
                 // Chuyển dữ liệu đọc được thành kiểu list<T>
                 try
                 {
-                    list = JsonConvert.DeserializeObject<List<T>>(json.ToString());
+                    CustomListTypeImportXlsx(json,ref listFail,ref list);
                 }
                 catch(Exception ex)
                 {
@@ -286,39 +288,33 @@ namespace MISA.WEB08.AMIS.BL
                 }
                 if (list != null && list.Count > 0 && string.IsNullOrEmpty(messageError))
                 {
-                    // Danh sách dữ liệu sai
-                    List<T> listFail = new List<T>();
-                    // Danh sách dữ liệu đúng
-                    List<T> listPass = new List<T>();
                     // Tiến hành validate
-                    int count = 1;
                     foreach (var temp in list)
                     {
-                        count++;
                         var item = temp;
                         CustomParameterValidate(ref item);
                         var validateResult = Validate<T>.ValidateData(item);
                         if (!validateResult.Success)
                         {
-                            CustomResultValidate(ref item, count, validateResult.Data, "common.illegal");
+                            CustomResultValidate(ref item, validateResult.Data, "common.illegal");
                             listFail.Add(item);
                             continue;
                         }
                         var validateCustom = CustomValidate(item);
                         if (!validateCustom.Success)
                         {
-                            CustomResultValidate(ref item, count, validateCustom.Data, "common.illegal");
+                            CustomResultValidate(ref item, validateCustom.Data, "common.illegal");
                             listFail.Add(item);
                             continue;
                         }
                         var validatCustomValidateImportXlsx = CustomValidateImportXlsx(item, list);
                         if (!validatCustomValidateImportXlsx.Success)
                         {
-                            CustomResultValidate(ref item, count, validatCustomValidateImportXlsx.Data, "common.illegal");
+                            CustomResultValidate(ref item, validatCustomValidateImportXlsx.Data, "common.illegal");
                             listFail.Add(item);
                             continue;
                         }
-                        CustomResultValidate(ref item, count, null, "common.valid");
+                        CustomResultValidate(ref item, null, "common.valid");
                         listPass.Add(item);
                     }
                     if(listPass.Count > 0)
@@ -361,77 +357,25 @@ namespace MISA.WEB08.AMIS.BL
         /// CreatedBy: Nguyễn Khắc Tiềm (6/10/2022)
         public string ExportData(Dictionary<string, object> formData)
         {
-            // lấy dữ liệu nhân viên
-            var v_Offset = 0;
-            var v_Limit = 0;
-            var v_Where = formData.Keys.Contains("v_Where") ? Convert.ToString(formData["v_Where"]).Trim() : null;
-            var v_Sort = formData.Keys.Contains("v_Sort") ? Convert.ToString(formData["v_Sort"]) : null;
             var v_Select = formData.Keys.Contains("v_Select") ? JsonConvert.DeserializeObject<List<string>>(Convert.ToString(formData["v_Select"])) : new List<string>();
-
-            List<ComparisonTypeSearch> listQuery = formData.Keys.Contains("CustomSearch") ? JsonConvert.DeserializeObject<List<ComparisonTypeSearch>>(Convert.ToString(formData["CustomSearch"])) : new List<ComparisonTypeSearch>();
-            string v_Query = "";
-            foreach (ComparisonTypeSearch item in listQuery)
-            {
-                if (!string.IsNullOrEmpty(item.ValueSearch) || item.ComparisonType == "!=Null" || item.ComparisonType == "=Null")
-                {
-                    v_Query += Validate<T>.FormatQuery(item.ColumnSearch, item.ValueSearch.Trim(), item.TypeSearch, item.ComparisonType);
-                }
-            }
-            List<T> records = (List<T>)_baseDL.GetFitterRecords(v_Offset, v_Limit, v_Where, v_Sort, v_Query, string.Join(", ", v_Select)).recordList;
+            List<T> records = (List<T>)GetFitterRecords(formData).RecordList;
             if (records == null || records.Count == 0 || v_Select.Count == 0) return null;
-            string column = SaveFileImage.GetColumnName(v_Select.Count + 1);
+            // lấy các thuộc tính của nhân viên
+            string listField = string.Join(",", v_Select);
+            var properties = typeof(T).GetProperties();
+            int indexCol = SaveFileImage.CalcIndexCol(properties, listField);
+            string column = SaveFileImage.GetColumnName(indexCol + 1);
             var stream = new MemoryStream();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (var package = new ExcelPackage(stream ?? new MemoryStream()))
             {
-                // thêm 1 sheet vào file excel
                 var sheet = package.Workbook.Worksheets.Add(CustomOptionExport().Header);
-                // style header
-                sheet.Cells[$"A1:{column}1"].Merge = true;
-                sheet.Cells[$"A1:{column}1"].Value = CustomOptionExport().Header;
-                sheet.Cells[$"A1:{column}1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                sheet.Cells[$"A1:{column}1"].Style.Font.Bold = true;
-                sheet.Cells[$"A1:{column}1"].Style.Font.Size = 16;
-                sheet.Cells[$"A1:{column}1"].Style.Font.Name = Resource.ExcelFontHeader;
-                sheet.Cells[$"A2:{column}2"].Merge = true;
-                sheet.Row(3).Style.Font.Name = Resource.ExcelFontHeader;
-                sheet.Row(3).Style.Font.Bold = true;
-                sheet.Row(3).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                sheet.Row(3).Style.Font.Size = 10;
-                sheet.Cells[$"A3:{column}3"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                sheet.Cells[$"A3:{column}3"].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml(Resource.BackGroundColorHeaderExport));
-                sheet.Cells[3, 1].Value = "STT";
-                sheet.Column(1).Width = 10;
-                sheet.Cells[$"A3:{column}{records.Count() + 3}"].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                sheet.Cells[$"A3:{column}{records.Count() + 3}"].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                sheet.Cells[$"A3:{column}{records.Count() + 3}"].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                sheet.Cells[$"A3:{column}{records.Count() + 3}"].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                sheet.Cells[$"A3:{column}{records.Count() + 3}"].Style.Font.Name = Resource.ExcelFontContent;
-                sheet.Cells[$"A3:{column}{records.Count() + 3}"].Style.Font.Size = 11;
-                // customize tên header của file excel
-                // lấy các thuộc tính của nhân viên
-                var properties = typeof(T).GetProperties();
-                int indexHeader = 2;
-                string listField = string.Join(",", v_Select);
-                // Duyệt từng property
-                foreach (var property in properties)
-                {
-                    // lấy tên hiển thị đầu tiên của thuộc tính
-                    var displayNameAttributes = property.GetCustomAttributes(typeof(ColumnName), true);
-                    if (listField.Contains(property.Name) && displayNameAttributes != null && displayNameAttributes.Length > 0)
-                    {
-                        // add vào header của file excel
-                        sheet.Column(indexHeader).Width = (displayNameAttributes[0] as ColumnName).Width;
-                        sheet.Cells[3, indexHeader].Value = (displayNameAttributes[0] as ColumnName).Name;
-                        indexHeader++;
-                    }
-                }
-
+                // style header customize tên header của file excel
+                SaveFileImage.SetUpExportHeaderData(ref sheet, column, CustomOptionExport().Header, records.Count(), properties, listField);
                 int index = 4;
                 int indexRow = 0;
                 string convertDate = "M/d/yyyy hh:mm:ss tt";
-                // thêm dữ liệu vào excel (phần body)
-                // duyệt các nhân viên
+                // duyệt các nhân viên thêm dữ liệu vào excel (phần body)
                 foreach (var recordItem in records)
                 {
                     int indexBody = 2;
@@ -443,38 +387,8 @@ namespace MISA.WEB08.AMIS.BL
                         var displayNameAttributes = property.GetCustomAttributes(typeof(ColumnName), true);
                         if (listField.Contains(property.Name) && displayNameAttributes != null && displayNameAttributes.Length > 0)
                         {
-                            // xử lí các datetime
-                            if ((displayNameAttributes[0] as ColumnName).IsDate)
-                            {
-                                try
-                                {
-                                    sheet.Cells[indexRow + 4, indexBody].Value = property.GetValue(recordItem) != null ? DateTime.ParseExact(property.GetValue(recordItem).ToString(), convertDate, CultureInfo.InvariantCulture).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : "";
-                                }
-                                catch
-                                {
-                                    if (convertDate == "M/d/yyyy hh:mm:ss tt")
-                                    {
-                                        convertDate = "d/M/yyyy hh:mm:ss tt";
-                                    }
-                                    else
-                                    {
-                                        convertDate = "M/d/yyyy hh:mm:ss tt";
-                                    }
-                                    sheet.Cells[indexRow + 4, indexBody].Value = property.GetValue(recordItem) != null ? DateTime.ParseExact(property.GetValue(recordItem).ToString(), convertDate, CultureInfo.InvariantCulture).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : "";
-                                }
-                                sheet.Cells[indexRow + 4, indexBody].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                            }
-                            else if ((displayNameAttributes[0] as ColumnName).IsBollen)
-                            {
-                                sheet.Cells[indexRow + 4, indexBody].Value = (bool)property.GetValue(recordItem) == true ? "Có" : "Không";
-                                sheet.Cells[indexRow + 4, indexBody].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                            }
-                            else if (property.Name == "IsActive")
-                            {
-                                sheet.Cells[indexRow + 4, indexBody].Value = (bool)property.GetValue(recordItem) == true ? Resource.ActiveTrue : Resource.ActiveFalse;
-                            }
                             // các kiểu dữ liệu khác datatime và giới tính
-                            else
+                            if(!SaveFileImage.SetUpDataExportDefault(ref sheet, ref convertDate, property, indexRow, indexBody, displayNameAttributes, recordItem))
                             {
                                 if (!CustomValuePropertieExport(property, ref sheet, indexRow, indexBody, recordItem))
                                 {

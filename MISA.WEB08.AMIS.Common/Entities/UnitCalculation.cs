@@ -35,4 +35,32 @@ namespace MISA.WEB08.AMIS.Common.Entities
         [ColumnName(Name = "Trạng thái", Width = 20)]
         public bool? IsActive { get; set; }
     }
+
+    /// <summary>
+    /// đơn vị ứng với bảng UnitCalculation trong database Import
+    /// </summary>
+    /// Created by : Nguyễn Khắc Tiềm 21.09.2022
+    public class UnitCalculationImport : BaseEntity
+    {
+        /// <summary>
+        /// id đơn vị tính
+        /// </summary>
+        public string? UnitCalculationID { get; set; }
+
+        /// <summary>
+        /// Tên đơn vị tính
+        /// </summary>
+        public string UnitCalculationName { get; set; }
+
+        /// <summary>
+        /// Mô tả đơn vị tính
+        /// </summary>
+        public string UnitCalculationDetail { get; set; }
+
+        /// <summary>
+        /// Hoạt động hay không hoạt động
+        /// </summary>
+        [ValidateString(IsBoolean = true)]
+        public string? IsActive { get; set; }
+    }
 }

@@ -149,10 +149,13 @@ namespace MISA.WEB08.AMIS.DL
                     );
                 result = new Paging
                 {
-                    recordList = records.Read<T>().ToList(),
-                    totalCount = records.ReadSingle().totalCount,
+                    RecordList = records.Read<T>().ToList(),
                 };
-                CustomResultProc(records, ref result);
+                if(limit > 0)
+                {
+                    result.TotalCount = records.ReadSingle().totalCount;
+                    CustomResultProc(records, ref result);
+                }
                 if (mysqlConnection.State == ConnectionState.Open)
                 {
                     mysqlConnection.Close();
@@ -184,6 +187,10 @@ namespace MISA.WEB08.AMIS.DL
                 if (primaryKeyAttribute != null && primaryKeyAttribute.PrimaryKey)
                 {
                     parameters.Add($"v_{propertyName}", recordID);
+                }
+                else if(primaryKeyAttribute != null && primaryKeyAttribute.NotMapParameterProc == true)
+                {
+                    continue;
                 }
                 else
                 {
@@ -231,6 +238,10 @@ namespace MISA.WEB08.AMIS.DL
                 if (primaryKeyAttribute != null && primaryKeyAttribute.PrimaryKey)
                 {
                     parameters.Add($"v_{propertyName}", recordID);
+                }
+                else if (primaryKeyAttribute != null && primaryKeyAttribute.NotMapParameterProc == true)
+                {
+                    continue;
                 }
                 else
                 {

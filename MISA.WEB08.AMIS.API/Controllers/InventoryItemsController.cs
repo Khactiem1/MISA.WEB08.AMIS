@@ -5,6 +5,7 @@ using MISA.WEB08.AMIS.Common.Entities;
 using MISA.WEB08.AMIS.Common.Enums;
 using MISA.WEB08.AMIS.Common.Resources;
 using MISA.WEB08.AMIS.Common.Result;
+using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.API.Controllers
 {
@@ -39,9 +40,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <returns></returns>
         //// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         [HttpGet("GetInventoryStatus")]
-        public IActionResult GetInventoryStatus()
+        public async Task<IActionResult> GetInventoryStatus()
         {
-            var result = _inventoryItemBL.GetInventoryStatus();
+            var result = await Task.FromResult(_inventoryItemBL.GetInventoryStatus());
             if(result != null)
             {
                 return StatusCode(StatusCodes.Status201Created, new ServiceResponse

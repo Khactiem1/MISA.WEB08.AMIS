@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MISA.WEB08.AMIS.API.Controllers
 {
@@ -47,9 +48,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <return> Danh sách tất cả bản ghi <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         [HttpGet]
-        public virtual IActionResult GetAllRecords()
+        public virtual async Task<IActionResult> GetAllRecords()
         {
-            var recordList = _baseBL.GetAllRecords();
+            var recordList = await Task.FromResult(_baseBL.GetAllRecords());
             if (recordList != null)
             {
                 return StatusCode(StatusCodes.Status200OK, new ServiceResponse
@@ -78,9 +79,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <returns>Danh sách tất cả bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         [HttpGet("dropdown")]
-        public virtual IActionResult GetDropdown()
+        public virtual async Task<IActionResult> GetDropdown()
         {
-            var recordList = _baseBL.GetDropdown();
+            var recordList = await Task.FromResult(_baseBL.GetDropdown());
             if (recordList != null)
             {
                 return StatusCode(StatusCodes.Status200OK, new ServiceResponse
@@ -110,9 +111,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <returns>Thông tin chi tiết một bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         [HttpGet("{recordID}")]
-        public virtual IActionResult GetRecordByID([FromRoute] Guid recordID, [FromQuery] string? stateForm)
+        public virtual async Task<IActionResult> GetRecordByID([FromRoute] Guid recordID, [FromQuery] string? stateForm)
         {
-            var record = _baseBL.GetRecordByID(recordID.ToString(), stateForm);
+            var record = await Task.FromResult(_baseBL.GetRecordByID(recordID.ToString(), stateForm));
             if (record != null)
             {
                 return StatusCode(StatusCodes.Status200OK, new ServiceResponse
@@ -141,9 +142,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <returns>Mã bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
         [HttpGet("next_value")]
-        public virtual IActionResult GetRecordCodeNew()
+        public virtual async Task<IActionResult> GetRecordCodeNew()
         {
-            var newCode = _baseBL.GetRecordCodeNew();
+            var newCode = await Task.FromResult(_baseBL.GetRecordCodeNew());
             return StatusCode(StatusCodes.Status200OK, new ServiceResponse
             {
                 Success = true,
@@ -158,9 +159,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <return> Danh sách bản ghi sau khi phân trang, chỉ lấy ra số bản ghi và số trang yêu cầu, và tổng số lượg bản ghi có điều kiện <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         [HttpPost("fitter")]
-        public virtual IActionResult GetFitterRecords([FromBody] Dictionary<string, object> formData)
+        public virtual async Task<IActionResult> GetFitterRecords([FromBody] Dictionary<string, object> formData)
         {
-            var records = _baseBL.GetFitterRecords(formData);
+            var records = await Task.FromResult(_baseBL.GetFitterRecords(formData));
             if (records != null)
             {
                 return StatusCode(StatusCodes.Status200OK, new ServiceResponse
@@ -194,9 +195,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <return> ID bản ghi sau khi thêm <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         [HttpPost]
-        public virtual IActionResult InsertRecord([FromBody] T record)
+        public virtual async Task<IActionResult> InsertRecord([FromBody] T record)
         {
-            var result = _baseBL.InsertRecord(record);
+            var result = await Task.FromResult(_baseBL.InsertRecord(record));
             if (result.Success)
             {
                 return StatusCode(StatusCodes.Status201Created, new ServiceResponse
@@ -226,9 +227,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <return> danh sách ID bản ghi sau khi xoá <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         [HttpPost("bulk_delete")]
-        public virtual IActionResult DeleteMultiple([FromBody] List<Guid> listRecordID)
+        public virtual async Task<IActionResult> DeleteMultiple([FromBody] List<Guid> listRecordID)
         {
-            var result = _baseBL.DeleteMultiple(JsonConvert.SerializeObject(listRecordID.Select(ds => new { id = ds })), listRecordID.Count);
+            var result = await Task.FromResult(_baseBL.DeleteMultiple(JsonConvert.SerializeObject(listRecordID.Select(ds => new { id = ds })), listRecordID.Count));
             if (result.Success)
             {
                 return StatusCode(StatusCodes.Status200OK, new ServiceResponse
@@ -263,9 +264,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <return> ID bản ghi sau khi cập nhật <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         [HttpPut("{recordID}")]
-        public virtual IActionResult UpdateRecord([FromRoute] Guid recordID, [FromBody] T record)
+        public virtual async Task<IActionResult> UpdateRecord([FromRoute] Guid recordID, [FromBody] T record)
         {
-            var result = _baseBL.UpdateRecord(recordID, record);
+            var result = await Task.FromResult(_baseBL.UpdateRecord(recordID, record));
             if (result.Success)
             {
                 return StatusCode(StatusCodes.Status200OK, new ServiceResponse
@@ -299,9 +300,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <return> ID bản ghi sau khi xoá <return>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         [HttpDelete("{recordID}")]
-        public virtual IActionResult DeleteRecord([FromRoute] Guid recordID)
+        public virtual async Task<IActionResult> DeleteRecord([FromRoute] Guid recordID)
         {
-            var result = _baseBL.DeleteRecord(recordID);
+            var result = await Task.FromResult(_baseBL.DeleteRecord(recordID));
             if (result.Success)
             {
                 return StatusCode(StatusCodes.Status200OK, new ServiceResponse
@@ -330,9 +331,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <returns>ID bản ghi </returns>
         /// CreatedBy: Nguyễn Khắc Tiềm (6/10/2022)
         [HttpGet("ToggleActive/{recordID}")]
-        public virtual IActionResult ToggleActive([FromRoute] Guid recordID)
+        public virtual async Task<IActionResult> ToggleActive([FromRoute] Guid recordID)
         {
-            var result = _baseBL.ToggleActive(recordID);
+            var result = await Task.FromResult(_baseBL.ToggleActive(recordID));
             if (result.Success)
             {
                 return StatusCode(StatusCodes.Status200OK, new ServiceResponse
@@ -363,9 +364,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// CreatedBy: Nguyễn Khắc Tiềm (6/10/2022)
         [Route("import-xlsx")]
         [HttpPost, DisableRequestSizeLimit]
-        public IActionResult ImportXLSX(IFormFile file)
+        public virtual async Task<IActionResult> ImportXLSX(IFormFile file)
         {
-            var result = _baseBL.ImportXLSX(file);
+            var result = await Task.FromResult(_baseBL.ImportXLSX(file));
             if (result.Success)
             {
                 return StatusCode(StatusCodes.Status200OK, result);
@@ -391,9 +392,9 @@ namespace MISA.WEB08.AMIS.API.Controllers
         /// <returns>file Excel chứa dữ liệu danh sách </returns>
         /// CreatedBy: Nguyễn Khắc Tiềm (6/10/2022)
         [HttpPost("export_data")]
-        public IActionResult ExportData([FromBody] Dictionary<string, object> formData)
+        public virtual async Task<IActionResult> ExportData([FromBody] Dictionary<string, object> formData)
         {
-            var excelName = _baseBL.ExportData(formData);
+            var excelName = await Task.FromResult(_baseBL.ExportData(formData));
             if (!string.IsNullOrEmpty(excelName))
             {
                 return StatusCode(StatusCodes.Status200OK, new ServiceResponse

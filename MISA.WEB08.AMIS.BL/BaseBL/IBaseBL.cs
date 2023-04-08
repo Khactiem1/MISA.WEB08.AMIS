@@ -47,7 +47,7 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="formData">Từ khoá tìm kiếm</param>
         /// <returns>Danh sách record và tổng số bản ghi</returns>
         /// Create by: Nguyễn Khắc Tiềm (26/09/2022)
-        public object GetFitterRecords(Dictionary<string, object> formData);
+        public Paging GetFitterRecords(Dictionary<string, object> formData);
 
         /// <summary>
         /// Hàm thêm mới một bản ghi

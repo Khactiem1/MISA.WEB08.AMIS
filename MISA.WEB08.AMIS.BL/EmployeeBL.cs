@@ -9,6 +9,8 @@ using System.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using MISA.WEB08.AMIS.Common.Attributes;
 
 namespace MISA.WEB08.AMIS.BL
 {
@@ -78,14 +80,12 @@ namespace MISA.WEB08.AMIS.BL
         /// Hàm xử lý custom kết quả validate cho bản ghi cần validate
         /// </summary>
         /// <param name="record">Record cần custom validate</param>
-        /// <param name="line">Line nhập khẩu</param>
         /// <param name="errorDetail">Lỗi chi tiết khi nhập</param>
         /// <param name="status">Trạng thái nhập khẩu</param>
         /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
-        public override void CustomResultValidate(ref Employee record, int line, string? errorDetail, string? status)
+        public override void CustomResultValidate(ref Employee record, string? errorDetail, string? status)
         {
             record.EmployeeID = Guid.NewGuid();
-            record.LineExcel = line;
             record.ErrorDetail = errorDetail;
             record.StatusImportExcel = status;
         }
@@ -130,12 +130,90 @@ namespace MISA.WEB08.AMIS.BL
         /// <param name="listFail">Danh sách bản ghi không hợp lệ</param>
         /// <param name="listPass">Danh sách bản ghi  hợp lệ</param>
         /// <param name="listFailResultProc">Danh sách bản ghi không hơp lệ trả về từ Proc</param>
-        public override void CustomListFailResultImportXlsx(ref List<Employee> listFail, ref List<Employee> listPass, List<Employee> listFailResultProc)
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public override void CustomListFailResultImportXlsx(ref List<object> listFail, ref List<Employee> listPass, List<Employee> listFailResultProc)
         {
             foreach(var item in listFailResultProc)
             {
+                item.EmployeeID = Guid.NewGuid();
                 listFail.Add(item);
                 listPass.RemoveAll(x => x.EmployeeCode == item.EmployeeCode);
+            }
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy những dữ liệu chuẩn đưa vào list để tiến hành nhập từ tệp
+        /// </summary>
+        /// <param name="json">Dữ liệu sẽ được chuẩn hoá</param>
+        /// <param name="listFail">Danh sách dữ liệu không hợp lệ</param>
+        /// <param name="list">Danh sách dữ liệu đúng kiểu</param>
+        /// CreatedBy: Nguyễn Khắc Tiềm (5/10/2022)
+        public override void CustomListTypeImportXlsx(string json, ref List<object> listFail, ref List<Employee> list)
+        {
+            void setFail(ref EmployeeImport item, ref List<object> listFail, ref bool check, string propertyName)
+            {
+                item.EmployeeID = Guid.NewGuid().ToString();
+                item.ErrorDetail = $"validate.malformed MESSAGE.VALID.SPLIT {propertyName}";
+                item.StatusImportExcel = "common.illegal";
+                listFail.Add(item);
+                check = true;
+            }
+            List<EmployeeImport> listData = JsonConvert.DeserializeObject<List<EmployeeImport>>(json.ToString());
+            int count = 1;
+            foreach (var temp in listData)
+            {
+                var item = temp;
+                count++;
+                item.LineExcel = count;
+                var properties = typeof(EmployeeImport).GetProperties();
+                bool check = false;
+                foreach (var property in properties)
+                {
+                    var propertyValue = property.GetValue(item)?.ToString();
+                    var validateString = (ValidateString?)Attribute.GetCustomAttribute(property, typeof(ValidateString));
+                    if (validateString != null)
+                    {
+                        if (validateString.IsDate && !string.IsNullOrEmpty(propertyValue))
+                        {
+                            if (!Validate<EmployeeImport>.IsDateFormatValid(propertyValue))
+                            {
+                                setFail(ref item,ref listFail, ref check, property.Name);
+                                break;
+                            }
+                        }
+                        if (validateString.IsBoolean && !string.IsNullOrEmpty(propertyValue))
+                        {
+                            if (!Validate<EmployeeImport>.IsBoolean(propertyValue))
+                            {
+                                setFail(ref item, ref listFail, ref check, property.Name);
+                                break;
+                            }
+                        }
+                        if (validateString.IsNumber && !string.IsNullOrEmpty(propertyValue))
+                        {
+                            if (!Validate<EmployeeImport>.IsNumeric(propertyValue))
+                            {
+                                setFail(ref item, ref listFail, ref check, property.Name);
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (check)
+                {
+                    continue;
+                }
+                if (!string.IsNullOrEmpty(item.Gender))
+                {
+                    if (!Validate<EmployeeImport>.IsGender(item.Gender))
+                    {
+                        setFail(ref item, ref listFail, ref check, "Gender");
+                        continue;
+                    }
+                }
+                item.EmployeeID = null;
+                item.BranchID = null;
+                list.Add(JsonConvert.DeserializeObject<Employee>(JsonConvert.SerializeObject(item).ToString()));
             }
         }
 

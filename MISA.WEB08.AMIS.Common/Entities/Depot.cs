@@ -43,4 +43,37 @@ namespace MISA.WEB08.AMIS.Common.Entities
         [ColumnName(Name = "Trạng thái", Width = 20)]
         public bool? IsActive { get; set; }
     }
+
+    /// <summary>
+    /// Nhà kho ứng với bảng depot trong database Import
+    /// </summary>
+    /// Created by : Nguyễn Khắc Tiềm 21.09.2022
+    public class DepotImport : BaseEntity
+    {
+        /// <summary>
+        /// id kho
+        /// </summary>
+        public string? DepotID { get; set; }
+
+        /// <summary>
+        /// Mã kho
+        /// </summary>
+        public string DepotCode { get; set; }
+
+        /// <summary>
+        /// Tên kho
+        /// </summary>
+        public string DepotName { get; set; }
+
+        /// <summary>
+        /// Địa chỉ
+        /// </summary>
+        public string DepotDelivery { get; set; }
+
+        /// <summary>
+        /// Hoạt động hay không hoạt động
+        /// </summary>
+        [ValidateString(IsBoolean = true)]
+        public string? IsActive { get; set; }
+    }
 }
