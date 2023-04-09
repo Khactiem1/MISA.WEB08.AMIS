@@ -45,7 +45,7 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// <summary>
         /// Mã nhóm vật tư hàng hoá
         /// </summary>
-        [ColumnName(Name = "Mã nhóm vật tư hàng hoá", Width = 50)]
+        //[ColumnName(Name = "Mã nhóm vật tư hàng hoá", Width = 50)]
         public string CommodityCode { get; set; }
 
         /// <summary>
