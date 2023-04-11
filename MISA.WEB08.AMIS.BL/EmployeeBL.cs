@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using MISA.WEB08.AMIS.Common.Attributes;
+using System.Text.RegularExpressions;
 
 namespace MISA.WEB08.AMIS.BL
 {
@@ -45,10 +46,45 @@ namespace MISA.WEB08.AMIS.BL
         public override ServiceResponse? CustomValidate(Employee employee)
         {
             var validateFailures = "";
-            ///
-            ///Code logic validate custom
-            ///
-            if(!string.IsNullOrEmpty(validateFailures))
+            // Kiểm tra phải đúng định dạng số điện thoại
+            if (!string.IsNullOrEmpty(employee.PhoneNumber))
+            {
+                if (!Regex.IsMatch(employee.PhoneNumber, @"(03|02|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b"))
+                {
+                    validateFailures = $"validate.malformed MESSAGE.VALID.SPLIT PhoneNumber";
+                }
+            }
+            else if (!string.IsNullOrEmpty(employee.LandlinePhone))
+            {
+                if (!Regex.IsMatch(employee.LandlinePhone, @"(03|02|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b"))
+                {
+                    validateFailures = $"validate.malformed MESSAGE.VALID.SPLIT LandlinePhone";
+                }
+            }
+            // kiểm tra phải đúng định dạng email
+            else if (!string.IsNullOrEmpty(employee.EmployeeEmail))
+            {
+                if (!Regex.IsMatch(employee.EmployeeEmail, @"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"))
+                {
+                    validateFailures = $"validate.malformed MESSAGE.VALID.SPLIT EmployeeEmail";
+                }
+            }
+            // Kiểm tra ngày không được lớn hơn ngày hiện tại
+            else if(!string.IsNullOrEmpty(employee.DayForIdentity.ToString()))
+            {
+                if (employee.DayForIdentity > DateTime.Now)
+                {
+                    validateFailures = $"validate.max_date_now MESSAGE.VALID.SPLIT DayForIdentity";
+                }
+            }
+            else if (!string.IsNullOrEmpty(employee.DateOfBirth.ToString()))
+            {
+                if (employee.DateOfBirth > DateTime.Now)
+                {
+                    validateFailures = $"validate.max_date_now MESSAGE.VALID.SPLIT DateOfBirth";
+                }
+            }
+            if (!string.IsNullOrEmpty(validateFailures))
             {
                 return new ServiceResponse
                 {

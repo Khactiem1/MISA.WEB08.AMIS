@@ -30,21 +30,6 @@ namespace MISA.WEB08.AMIS.Common.Attributes
         public bool IsNotNullOrEmpty = false;
 
         /// <summary>
-        /// xác định trường là số điện thoại
-        /// </summary>
-        public bool PhoneNumber = false;
-
-        /// <summary>
-        /// xác định trường là email
-        /// </summary>
-        public bool Email = false;
-
-        /// <summary>
-        /// xác định trường là Date và có điều kiện đầu vào ngày không được lớn hơn ngày hiện tại
-        /// </summary>
-        public bool MaxDateNow = false;
-
-        /// <summary>
         /// Xác định độ dài tối đa của cột
         /// </summary>
         public int MaxLength = -1;

@@ -18,7 +18,9 @@ namespace MISA.WEB08.AMIS.DL
         /// <summary>
         /// Chạy proc với query trong dapper
         /// </summary>
-        /// <returns>object</returns>
+        /// <param name="storeProcedureName">Tên store</param>
+        /// <param name="parameters">các parameter</param>
+        /// <returns></returns>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         public virtual object RunProcWithQuery(string storeProcedureName, DynamicParameters? parameters)
         {
@@ -48,7 +50,9 @@ namespace MISA.WEB08.AMIS.DL
         /// <summary>
         /// Chạy proc với QueryFirstOrDefault trong dapper
         /// </summary>
-        /// <returns>object</returns>
+        /// <param name="storeProcedureName">Tên store</param>
+        /// <param name="parameters">các parameter</param>
+        /// <returns></returns>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         public virtual object RunProcWithQueryFirstOrDefault(string storeProcedureName, DynamicParameters? parameters)
         {
@@ -77,7 +81,10 @@ namespace MISA.WEB08.AMIS.DL
         /// <summary>
         /// Chạy proc với Execute trong dapper
         /// </summary>
-        /// <returns>object</returns>
+        /// <param name="storeProcedureName">Tên store</param>
+        /// <param name="parameters">các parameter</param>
+        /// <param name="v_MessOut">Message trả ra từ store</param>
+        /// <returns></returns>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         public int RunProcWithExecute(string storeProcedureName, DynamicParameters? parameters, ref string? v_MessOut)
         {
@@ -127,7 +134,10 @@ namespace MISA.WEB08.AMIS.DL
         /// <summary>
         /// Chạy proc với Query trong dapper kết hợp với Transaction
         /// </summary>
-        /// <returns>object</returns>
+        /// <param name="storeProcedureName">Tên store</param>
+        /// <param name="parameters">các parameter</param>
+        /// <param name="v_MessOut">Message trả ra từ store</param>
+        /// <returns></returns>
         /// Create by: Nguyễn Khắc Tiềm (21/09/2022)
         public virtual object RunProcWithQueryCombineTransaction(string storeProcedureName, DynamicParameters? parameters, ref string? v_MessOut)
         {

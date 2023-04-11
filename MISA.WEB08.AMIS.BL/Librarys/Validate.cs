@@ -3,7 +3,6 @@ using MISA.WEB08.AMIS.Common.Enums;
 using MISA.WEB08.AMIS.Common.Result;
 using System;
 using System.Globalization;
-using System.Text.RegularExpressions;
 
 namespace MISA.WEB08.AMIS.BL
 {
@@ -37,33 +36,6 @@ namespace MISA.WEB08.AMIS.BL
                     {
                         validateFailures = $"{validateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
                         break;
-                    }
-                    // Kiểm tra phải đúng định dạng số điện thoại
-                    else if (validateAttribute.PhoneNumber && !string.IsNullOrEmpty(propertyValue))
-                    {
-                        if (!Regex.IsMatch(propertyValue, @"(03|02|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b"))
-                        {
-                            validateFailures = $"{validateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
-                            break;
-                        }
-                    }
-                    // kiểm tra phải đúng định dạng email
-                    else if (validateAttribute.Email && !string.IsNullOrEmpty(propertyValue))
-                    {
-                        if (!Regex.IsMatch(propertyValue, @"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"))
-                        {
-                            validateFailures = $"{validateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
-                            break;
-                        }
-                    }
-                    // Kiểm tra ngày không được lớn hơn ngày hiện tại
-                    else if (validateAttribute.MaxDateNow && !string.IsNullOrEmpty(propertyValue))
-                    {
-                        if (DateTime.Parse(propertyValue) > DateTime.Now)
-                        {
-                            validateFailures = $"{validateAttribute.ErrorMessage} MESSAGE.VALID.SPLIT {property.Name}";
-                            break;
-                        }
                     }
                     // Kiểm tra độ dài
                     else if (validateAttribute.MaxLength > 0 && !string.IsNullOrEmpty(propertyValue))

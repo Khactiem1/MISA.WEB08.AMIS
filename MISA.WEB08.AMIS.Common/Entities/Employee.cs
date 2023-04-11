@@ -52,7 +52,6 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// ngày sinh
         /// </summary>
         [ColumnName(Name = "Ngày sinh", Width = 20, IsDate = true)]
-        [Validate(MaxDateNow = true, ErrorMessage = "validate.max_date_now")]
         public DateTime? DateOfBirth { get; set; }
 
         /// <summary>
@@ -101,7 +100,6 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// ngày cấp cmnd
         /// </summary>
         [ColumnName(Name = "Ngày cấp chứng minh thư", Width = 30, IsDate = true)]
-        [Validate(MaxDateNow = true, ErrorMessage = "validate.max_date_now")]
         public DateTime? DayForIdentity { get; set; }
 
         /// <summary>
@@ -115,21 +113,21 @@ namespace MISA.WEB08.AMIS.Common.Entities
         /// số điện thoại
         /// </summary>
         [ColumnName(Name = "Điện thoại", Width = 20)]
-        [Validate(PhoneNumber = true, ErrorMessage = "validate.malformed", MaxLength = 50)]
+        [Validate(MaxLength = 50)]
         public string PhoneNumber { get; set; }
 
         /// <summary>
         /// số điện thoại cố định
         /// </summary>
         [ColumnName(Name = "Điện thoại cố định", Width = 20)]
-        [Validate(PhoneNumber = true, ErrorMessage = "validate.malformed", MaxLength = 50)]
+        [Validate(MaxLength = 50)]
         public string LandlinePhone { get; set; }
 
         /// <summary>
         /// điạ chỉ email
         /// </summary>
         [ColumnName(Name = "Địa chỉ Email", Width = 30)]
-        [Validate(Email = true, ErrorMessage = "validate.malformed", MaxLength = 100)]
+        [Validate(MaxLength = 100)]
         public string EmployeeEmail { get; set; }
 
         /// <summary>
