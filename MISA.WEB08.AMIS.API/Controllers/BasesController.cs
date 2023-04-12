@@ -5,7 +5,6 @@ using MISA.WEB08.AMIS.BL;
 using MISA.WEB08.AMIS.Common.Enums;
 using MISA.WEB08.AMIS.Common.Resources;
 using MISA.WEB08.AMIS.Common.Result;
-using MISA.WEB08.AMIS.DL;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
